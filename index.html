@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Leon &amp; Iman — A Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Caveat:wght@400;500;600;700&family=Lilita+One&family=Fredoka:wght@600;700&family=Fredericka+the+Great&family=Patrick+Hand&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --p: 0;
+    --p-zoom: 0;
+    --p-doors: 0;
+    --p-glow: 0;
+    --p-couple: 0;
+
+    --ink: #1a1410;
+    --paper: #fbf3e3;
+    --cream: #fdf5e0;
+    --red: #b91c1c;
+    --red-soft: #d04848;
+    --rose: #f4a8c1;
+    --twilight: #b8a3d4;
+    --sun: #f08555;
+    --leaf: #2d5016;
+    --wood: #3d2613;
+    --wood-light: #5a3a22;
+    --gold: #c69c4a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--ink); color: var(--ink); font-family: 'Patrick Hand', cursive; -webkit-font-smoothing: antialiased; }
+  body { overscroll-behavior: none; }
+
+  .scroll-track { height: 440vh; position: relative; }
+  .stage {
+    position: sticky; top: 0;
+    height: 100vh; width: 100%;
+    overflow: hidden;
+    background: linear-gradient(180deg,
+      #eba2c2 0%,
+      #c4a6d0 22%,
+      #f78aa8 48%,
+      #6e6997 72%,
+      #3a2845 100%);
+    transition: background 0.6s;
+  }
+
+  .house-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    overflow: hidden;
+    container-type: size;
+  }
+  .house-inner {
+    position: absolute;
+    width:  max(100cqw, calc(100cqh * 1080 / 721));
+    height: max(100cqh, calc(100cqw *  721 / 1080));
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -65%);
+  }
+  .house-zoom {
+    position: absolute;
+    inset: 0;
+    transform-origin: 37% 75.7%;
+    transform: scale(calc(1 + var(--p-zoom) * 7)) translateY(calc(var(--p-zoom) * 2vh));
+    will-change: transform;
+  }
+  .house-img {
+    width: 100%; height: 100%;
+    display: block;
+  }
+
+  .doorway {
+    position: absolute;
+    left: 37%; top: 75.95%;
+    width: 3.8%; height: 6.5%;
+    transform: translate(-50%, -50%);
+    perspective: 600px;
+    z-index: 12;
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+    overflow: hidden;
+    background-color: #d9a4c4;
+    box-shadow: inset 0 0 0 2.5px #1a1410, 0 0 0 1.5px #1a1410;
+    background-image: url('art/doorway-pattern.jpg');
+    background-size: 140% 140%;
+    background-position: center;
+  }
+  .door {
+    position: absolute; top: 0; bottom: 0;
+    width: 50%;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.18), transparent 12%, transparent 88%, rgba(0,0,0,0.25)),
+      repeating-linear-gradient(180deg,
+        #5a3a22 0px, #5a3a22 7px,
+        #4a2e15 7px, #4a2e15 8px,
+        #5a3a22 8px, #5a3a22 15px,
+        #3d2410 15px, #3d2410 16px),
+      #5a3a22;
+    box-shadow: inset 0 0 0 1px #2a1808, 0 1px 2px rgba(0,0,0,0.4);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  .door-left  { left: 0;  transform-origin: left center;  transform: rotateY(calc(var(--p-doors) * -105deg)); }
+  .door-right { right: 0; transform-origin: right center; transform: rotateY(calc(var(--p-doors) *  105deg)); }
+  .door::after {
+    content: "";
+    position: absolute;
+    top: 50%; width: 14%; height: 8%;
+    background: #d4a857;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .door-left::after  { right: 8%; }
+  .door-right::after { left:  8%; }
+
+  .doorway::before {
+    content: "";
+    position: absolute;
+    inset: -120% -200%;
+    background: radial-gradient(ellipse at center,
+      rgba(255, 180, 200, calc(var(--p-doors) * 0.55)) 0%,
+      rgba(255, 140, 170, calc(var(--p-doors) * 0.35)) 25%,
+      rgba(180, 80, 200, calc(var(--p-doors) * 0.2)) 50%,
+      transparent 80%);
+    z-index: -1;
+    filter: blur(8px);
+  }
+
+  /* Birds */
+  .birds {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: 11;
+    overflow: hidden;
+    opacity: calc(1 - var(--p-zoom) * 1.4);
+  }
+  .bird {
+    background-color: #b91c1c;
+    -webkit-mask: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/174479/bird-cells-new.svg') 0 0 / auto 100% no-repeat;
+    mask: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/174479/bird-cells-new.svg') 0 0 / auto 100% no-repeat;
+    width: 88px;
+    height: 125px;
+    transform: scale(1.35);
+    transform-origin: top left;
+    will-change: mask-position, background-color;
+    filter: url(#bird-outline);
+    animation-name: fly-cycle;
+    animation-timing-function: steps(10);
+    animation-iteration-count: infinite;
+  }
+  .bird-one   { background-color: #b91c1c; animation-duration: 1s;    animation-delay: -0.5s; }
+  .bird-two   { background-color: #d97757; animation-duration: 0.9s;  animation-delay: -0.75s; }
+  .bird-three { background-color: #3b6fa3; animation-duration: 1.25s; animation-delay: -0.25s; }
+  .bird-four  { background-color: #d97757; animation-duration: 1.1s;  animation-delay: -0.5s; }
+
+  .bird-container {
+    position: absolute;
+    top: 10%;
+    left: -3%;
+    transform: scale(0) translateX(-10vw);
+    will-change: transform;
+    animation-name: fly-right-one;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .bird-container-one   { animation-duration: 15s;   animation-delay: 0s; }
+  .bird-container-two   { animation-duration: 16s;   animation-delay: 1s; animation-name: fly-right-two; }
+  .bird-container-three { animation-duration: 14.6s; animation-delay: 9.5s; }
+  .bird-container-four  { animation-duration: 16s;   animation-delay: 10.25s; animation-name: fly-right-two; }
+
+  @keyframes fly-cycle {
+    100% {
+      -webkit-mask-position: -900px 0;
+      mask-position: -900px 0;
+    }
+  }
+  @keyframes fly-right-one {
+    0%   { transform: scale(0.3) translateX(-10vw); }
+    10%  { transform: translateY(2vh)  translateX(10vw)  scale(0.4); }
+    20%  { transform: translateY(0vh)  translateX(30vw)  scale(0.5); }
+    30%  { transform: translateY(4vh)  translateX(50vw)  scale(0.6); }
+    40%  { transform: translateY(2vh)  translateX(70vw)  scale(0.6); }
+    50%  { transform: translateY(0vh)  translateX(90vw)  scale(0.6); }
+    60%  { transform: translateY(0vh)  translateX(110vw) scale(0.6); }
+    100% { transform: translateY(0vh)  translateX(110vw) scale(0.6); }
+  }
+  @keyframes fly-right-two {
+    0%   { transform: translateY(-2vh)   translateX(-10vw) scale(0.5); }
+    10%  { transform: translateY(0vh)    translateX(10vw)  scale(0.4); }
+    20%  { transform: translateY(-4vh)   translateX(30vw)  scale(0.6); }
+    30%  { transform: translateY(1vh)    translateX(50vw)  scale(0.45); }
+    40%  { transform: translateY(-2.5vh) translateX(70vw)  scale(0.5); }
+    50%  { transform: translateY(0vh)    translateX(90vw)  scale(0.45); }
+    51%  { transform: translateY(0vh)    translateX(110vw) scale(0.45); }
+    100% { transform: translateY(0vh)    translateX(110vw) scale(0.45); }
+  }
+
+  /* Approach overlay text */
+  .scene { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6vh 6vw; }
+  .scene .inner { pointer-events: auto; text-align: center; }
+
+  .scene-approach {
+    z-index: 20;
+    opacity: calc(1 - var(--p-zoom) * 1.6);
+    color: var(--ink);
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: calc(2vh + 2px);
+  }
+  .scene-approach .inner {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 720px;
+    text-shadow: none;
+    transform: translateX(-2%);
+  }
+  .eyebrow {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(14px, 2.2vw, 28px);
+    color: #f59e0b;
+    -webkit-text-stroke: 1.5px #1a1410;
+    paint-order: stroke fill;
+    text-shadow: 3px 3px 0 rgba(26,20,16,0.18);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.35em;
+    transform: rotate(-2deg);
+    display: inline-block;
+  }
+  .names {
+    font-family: 'Fredericka the Great', cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(38px, 7.2vw, 96px);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    color: #ec4899;
+    -webkit-text-stroke: 3px #1a1410;
+    paint-order: stroke fill;
+    text-shadow: 5px 5px 0 rgba(26,20,16,0.18);
+  }
+  .names .amp { color: #f59e0b; -webkit-text-stroke: 3px #1a1410; padding: 0 0.08em; }
+  .names .nm-2 { color: #6d28d9; }
+  .invite-line {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(12px, 1.6vw, 20px);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0.4em 0 0;
+    color: #0ea5e9;
+    -webkit-text-stroke: 1.2px #1a1410;
+    paint-order: stroke fill;
+  }
+  .scroll-hint {
+    margin-top: 0.15em;
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(12px, 1.6vw, 20px);
+    color: #f59e0b;
+    -webkit-text-stroke: 1.2px #1a1410;
+    paint-order: stroke fill;
+    display: flex; align-items: center; justify-content: center; gap: 0.6em;
+    opacity: calc(1 - var(--p-zoom) * 2);
+  }
+  .scroll-hint .arrow {
+    display: inline-block;
+    animation: bob 1.6s ease-in-out infinite;
+  }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+  /* Couple reveal scene */
+  .scene-couple {
+    z-index: 30;
+    opacity: var(--p-couple);
+    background: linear-gradient(180deg, #eba2c2 0%, #efc6b8 55%, #ecd4b8 100%);
+  }
+
+  .couple-card {
+    position: relative;
+    width: min(78vw, 142vh);
+    aspect-ratio: 1722/1238;
+    max-height: 82vh;
+    background-image: url('art/postcard.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: auto;
+    will-change: opacity, transform;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 6.5% 6% 7% 6%;
+    box-sizing: border-box;
+    filter: none;
+    transform: translateY(calc((1 - var(--p-couple)) * 16vh)) rotate(calc(-1.8deg + (1 - var(--p-couple)) * -3.5deg));
+  }
+  .couple-art {
+    position: relative;
+    aspect-ratio: 1024 / 1536;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    transform: translateX(-20px);
+    background-image: url('art/couple.jpeg');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .couple-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1536' preserveAspectRatio='none'><defs><filter id='w' x='-5%25' y='-5%25' width='110%25' height='110%25'><feTurbulence baseFrequency='0.018' numOctaves='2' seed='4'/><feDisplacementMap in='SourceGraphic' scale='8'/></filter></defs><rect x='10' y='10' width='1004' height='1516' fill='none' stroke='%231a1410' stroke-width='5' stroke-linejoin='round' filter='url(%23w)'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .couple-text {
+    text-align: center;
+    padding: 0 2% 0 4%;
+  }
+  .couple-name {
+    font-family: 'Fredericka the Great', cursive;
+    font-style: normal;
+    font-size: clamp(40px, 7vw, 88px);
+    line-height: 1;
+    color: var(--ink);
+    text-align: center;
+  }
+  .couple-name .amp { color: var(--red); font-style: italic; padding: 0 0.1em; }
+  .couple-meta {
+    text-align: center;
+    font-size: clamp(12px, 1.4vw, 16px);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--wood);
+    margin-top: 0.8em;
+  }
+  .couple-meta .dot { color: var(--red); padding: 0 0.4em; }
+
+  /* Continuous gradient for all post-couple sections */
+  .scene-family {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 3vh 6vw;
+    background: linear-gradient(180deg, #ecd4b8 0%, #e8c3a0 100%);
+    min-height: auto;
+  }
+  .family-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(8px, 2vw, 24px);
+    align-items: center;
+    max-width: 1100px;
+    width: 100%;
+    pointer-events: auto;
+  }
+  .family-col { display: flex; flex-direction: column; align-items: center; gap: 0.15em; }
+  .horse-art {
+    width: min(24vh, 22vw);
+    aspect-ratio: 1/1;
+    background: url('art/horse.png') center 35% / 100% auto no-repeat;
+    transform-origin: 50% 90%;
+    animation: tilt-horse 2.4s steps(1, end) infinite;
+  }
+  .cats-art {
+    width: min(32vh, 30vw);
+    aspect-ratio: 1500/1024;
+    background: url('art/cats.png') center/contain no-repeat;
+    transform-origin: 50% 90%;
+    animation: tilt-cats 2.0s steps(1, end) infinite;
+    animation-delay: -0.5s;
+  }
+  @keyframes tilt-horse {
+    0%    { transform: rotate(-4deg); }
+    20%   { transform: rotate(2deg); }
+    40%   { transform: rotate(-2.5deg); }
+    60%   { transform: rotate(4.5deg); }
+    80%   { transform: rotate(-1deg); }
+    100%  { transform: rotate(3deg); }
+  }
+  @keyframes tilt-cats {
+    0%    { transform: rotate(3deg); }
+    25%   { transform: rotate(-3.5deg); }
+    50%   { transform: rotate(1.5deg); }
+    75%   { transform: rotate(-2.2deg); }
+    100%  { transform: rotate(4deg); }
+  }
+  .family-label {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: clamp(22px, 2.6vw, 32px);
+    color: var(--red);
+    text-align: center;
+    line-height: 1.15;
+  }
+  .family-label .meta {
+    display: block;
+    font-family: 'Patrick Hand', cursive;
+    font-style: normal;
+    font-size: 0.7em;
+    color: var(--wood);
+    margin-top: 0.2em;
+  }
+  .family-title {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-style: italic;
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--ink);
+    margin-bottom: 0.15em;
+  }
+  .family-title .accent { color: var(--red); font-family: 'Fredericka the Great', cursive; font-style: normal; }
+  .day-info {
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .day-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 1fr;
+    align-items: center;
+    gap: clamp(10px, 2.5vw, 32px);
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 4vw;
+  }
+  .day-grid .family-title { grid-column: 1 / -1; }
+  .day-side { align-self: center; }
+  .day-side .horse-art, .day-side .cats-art { width: 100%; max-width: 140px; margin: 0 auto; }
+  @media (max-width: 720px), (orientation: portrait) {
+    .day-grid { grid-template-columns: 1fr 1fr; }
+    .day-grid .day-info { grid-column: 1 / -1; order: 3; }
+  }
+  .day-info .details-row {
+    text-align: center;
+  }
+  .day-info .label {
+    font-family: 'Patrick Hand', cursive;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-size: clamp(11px, 1.2vw, 13px);
+    color: var(--red);
+  }
+  .day-info .value {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: clamp(22px, 2.6vw, 30px);
+    color: var(--ink);
+    margin-top: 0.1em;
+  }
+  .day-info .sub {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(15px, 1.5vw, 17px);
+    color: var(--wood);
+    margin-top: 0.2em;
+  }
+  .day-info .ornament {
+    height: 1px;
+    margin: 1em auto;
+    width: 60%;
+    background: rgba(26,20,16,0.18);
+  }
+
+  /* Good to know section */
+  .scene-faq {
+    position: relative;
+    padding: 10vh 6vw 8vh;
+    background: linear-gradient(180deg, #d8a0a8 0%, #c4a6d0 100%);
+  }
+  .faq-wrap { max-width: 760px; margin: 0 auto; }
+  .faq-heading {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: clamp(36px, 5vw, 56px);
+    text-align: center;
+    margin-bottom: 1em;
+    color: var(--ink);
+  }
+  .faq-heading .accent { color: var(--red); }
+  .faq-item { border-bottom: 2px solid rgba(26,20,16,0.18); }
+  .faq-item:first-of-type { border-top: 2px solid rgba(26,20,16,0.18); }
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    font-family: 'Fredericka the Great', cursive;
+    font-size: clamp(22px, 2.6vw, 30px);
+    color: var(--ink);
+    padding: 14px 4px;
+    display: flex; align-items: center; justify-content: space-between;
+    user-select: none;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+";
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.3em;
+    color: var(--red);
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] summary::after { content: "–"; }
+  .faq-item .faq-body {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: var(--wood);
+    line-height: 1.55;
+    padding: 2px 4px 16px;
+  }
+  .faq-item .faq-body p { margin-bottom: 0.6em; }
+  .faq-item .faq-body p:last-child { margin-bottom: 0; }
+
+  /* Day two details */
+  .scene-details {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 10vh 6vw;
+    background: linear-gradient(180deg, #e8c3a0 0%, #d8a0a8 100%);
+  }
+  .details-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+    max-width: 1100px;
+    width: 100%;
+    pointer-events: auto;
+  }
+  .cake-art {
+    width: 100%;
+    max-width: 460px;
+    aspect-ratio: 1/1;
+    background: url('art/cake.png') center/contain no-repeat;
+    filter: drop-shadow(0 24px 32px rgba(180, 60, 90, 0.22));
+    justify-self: center;
+  }
+  .details-text { font-family: 'Patrick Hand', cursive; color: var(--ink); }
+  .details-text h2 {
+    font-family: 'Fredericka the Great', cursive;
+    font-weight: 600;
+    font-size: clamp(34px, 4.5vw, 54px);
+    color: var(--red);
+    margin-bottom: 0.4em;
+    line-height: 1;
+  }
+  .details-row { margin-bottom: 1.8em; }
+  .details-row .label {
+    font-size: clamp(11px, 1.2vw, 12px);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--wood-light);
+    margin-bottom: 0.35em;
+  }
+  .details-row .value {
+    font-size: clamp(22px, 2.6vw, 30px);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .details-row .sub {
+    font-size: clamp(14px, 1.5vw, 17px);
+    color: var(--wood-light);
+    margin-top: 0.15em;
+  }
+  .ornament {
+    width: 60px; height: 1px;
+    background: var(--red);
+    margin: 0.8em 0;
+    position: relative;
+  }
+  .ornament::before, .ornament::after {
+    content: ""; position: absolute; top: 50%; width: 6px; height: 6px;
+    background: var(--red); border-radius: 50%; transform: translateY(-50%);
+  }
+  .ornament::before { left: -3px; }
+  .ornament::after  { right: -3px; }
+
+  /* RSVP — continues the gradient from details */
+  .scene-rsvp {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 6vh 6vw;
+    background: linear-gradient(180deg, #c4a6d0 0%, #8a7ba8 55%, #3a2845 100%);
+  }
+  .rsvp-card {
+    background: var(--paper);
+    border: none;
+    position: relative;
+    transform: none;
+    padding: clamp(20px, 3vw, 36px) clamp(28px, 4vw, 56px);
+    text-align: center;
+    box-shadow: 0 40px 80px -20px rgba(60, 20, 30, 0.35);
+    max-width: 460px;
+    pointer-events: auto;
+  }
+  .rsvp-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1536' preserveAspectRatio='none'><defs><filter id='w' x='-5%25' y='-5%25' width='110%25' height='110%25'><feTurbulence baseFrequency='0.018' numOctaves='2' seed='4'/><feDisplacementMap in='SourceGraphic' scale='8'/></filter></defs><rect x='10' y='10' width='1004' height='1516' fill='none' stroke='%231a1410' stroke-width='5' stroke-linejoin='round' filter='url(%23w)'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .rsvp-card h2 {
+    font-family: 'Fredericka the Great', cursive;
+    font-style: normal;
+    font-size: clamp(40px, 6vw, 64px);
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.4em;
+  }
+  .rsvp-card p { font-size: clamp(15px, 1.7vw, 18px); color: var(--wood); line-height: 1.5; margin-bottom: 1.8em; }
+  .rsvp-days { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3vw, 28px); margin-bottom: 1.4em; }
+  .rsvp-day {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .rsvp-day-label {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--ink);
+    margin-bottom: 0.15em;
+  }
+  .rsvp-day-date {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(13px, 1.4vw, 16px);
+    color: var(--wood);
+    margin-bottom: 0.7em;
+  }
+  .rsvp-day-actions { display: flex; flex-direction: column; gap: 8px; align-items: stretch; margin-top: auto; }
+  .btn-sm {
+    font-size: clamp(11px, 1.2vw, 13px);
+    padding: 10px 16px;
+    letter-spacing: 0.24em;
+  }
+  .btn {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(13px, 1.4vw, 15px);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    background: var(--red);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .btn:hover { background: #9a1414; transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); }
+  .rsvp-meta {
+    margin-top: 2em;
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--red);
+  }
+
+  /* Progress chrome */
+  .progress-rail {
+    position: fixed;
+    right: clamp(16px, 2vw, 28px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 200px;
+    background: rgba(255,255,255,0.25);
+    z-index: 100;
+    pointer-events: none;
+  }
+  .progress-rail::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; width: 100%;
+    height: calc(var(--p) * 100%);
+    background: var(--red);
+    transition: height 0.1s linear;
+  }
+  .progress-rail::after {
+    content: "";
+    position: absolute;
+    left: -3px; top: calc(var(--p) * 100%);
+    width: 8px; height: 8px;
+    background: var(--paper);
+    border: 1px solid var(--red);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.15);
+  }
+
+  .chapter-label {
+    position: fixed;
+    right: clamp(36px, 4vw, 56px);
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    font-family: 'Caveat', cursive;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+    z-index: 100;
+    pointer-events: none;
+    transition: color 0.4s;
+  }
+  .chapter-label.on-light { color: rgba(60, 30, 20, 0.55); }
+
+  .top-mono {
+    position: fixed;
+    top: 18px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Caveat', cursive;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    color: rgba(60, 30, 20, 0.55);
+    z-index: 99;
+    opacity: calc(1 - var(--p) * 3);
+    pointer-events: none;
+  }
+
+  /* Petals */
+  .petals {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 35;
+    opacity: var(--petals-opacity, 0);
+    transition: opacity 0.4s;
+  }
+  .petal {
+    position: absolute;
+    width: 22px; height: 22px;
+    transform-origin: center;
+    animation: fall linear infinite;
+    filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.15));
+  }
+  .petal svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .petal svg polygon { stroke: #1a1410; stroke-width: 6; stroke-linejoin: round; paint-order: stroke fill; }
+  @keyframes fall {
+    0% { transform: translateY(-20vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* responsive */
+  @media (max-width: 720px) {
+    .details-wrap { grid-template-columns: 1fr; gap: 24px; }
+    .cake-art { max-width: 260px; }
+    .family-grid { gap: 16px; }
+    .progress-rail, .chapter-label { display: none; }
+  }
+
+  /* Rotate-your-phone overlay */
+  .rotate-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #1d0f2e;
+    color: #fdf6ec;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    font-family: "Patrick Hand", sans-serif;
+  }
+  .rotate-overlay svg {
+    width: 96px;
+    height: 96px;
+    margin-bottom: 24px;
+    animation: rot-wiggle 2.4s ease-in-out infinite;
+  }
+  .rotate-overlay h2 {
+    font-family: "Lilita One", sans-serif;
+    font-size: 32px;
+    margin: 0 0 8px;
+    color: #ffd6a8;
+  }
+  .rotate-overlay p {
+    font-size: 20px;
+    margin: 0;
+    opacity: 0.85;
+    max-width: 280px;
+    line-height: 1.4;
+  }
+  @keyframes rot-wiggle {
+    0%, 100% { transform: rotate(-12deg); }
+    50%      { transform: rotate(78deg); }
+  }
+  @media (max-width: 900px) and (orientation: portrait) {
+    .rotate-overlay { display: flex; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Rotate-your-phone overlay -->
+<div class="rotate-overlay" aria-hidden="true">
+  <svg viewBox="0 0 64 64" fill="none" stroke="#ffd6a8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="18" y="6" width="28" height="52" rx="4" />
+    <line x1="28" y1="52" x2="36" y2="52" />
+  </svg>
+  <h2>Rotate your phone</h2>
+  <p>This invite is best viewed in landscape — turn your phone sideways.</p>
+</div>
+
+<div class="top-mono">– an invitation –</div>
+
+<div class="progress-rail" aria-hidden="true"></div>
+<div class="chapter-label" id="chapter-label">scroll to enter</div>
+
+<div class="scroll-track">
+  <div class="stage">
+
+    <!-- HOUSE LAYER -->
+    <div class="house-wrap">
+      <div class="house-inner">
+        <div class="house-zoom">
+          <img class="house-img" src="art/house.jpeg" alt="" />
+          <div class="doorway">
+            <div class="door door-left" aria-hidden="true"></div>
+            <div class="door door-right" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BIRDS -->
+    <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+      <defs>
+        <filter id="bird-outline" x="-20%" y="-20%" width="140%" height="140%">
+          <feMorphology in="SourceAlpha" operator="dilate" radius="3" result="dilated" />
+          <feFlood flood-color="#1a1410" result="black" />
+          <feComposite in="black" in2="dilated" operator="in" result="outline" />
+          <feMerge>
+            <feMergeNode in="outline" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+    </svg>
+    <div class="birds" aria-hidden="true">
+      <div class="bird-container bird-container-one"><div class="bird bird-one"></div></div>
+      <div class="bird-container bird-container-two"><div class="bird bird-two"></div></div>
+      <div class="bird-container bird-container-three"><div class="bird bird-three"></div></div>
+      <div class="bird-container bird-container-four"><div class="bird bird-four"></div></div>
+    </div>
+
+    <!-- SCENE 1 — APPROACH -->
+    <div class="scene scene-approach">
+      <div class="inner">
+        <div class="eyebrow">you are warmly invited to</div>
+        <div class="names"><span class="nm-1">Leon</span><span class="amp">&amp;</span><span class="nm-2">Iman</span></div>
+        <div class="invite-line">are getting married</div>
+        <div class="scroll-hint">
+          <span class="arrow">↓</span>
+          <span>scroll to step inside</span>
+          <span class="arrow">↓</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 2 — COUPLE REVEAL -->
+    <div class="scene scene-couple">
+      <div class="couple-card">
+        <div class="couple-art" role="img" aria-label="The couple"></div>
+        <div class="couple-text">
+          <div class="couple-name">Leon <span class="amp">&amp;</span> Iman</div>
+          <div class="couple-meta">
+            <span>29 &amp; 30</span>
+            <span class="dot">·</span>
+            <span>August 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Petals overlay -->
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<!-- SECTION — DAY ONE: Nikkah & Mehndi with horse + cats flanking -->
+<section class="scene-family" id="day-one">
+  <div class="day-grid">
+    <div class="family-title">
+      <span class="accent">day one</span> nikkah &amp; mehndi
+    </div>
+    <div class="family-col day-side">
+      <div class="horse-art" role="img" aria-label="Dreamy the horse with flower garland"></div>
+      <div class="family-label">
+        Dreamy
+        <span class="meta">the bearer of garlands</span>
+      </div>
+    </div>
+    <div class="day-info">
+      <div class="details-row">
+        <div class="label">when</div>
+        <div class="value">Saturday, 29 August 2026</div>
+        <div class="sub">3pm — late</div>
+      </div>
+      <div class="ornament" aria-hidden="true"></div>
+      <div class="details-row">
+        <div class="label">where</div>
+        <div class="value">Jack of Clubs Barn</div>
+        <div class="sub">Lode Fen · CB25 9HE</div>
+      </div>
+      <div class="ornament" aria-hidden="true"></div>
+      <div class="details-row">
+        <div class="label">dress</div>
+        <div class="value">Colourful</div>
+        <div class="sub">South Asian recommended · Western welcome</div>
+      </div>
+    </div>
+    <div class="family-col day-side">
+      <div class="cats-art" role="img" aria-label="Lola and Rumi the cats with flower collars"></div>
+      <div class="family-label">
+        Lola &amp; Rumi
+        <span class="meta">witnesses &amp; ringbearers</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION — DAY TWO: Baraat with cake -->
+<section class="scene-details" id="day-two">
+  <div class="details-wrap">
+    <div class="cake-art" role="img" aria-label="Wedding cake"></div>
+    <div class="details-text">
+      <h2><span class="accent">day two</span> baraat</h2>
+      <div class="details-row">
+        <div class="label">when</div>
+        <div class="value">Sunday, 30 August 2026</div>
+        <div class="sub">Ceremony in the afternoon · Reception to follow</div>
+      </div>
+      <div class="ornament" aria-hidden="true"></div>
+      <div class="details-row">
+        <div class="label">where</div>
+        <div class="value">Jack of Clubs Barn</div>
+        <div class="sub">Lode Fen · CB25 9HE</div>
+      </div>
+      <div class="ornament" aria-hidden="true"></div>
+      <div class="details-row">
+        <div class="label">dress</div>
+        <div class="value">Garden formal</div>
+        <div class="sub">South Asian or Western wear welcome</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION — GOOD TO KNOW -->
+<section class="scene-faq">
+  <div class="faq-wrap">
+    <h2 class="faq-heading"><span class="accent">good</span> to know</h2>
+    <details class="faq-item">
+      <summary>Accommodation</summary>
+      <div class="faq-body">
+        <p>We've held a few rooms at <strong>The Bell Inn, Cambridge</strong> and <strong>The Anchor at Burwell</strong> under <em>Leon &amp; Iman</em>. Mention the wedding when booking.</p>
+        <p>For something quieter, look at cottages on Airbnb around Lode, Reach, and Swaffham Bulbeck.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>Travel</summary>
+      <div class="faq-body">
+        <p>Nearest station is <strong>Cambridge North</strong> (~20 min by taxi). London Liverpool Street → Cambridge takes about 75 minutes.</p>
+        <p>We'll run a shuttle from Cambridge city centre on both days — details to follow with your RSVP.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>Parking</summary>
+      <div class="faq-body">
+        <p>Free on-site parking at the barn. Cars can be left overnight and collected before noon the next day.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- SECTION — RSVP -->
+<section class="scene-rsvp">
+  <div class="rsvp-card">
+    <h2>Will you be there?</h2>
+    <p>We can't wait to celebrate with you. Please let us know by <strong>1 July 2026</strong>.</p>
+    <div class="rsvp-days">
+      <div class="rsvp-day">
+        <div class="rsvp-day-label">Day one · Nikkah &amp; Mehndi</div>
+        <div class="rsvp-day-date">Sat 29 August</div>
+        <div class="rsvp-day-actions">
+          <button class="btn btn-sm" data-day="1" data-rsvp="yes">I'll be there</button>
+          <button class="btn btn-sm ghost" data-day="1" data-rsvp="no">Can't make it</button>
+        </div>
+      </div>
+      <div class="rsvp-day">
+        <div class="rsvp-day-label">Day two · Baraat</div>
+        <div class="rsvp-day-date">Sun 30 August</div>
+        <div class="rsvp-day-actions">
+          <button class="btn btn-sm" data-day="2" data-rsvp="yes">I'll be there</button>
+          <button class="btn btn-sm ghost" data-day="2" data-rsvp="no">Can't make it</button>
+        </div>
+      </div>
+    </div>
+    <div class="rsvp-meta">with love, Leon &amp; Iman ♥</div>
+  </div>
+</section>
+
+<div id="tweaks-root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script>
+  const root = document.documentElement;
+  const track = document.querySelector('.scroll-track');
+  const chapterLabel = document.getElementById('chapter-label');
+
+  const range = (p, a, b) => Math.max(0, Math.min(1, (p - a) / (b - a)));
+  const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+  const phases = {
+    zoom:     [0.00, 1.00],
+    doors:    [0.00, 0.50],
+    couple:   [0.20, 0.95],
+  };
+
+  const labels = [
+    { until: 0.05, text: 'scroll to enter' },
+    { until: 0.50, text: 'the doors open' },
+    { until: 0.95, text: 'approaching' },
+    { until: 1.01, text: 'the couple' },
+  ];
+
+  function fadeIn(p, [a, b]) {
+    if (p <= a) return 0;
+    if (p >= b) return 1;
+    return ease((p - a) / (b - a));
+  }
+
+  // Auto-scroll: once the couple overlay starts appearing, automatically
+  // scroll to fully reveal the postcard so the user can't get stuck in
+  // a half-overlaid state.
+  let autoScrolling = false;
+  let autoScrollTriggered = false;
+
+  function update() {
+    const trackTop = track.getBoundingClientRect().top + window.scrollY;
+    const trackHeight = track.offsetHeight - window.innerHeight;
+    const p = Math.max(0, Math.min(1, (window.scrollY - trackTop) / trackHeight));
+
+    root.style.setProperty('--p', p);
+    root.style.setProperty('--p-zoom',    ease(range(p, ...phases.zoom)));
+    root.style.setProperty('--p-doors',   ease(range(p, ...phases.doors)));
+    root.style.setProperty('--p-couple',  fadeIn(p, phases.couple));
+
+    // Petals
+    const docScroll = window.scrollY;
+    const coupleStart = trackTop + trackHeight * 0.20;
+    let petalsOp = 0;
+    if (docScroll > coupleStart) {
+      petalsOp = Math.min(1, (docScroll - coupleStart) / (window.innerHeight * 0.4));
+    }
+    root.style.setProperty('--petals-opacity', petalsOp);
+
+    // chapter label
+    const lab = labels.find(l => p < l.until);
+    if (lab) chapterLabel.textContent = lab.text;
+    chapterLabel.classList.toggle('on-light', p > 0.55);
+
+    // Auto-scroll trigger: once couple starts fading in (p > 0.30),
+    // smoothly scroll to the end of the track so you can't linger
+    // in the overlay state
+    if (p > 0.35 && p < 0.95 && !autoScrolling && !autoScrollTriggered) {
+      autoScrolling = true;
+      autoScrollTriggered = true;
+      const target = trackTop + trackHeight + 10;
+      window.scrollTo({ top: target, behavior: 'smooth' });
+      setTimeout(() => { autoScrolling = false; }, 1800);
+    }
+    // Reset the trigger when user scrolls back to the top
+    if (p < 0.15) {
+      autoScrollTriggered = false;
+    }
+  }
+
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => { update(); ticking = false; });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  // Petals confetti
+  const petalsHost = document.getElementById('petals');
+  function spawnPetals(n) {
+    const colors = ['#ec4899', '#6d28d9', '#f59e0b', '#0ea5e9', '#ef4444', '#22c55e'];
+    for (let i = 0; i < n; i++) {
+      const el = document.createElement('div');
+      el.className = 'petal';
+      el.style.left = (Math.random() * 100) + 'vw';
+      el.style.animationDuration = (5 + Math.random() * 5) + 's';
+      el.style.animationDelay = (-Math.random() * 10) + 's';
+      el.style.top = (Math.random() * -40) + 'vh';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = 8 + Math.random() * 10;
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.innerHTML = `<svg viewBox="-6 -6 112 112" xmlns="http://www.w3.org/2000/svg"><polygon fill="${color}" points="50,0 62,35 100,45 70,65 80,100 50,80 20,100 30,65 0,45 38,35"/></svg>`;
+      el.style.transform = `scale(${0.6 + Math.random() * 0.8})`;
+      petalsHost.appendChild(el);
+    }
+  }
+  spawnPetals(14);
+
+  // RSVP interactions — per day
+  document.querySelectorAll('[data-rsvp]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const day = e.target.dataset.day;
+      const rsvp = e.target.dataset.rsvp;
+      const siblings = document.querySelectorAll(`[data-day="${day}"]`);
+      siblings.forEach(b => { b.disabled = true; b.style.opacity = 0.5; });
+      e.target.style.opacity = 1;
+      if (rsvp === 'yes') {
+        e.target.textContent = "See you there ♥";
+        e.target.style.background = '#7d1414';
+      } else {
+        e.target.textContent = "Noted ♥";
+        e.target.style.background = 'transparent';
+        e.target.style.color = 'var(--wood)';
+        e.target.style.borderColor = 'var(--wood)';
+      }
+    });
+  });
+
+  // Smooth-scroll hint
+  document.querySelector('.scroll-hint')?.addEventListener('click', () => {
+    window.scrollTo({ top: window.innerHeight * 3, behavior: 'smooth' });
+  });
+</script>
+
+<script type="text/babel" data-presets="env,react">
+  const TWEAKS_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "name1": "Leon",
+    "name2": "Iman",
+    "skySetting": "twilight"
+  }/*EDITMODE-END*/;
+
+  const { useEffect } = React;
+
+  function App() {
+    const [tweaks, setTweak] = window.useTweaks(TWEAKS_DEFAULTS);
+
+    useEffect(() => {
+      const sel = (s) => document.querySelectorAll(s);
+      sel('.scene-approach .names').forEach(el => {
+        el.innerHTML = `<span class="nm-1">${tweaks.name1}</span><span class="amp">&amp;</span><span class="nm-2">${tweaks.name2}</span>`;
+      });
+      sel('.scene-couple .couple-name').forEach(el => {
+        el.innerHTML = `${tweaks.name1} <span class="amp">&amp;</span> ${tweaks.name2}`;
+      });
+      const rsvpMeta = document.querySelector('.rsvp-meta');
+      if (rsvpMeta) {
+        rsvpMeta.innerHTML = `with love, ${tweaks.name1} &amp; ${tweaks.name2} ♥`;
+      }
+      const stage = document.querySelector('.stage');
+      const palettes = {
+        twilight: 'linear-gradient(180deg, #f7c8d8 0%, #e7b5c9 18%, #c9a8d4 42%, #8e7eb8 68%, #2a2440 100%)',
+        sunrise:  'linear-gradient(180deg, #fde0c8 0%, #f7c19a 25%, #f0a8a4 55%, #b889b4 85%, #6a5a90 100%)',
+        midnight: 'linear-gradient(180deg, #4d4070 0%, #322a55 35%, #1d1838 70%, #0b0817 100%)',
+        meadow:   'linear-gradient(180deg, #d7e9c4 0%, #b6d6a3 30%, #84ab8a 65%, #4a6a5b 100%)',
+      };
+      stage.style.background = palettes[tweaks.skySetting] || palettes.twilight;
+    }, [tweaks]);
+
+    return (
+      <window.TweaksPanel title="Tweaks">
+        <window.TweakSection label="Couple">
+          <window.TweakText label="Name 1" value={tweaks.name1} onChange={v => setTweak('name1', v)} />
+          <window.TweakText label="Name 2" value={tweaks.name2} onChange={v => setTweak('name2', v)} />
+        </window.TweakSection>
+        <window.TweakSection label="Sky mood">
+          <window.TweakSelect
+            label="Sky"
+            value={tweaks.skySetting}
+            onChange={v => setTweak('skySetting', v)}
+            options={['twilight', 'sunrise', 'midnight', 'meadow']}
+          />
+        </window.TweakSection>
+      </window.TweaksPanel>
+    );
+  }
+
+  const rootEl = document.getElementById('tweaks-root');
+  ReactDOM.createRoot(rootEl).render(<App />);
+</script>
+
+</body>
+</html>

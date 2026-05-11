@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Mobile Preview — Wedding Invite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #1a1a1a;
+    --bg-2: #0f0f0f;
+    --fg: #eee;
+    --muted: rgba(238,238,238,0.55);
+    --accent: #ec4899;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 24px 16px 64px;
+    min-height: 100vh;
+    transition: background 0.5s ease;
+    position: relative;
+  }
+
+  body[data-mood="studio"] {
+    background:
+      radial-gradient(ellipse at center 40%, #2a2a2a 0%, #1a1a1a 50%, #0d0d0d 100%);
+  }
+  body[data-mood="paper"] {
+    background:
+      #e9dfc8
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='2' seed='3' /%3E%3CfeColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.45  0 0 0 0 0.30  0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    color: #2a2218;
+  }
+  body[data-mood="twilight"] {
+    background:
+      linear-gradient(180deg, #d9a4c4 0%, #b88bb7 35%, #6e5b8f 70%, #2c2b50 100%);
+    color: #fdf6ec;
+  }
+  body[data-mood="daylight"] {
+    background:
+      linear-gradient(180deg, #ffe6b3 0%, #ffd1a1 40%, #f9b5a6 100%);
+    color: #3a1e10;
+  }
+
+  .header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: center;
+    position: relative;
+  }
+  h1 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0;
+    opacity: 0.75;
+  }
+
+  .row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .row button {
+    background: rgba(255,255,255,0.06);
+    color: inherit;
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  body[data-mood="paper"] .row button { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.2); }
+  body[data-mood="daylight"] .row button { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.2); }
+  .row button.active {
+    background: currentColor;
+    color: var(--bg);
+    border-color: currentColor;
+  }
+  body[data-mood="paper"] .row button.active,
+  body[data-mood="daylight"] .row button.active {
+    background: #2a2218;
+    color: #fff;
+    border-color: #2a2218;
+  }
+  .row button:hover { transform: translateY(-1px); }
+
+  .stage {
+    perspective: 1800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    transition: gap 0.4s ease;
+    min-height: 480px;
+    padding: 32px 0;
+    position: relative;
+  }
+
+  .phone {
+    position: relative;
+    transition: width 0.25s ease, height 0.25s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s;
+    flex-shrink: 0;
+  }
+  .phone iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000;
+  }
+
+  .phone[data-frame="phone"] {
+    background: #0d0d0d;
+    border-radius: 48px;
+    padding: 12px;
+    box-shadow:
+      0 0 0 2px #2a2a2a,
+      0 0 0 3px rgba(255,255,255,0.06),
+      0 28px 60px rgba(0,0,0,0.55);
+  }
+  .phone[data-frame="phone"] iframe { border-radius: 36px; }
+  .phone[data-frame="phone"] .notch {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 100px;
+    background: #000;
+    border-radius: 18px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .phone[data-frame="phone"].portrait .notch {
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 28px;
+  }
+
+  .size-label {
+    margin-top: 24px;
+    font-size: 12px;
+    opacity: 0.55;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+  .hint {
+    margin-top: 6px;
+    font-size: 11px;
+    opacity: 0.4;
+    max-width: 420px;
+    text-align: center;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body data-mood="studio">
+
+  <div class="header"><h1>Mobile preview</h1></div>
+  <div class="row" id="sizes"></div>
+
+  <div class="stage" id="stage">
+    <div class="phone main" id="phone" data-frame="phone">
+      <div class="notch"></div>
+      <iframe id="frame" src="index.html" title="Wedding Invite mobile preview"></iframe>
+    </div>
+  </div>
+
+  <div class="size-label" id="sizeLabel"></div>
+  <div class="hint">Scroll inside the phone frame to test the full invite flow at mobile size.</div>
+
+<script>
+  const sizes = [
+    { name: "iPhone 13/14 ↻",  w: 844, h: 390 },
+    { name: "iPhone Pro Max ↻",w: 932, h: 430 },
+    { name: "Pixel 7 ↻",       w: 915, h: 412 },
+    { name: "Galaxy S24 ↻",    w: 800, h: 360 },
+    { name: "iPhone SE ↻",     w: 667, h: 375 },
+    { name: "Portrait — 13/14",w: 390, h: 844 },
+  ];
+
+  const label = document.getElementById("sizeLabel");
+  const row   = document.getElementById("sizes");
+  const phone = document.getElementById("phone");
+
+  let currentSize = sizes[0];
+
+  function applySize(s, btn) {
+    currentSize = s;
+    phone.style.width  = s.w + "px";
+    phone.style.height = s.h + "px";
+    phone.classList.toggle("portrait", s.h > s.w);
+    label.textContent  = s.name + " — " + s.w + " × " + s.h;
+    [...row.children].forEach(b => b.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+  }
+
+  sizes.forEach((s, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = s.name;
+    btn.onclick = () => applySize(s, btn);
+    row.appendChild(btn);
+    if (i === 0) applySize(s, btn);
+  });
+</script>
+</body>
+</html>
