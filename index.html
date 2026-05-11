@@ -33,7 +33,7 @@
   html, body { background: var(--ink); color: var(--ink); font-family: 'Patrick Hand', cursive; -webkit-font-smoothing: antialiased; }
   body { overscroll-behavior: none; }
 
-  .scroll-track { height: 440vh; position: relative; }
+  .scroll-track { height: 700vh; position: relative; }
   .stage {
     position: sticky; top: 0;
     height: 100vh; width: 100%;
@@ -1072,6 +1072,21 @@
   let autoScrolling = false;
   let autoScrollTriggered = false;
 
+  function slowScrollTo(target, duration) {
+    const startY = window.scrollY;
+    const dist = target - startY;
+    const startT = performance.now();
+    const easeInOutCubic = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+    function step(now) {
+      const elapsed = now - startT;
+      const t = Math.min(1, elapsed / duration);
+      window.scrollTo(0, startY + dist * easeInOutCubic(t));
+      if (t < 1) requestAnimationFrame(step);
+      else autoScrolling = false;
+    }
+    requestAnimationFrame(step);
+  }
+
   function update() {
     const trackTop = track.getBoundingClientRect().top + window.scrollY;
     const trackHeight = track.offsetHeight - window.innerHeight;
@@ -1096,17 +1111,12 @@
     if (lab) chapterLabel.textContent = lab.text;
     chapterLabel.classList.toggle('on-light', p > 0.55);
 
-    // Auto-scroll trigger: once couple starts fading in (p > 0.30),
-    // smoothly scroll to the end of the track so you can't linger
-    // in the overlay state
     if (p > 0.35 && p < 0.95 && !autoScrolling && !autoScrollTriggered) {
       autoScrolling = true;
       autoScrollTriggered = true;
       const target = trackTop + trackHeight + 10;
-      window.scrollTo({ top: target, behavior: 'smooth' });
-      setTimeout(() => { autoScrolling = false; }, 1800);
+      slowScrollTo(target, 3800);
     }
-    // Reset the trigger when user scrolls back to the top
     if (p < 0.15) {
       autoScrollTriggered = false;
     }
