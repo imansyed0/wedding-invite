@@ -1166,7 +1166,10 @@
   .petals {
     position: fixed; inset: 0;
     pointer-events: none;
-    z-index: 35;
+    /* must sit above .sections-flow (z:40) so the stars keep falling
+       through every post-postcard section instead of being painted over
+       by the gradient background. */
+    z-index: 45;
     opacity: var(--petals-opacity, 0);
     transition: opacity 0.4s;
   }
