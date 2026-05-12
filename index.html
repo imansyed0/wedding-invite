@@ -237,10 +237,15 @@
     max-width: 720px;
     opacity: calc(1 - var(--p-zoom) * 1.6);
   }
-  /* Mobile landscape — the house image is taller than the viewport, so 20%
-     of .house-inner can sit above the screen. Push the text down. */
+  /* Mobile landscape — reposition image to expose more sky above the house,
+     then keep the text pinned just above the horizon line. */
   @media (orientation: landscape) and (max-height: 500px) {
-    .house-text { top: 32%; }
+    .house-inner { top: 38%; transform: translate(-50%, -38%); }
+    .house-text { top: 18%; width: 90%; }
+    .bismillah { font-size: 10px; margin-bottom: 0.25em; }
+    .eyebrow { font-size: 13px; margin-bottom: 0.2em; }
+    .names { font-size: 29px; -webkit-text-stroke: 1.9px #1a1410; line-height: 0.92; }
+    .scroll-hint { font-size: 16px; margin-top: 0.2em; -webkit-text-stroke: 1.1px #1a1410; gap: 0.45em; }
   }
   .house-text .inner {
     pointer-events: auto;
