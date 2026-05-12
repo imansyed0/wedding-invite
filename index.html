@@ -874,6 +874,25 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    border-radius: 8px;
+    padding: 6px;
+    transition: outline-color 0.2s ease, background-color 0.2s ease;
+    outline: 2px solid transparent;
+    outline-offset: 4px;
+  }
+  /* Applied when the user tries to submit without answering this day's
+     buttons. Cleared as soon as they click either yes/no for the day. */
+  .rsvp-day.needs-answer {
+    outline-color: var(--red);
+    background: rgba(190, 24, 93, 0.06);
+    animation: rsvp-shake 0.45s ease;
+  }
+  @keyframes rsvp-shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
   }
   .rsvp-day-label {
     font-family: 'Fredericka the Great', cursive;
@@ -1822,6 +1841,12 @@
       }
       updateRsvpButtons();
 
+      // Clear the "you forgot this day" highlight as soon as the user
+      // responds to the day in question.
+      document
+        .querySelector(`[data-day-section="${day}"]`)
+        ?.classList.remove('needs-answer');
+
       // When "I'll be there" reveals the form for the first time, focus the
       // first guest-name input (so mobile keyboards pop within the gesture)
       // and smooth-scroll it near the top of the viewport once the form's
@@ -1862,6 +1887,33 @@
 
   // Send RSVP — POSTs to Apps Script and shows confirmation
   document.getElementById('btn-send-rsvp').addEventListener('click', () => {
+    // Validate that every visible day has an answer. On the default
+    // two-day invite both days must be answered; on ?invite=day1 or
+    // ?invite=day2 only the visible day is required (the hidden one
+    // is force-set to 'no-response' downstream).
+    const inviteIsDay1 = document.body.classList.contains('invite-day1');
+    const inviteIsDay2 = document.body.classList.contains('invite-day2');
+    const requiredDays = inviteIsDay1 ? [1] : inviteIsDay2 ? [2] : [1, 2];
+    const missingDays = requiredDays.filter(d => rsvpState[d] === null);
+    if (missingDays.length > 0) {
+      missingDays.forEach(d => {
+        const sect = document.querySelector(`[data-day-section="${d}"]`);
+        if (!sect) return;
+        // Re-trigger the shake even if the class is somehow left over.
+        sect.classList.remove('needs-answer');
+        void sect.offsetWidth;
+        sect.classList.add('needs-answer');
+      });
+      const firstMissing = document.querySelector(
+        `[data-day-section="${missingDays[0]}"]`
+      );
+      if (firstMissing) {
+        const top = firstMissing.getBoundingClientRect().top + window.scrollY;
+        slowScrollTo(Math.max(0, top - 80), 600);
+      }
+      return;
+    }
+
     const guests = Array.from(guestList.querySelectorAll('input'))
       .map(i => i.value.trim())
       .filter(Boolean);
@@ -1874,14 +1926,12 @@
 
     const formArea = document.getElementById('rsvp-form-area');
     const inner = formArea.querySelector('.rsvp-form-inner');
-    const isSingleDay = document.body.classList.contains('invite-day1') || document.body.classList.contains('invite-day2');
+    const isSingleDay = inviteIsDay1 || inviteIsDay2;
     const days = [];
     if (rsvpState[1] === 'yes') days.push(isSingleDay ? 'Nikkah & Mehndi' : 'Day One (Nikkah & Mehndi)');
     if (rsvpState[2] === 'yes') days.push(isSingleDay ? 'Baraat' : 'Day Two (Baraat)');
 
-    const inviteType = document.body.classList.contains('invite-day1') ? 'day1'
-      : document.body.classList.contains('invite-day2') ? 'day2'
-      : 'both';
+    const inviteType = inviteIsDay1 ? 'day1' : inviteIsDay2 ? 'day2' : 'both';
 
     const payload = {
       guests: guests,
