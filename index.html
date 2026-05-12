@@ -407,9 +407,8 @@
      not the picture. 27% puts it under the picture across every size. */
   .couple-scroll-cue {
     position: absolute;
-    bottom: 9%;
-    left: 27%;
-    transform: translateX(-50%);
+    bottom: clamp(40px, 8vh, 80px);
+    left: clamp(14px, 3vw, 28px);
     display: flex;
     align-items: center;
     gap: 0.4em;
@@ -417,7 +416,7 @@
     font-weight: 600;
     font-size: clamp(18px, 2.4vw, 30px);
     color: var(--wood);
-    text-align: center;
+    text-align: left;
     pointer-events: none;
     z-index: 5;
     white-space: nowrap;
@@ -430,7 +429,12 @@
     line-height: 1;
   }
   @media (orientation: landscape) and (max-height: 500px) {
-    .couple-scroll-cue { bottom: 8%; font-size: clamp(13px, 1.8vw, 18px); gap: 0.35em; }
+    .couple-scroll-cue {
+      bottom: clamp(24px, 6vh, 48px);
+      left: clamp(10px, 2vw, 18px);
+      font-size: clamp(13px, 1.8vw, 18px);
+      gap: 0.35em;
+    }
   }
 
   .couple-card {
@@ -539,14 +543,14 @@
   }
   .family-col { display: flex; flex-direction: column; align-items: center; gap: 0.15em; }
   .horse-art {
-    width: min(24vh, 22vw);
+    width: min(31vh, 29vw);
     aspect-ratio: 1/1;
     background: url('art/horse.png') center 35% / 100% auto no-repeat;
     transform-origin: 50% 90%;
     animation: tilt-horse 2.4s steps(1, end) infinite;
   }
   .cats-art {
-    width: min(32vh, 30vw);
+    width: min(42vh, 39vw);
     aspect-ratio: 1500/1024;
     background: url('art/cats.png') center/contain no-repeat;
     transform-origin: 50% 90%;
@@ -579,7 +583,7 @@
     display: block;
     font-family: 'Caveat', cursive;
     font-style: normal;
-    font-size: 0.7em;
+    font-size: 0.85em;
     color: var(--wood);
     margin-top: 0.2em;
   }
@@ -600,7 +604,7 @@
   }
   .day-grid {
     display: grid;
-    grid-template-columns: 0.8fr 2.4fr 0.8fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: clamp(10px, 2.5vw, 32px);
     max-width: 1400px;
@@ -609,12 +613,9 @@
     padding: 0 4vw;
   }
   .day-grid .family-title { grid-column: 1 / -1; }
+  .day-grid .day-info { grid-column: 1 / -1; order: 3; }
   .day-side { align-self: center; }
-  .day-side .horse-art, .day-side .cats-art { width: 100%; max-width: 140px; margin: 0 auto; }
-  @media (max-width: 720px), (orientation: portrait) {
-    .day-grid { grid-template-columns: 1fr 1fr; }
-    .day-grid .day-info { grid-column: 1 / -1; order: 3; }
-  }
+  .day-side .horse-art, .day-side .cats-art { width: 100%; max-width: 218px; margin: 0 auto; }
   .day-info .details-row {
     text-align: center;
   }
@@ -699,9 +700,9 @@
   }
   .details-wrap {
     display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
-    align-items: center;
-    gap: clamp(24px, 4vw, 64px);
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: clamp(20px, 3vw, 40px);
     max-width: 1400px;
     width: 100%;
     pointer-events: auto;
@@ -720,7 +721,7 @@
   .details-title .accent { color: var(--red); }
   .cake-art {
     width: 100%;
-    max-width: 460px;
+    max-width: 390px;
     aspect-ratio: 1/1;
     background: url('art/cake.png') center/contain no-repeat;
     filter: drop-shadow(0 24px 32px rgba(180, 60, 90, 0.22));
@@ -746,7 +747,7 @@
     margin-bottom: 0.4em;
     line-height: 1;
   }
-  .details-row { margin-bottom: 1.8em; }
+  .details-row { margin-bottom: 1.8em; text-align: center; }
   .details-row .label {
     font-size: clamp(22px, 2.4vw, 24px);
     letter-spacing: 0.4em;
@@ -769,7 +770,7 @@
   .ornament {
     width: 60px; height: 1px;
     background: var(--red);
-    margin: 0.8em 0;
+    margin: 0.8em auto;
     position: relative;
   }
   .ornament::before, .ornament::after {
@@ -819,7 +820,7 @@
   }
   .rsvp-card.in-view {
     opacity: 1;
-    transform: translateY(0) rotate(0deg) scale(1);
+    transform: translateY(0) rotate(0deg) scale(0.9);
   }
   .rsvp-card::after {
     content: "";
@@ -1186,8 +1187,8 @@
 
   /* responsive */
   @media (max-width: 720px) {
-    .details-wrap { grid-template-columns: 1fr; gap: 24px; }
-    .cake-art { max-width: 260px; }
+    .details-wrap { gap: 20px; }
+    .cake-art { max-width: 220px; }
     .family-grid { gap: 16px; }
     .progress-rail, .chapter-label { display: none; }
   }
@@ -1319,10 +1320,10 @@
             <span>August 2026</span>
           </div>
         </div>
-        <div class="couple-scroll-cue" aria-hidden="true">
-          <span class="arrow">↓</span>
-          <span>keep scrolling for details</span>
-        </div>
+      </div>
+      <div class="couple-scroll-cue" aria-hidden="true">
+        <span class="arrow">↓</span>
+        <span>keep scrolling for details</span>
       </div>
     </div>
 
@@ -1640,9 +1641,12 @@
 
   // Auto-scroll: once the couple overlay starts appearing, automatically
   // scroll to fully reveal the postcard so the user can't get stuck in
-  // a half-overlaid state.
+  // a half-overlaid state. Also: when the user scrolls back up out of
+  // the postcard area, snap back to the fully zoomed-out house so they
+  // don't have to manually unwind the entire zoom.
   let autoScrolling = false;
   let autoScrollTriggered = false;
+  let lastP = 0;
 
   function slowScrollTo(target, duration) {
     const startY = window.scrollY;
@@ -1689,9 +1693,18 @@
       const target = trackTop + trackHeight + 10;
       slowScrollTo(target, 1500);
     }
+    // Snap back to the fully zoomed-out house when scrolling up out of
+    // the postcard area. Triggered as p drops below 0.95 from a higher
+    // value (i.e. user was on the postcard and started scrolling up).
+    if (lastP > 0.95 && p < 0.95 && !autoScrolling) {
+      autoScrolling = true;
+      autoScrollTriggered = false;
+      slowScrollTo(trackTop, 1200);
+    }
     if (p < 0.15) {
       autoScrollTriggered = false;
     }
+    lastP = p;
   }
 
   let ticking = false;
