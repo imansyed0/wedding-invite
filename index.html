@@ -21,6 +21,7 @@
     --p-doors: 0;
     --p-glow: 0;
     --p-couple: 0;
+    --house-base-scale: 1;
 
     --ink: #1a1410;
     --paper: #fbf3e3;
@@ -73,7 +74,7 @@
     position: absolute;
     inset: 0;
     transform-origin: 37% 75.95%;
-    transform: scale(calc(1 + var(--p-zoom) * 9)) translateY(calc(var(--p-zoom) * 2vh));
+    transform: scale(calc(var(--house-base-scale) + var(--p-zoom) * 9)) translateY(calc(var(--p-zoom) * 2vh));
     will-change: transform;
   }
   .house-img {
@@ -253,13 +254,19 @@
     max-width: 720px;
     opacity: calc(1 - var(--p-zoom) * 1.6);
   }
-  /* Mobile landscape — pin the text to the sky just above the roof,
-     same zone we agreed on for desktop (below clouds, above house). */
+  /* Mobile landscape — keep the original house framing, then fit the
+     headline block into the sky band between the clouds and the roof. */
   @media (orientation: landscape) and (max-height: 500px) {
-    .house-inner { top: 50%; transform: translate(-50%, -50%); }
-    .house-text { top: 30%; width: 86%; }
-    .eyebrow { font-size: 20px; margin-bottom: 0.2em; }
-    .scroll-hint { font-size: 18px; margin-top: 0.2em; gap: 0.45em; }
+    .house-wrap { --house-base-scale: 1; }
+    .house-inner { top: 56%; transform: translate(-50%, -56%); }
+    .house-text { top: 27%; width: 60%; max-width: 440px; transform: translateX(-50%); }
+    .bismillah { font-size: 10px; margin-bottom: 0.25em; }
+    .eyebrow { display: block; width: 100%; max-width: 100%; font-size: 7px; margin: 0 auto 0.18em; line-height: 1.06; }
+    .eyebrow .eyebrow-line { display: block; white-space: nowrap; }
+    .names { font-size: 29px; -webkit-text-stroke: 1.9px #1a1410; line-height: 0.92; }
+    .invite-line { font-size: 11px; letter-spacing: 0.1em; margin-top: 0.3em; }
+    .stage .scroll-hint-wrap { bottom: 0; transform: translateX(-50%); }
+    .stage .scroll-hint { font-size: 18px; gap: 0.45em; }
   }
   .house-text .inner {
     pointer-events: auto;
@@ -285,6 +292,7 @@
     margin-bottom: 0.35em;
     display: inline-block;
   }
+  .eyebrow-line { display: inline; }
   .eyebrow .fam-syeds,
   .eyebrow .fam-elliotts { font-weight: bold; }
   .eyebrow .fam-syeds { color: #6d28d9; }
@@ -326,7 +334,7 @@
     font-family: 'Patrick Hand', cursive;
     font-weight: bold;
     font-size: clamp(22px, 3.4vw, 42px);
-    color: #1a1410;
+    color: #6d28d9;
     display: flex; align-items: center; justify-content: center; gap: 0.55em;
     opacity: 0;
     transition: opacity 1s ease;
@@ -1177,7 +1185,7 @@
         <!-- Approach text pinned to image (in the sky just above the house) -->
         <div class="house-text">
           <div class="inner">
-            <div class="eyebrow">The <span class="fam-syeds">Syeds</span> and <span class="fam-elliotts">Elliotts</span> warmly invite you to our wedding...</div>
+            <div class="eyebrow"><span class="eyebrow-line">The <span class="fam-syeds">Syeds</span> and <span class="fam-elliotts">Elliotts</span></span><span class="eyebrow-line">warmly invite you to our</span><span class="eyebrow-line">wedding...</span></div>
           </div>
         </div>
       </div>
