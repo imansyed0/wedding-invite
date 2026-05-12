@@ -74,7 +74,11 @@
     position: absolute;
     inset: 0;
     transform-origin: 37% 75.95%;
-    transform: scale(calc(var(--house-base-scale) + var(--p-zoom) * 9)) translateY(calc(var(--p-zoom) * 2vh));
+    /* No translateY: any vertical offset gets multiplied by the scale
+       factor (since the translate is inside the same transform list
+       and applied before scale), which pulls the camera off the door
+       and onto the wall above it at full zoom. */
+    transform: scale(calc(var(--house-base-scale) + var(--p-zoom) * 9));
     will-change: transform;
   }
   .house-img {
