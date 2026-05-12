@@ -8,6 +8,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Caveat:wght@400;500;600;700&family=Lilita+One&family=Fredoka:wght@600;700&family=Fredericka+the+Great&family=Patrick+Hand&display=swap" rel="stylesheet" />
 <style>
+  @font-face {
+    font-family: 'Berky';
+    src: url('art/berky.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
   :root {
     --p: 0;
     --p-zoom: 0;
@@ -101,6 +108,15 @@
     transform-origin: 50% 90%;
     animation: doorway-dance 2.0s steps(1, end) infinite;
     z-index: 0;
+    filter: brightness(0.85) saturate(0.6) contrast(0.92);
+  }
+  .doorway-pattern::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(252, 240, 230, 0.18);
+    mix-blend-mode: soft-light;
+    pointer-events: none;
   }
   @keyframes doorway-dance {
     0%    { transform: rotate(-4deg); }
@@ -228,7 +244,7 @@
   .house-text {
     position: absolute;
     left: 50%;
-    top: 20%;
+    top: 28%;
     transform: translateX(-50%);
     z-index: 13;
     text-align: center;
@@ -242,10 +258,8 @@
   @media (orientation: landscape) and (max-height: 500px) {
     .house-inner { top: 38%; transform: translate(-50%, -38%); }
     .house-text { top: 18%; width: 90%; }
-    .bismillah { font-size: 10px; margin-bottom: 0.25em; }
-    .eyebrow { font-size: 13px; margin-bottom: 0.2em; }
-    .names { font-size: 29px; -webkit-text-stroke: 1.9px #1a1410; line-height: 0.92; }
-    .scroll-hint { font-size: 16px; margin-top: 0.2em; -webkit-text-stroke: 1.1px #1a1410; gap: 0.45em; }
+    .eyebrow { font-size: 18px; margin-bottom: 0.2em; }
+    .scroll-hint { font-size: 20px; margin-top: 0.2em; gap: 0.45em; }
   }
   .house-text .inner {
     pointer-events: auto;
@@ -263,16 +277,16 @@
     line-height: 1.4;
   }
   .eyebrow {
-    font-family: 'Patrick Hand', cursive;
-    font-size: clamp(15px, 2.5vw, 30px);
-    color: #1a1410;
-    -webkit-text-stroke: 0.6px #1a1410;
-    paint-order: stroke fill;
+    font-family: 'Berky', cursive;
+    font-weight: normal;
+    font-size: clamp(24px, 4.5vw, 56px);
+    color: transparent;
     letter-spacing: 0.02em;
     margin-bottom: 0.35em;
-    transform: rotate(-2deg);
     display: inline-block;
   }
+  .eyebrow .fam-syeds,
+  .eyebrow .fam-elliotts { font-weight: bold; }
   .eyebrow .fam-syeds { color: #6d28d9; }
   .eyebrow .fam-elliotts { color: #ec4899; }
   .names {
@@ -298,27 +312,36 @@
     -webkit-text-stroke: 1.2px #1a1410;
     paint-order: stroke fill;
   }
+  .scroll-hint-wrap {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 13;
+    text-align: center;
+    pointer-events: none;
+    opacity: calc(1 - var(--p-zoom) * 1.6);
+  }
   .scroll-hint {
-    margin-top: 0.4em;
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(22px, 3.4vw, 40px);
-    color: #1e3a8a;
-    -webkit-text-stroke: 1.6px #1a1410;
-    paint-order: stroke fill;
+    font-weight: bold;
+    font-size: clamp(22px, 3.4vw, 42px);
+    color: #1a1410;
     display: flex; align-items: center; justify-content: center; gap: 0.55em;
-    opacity: calc(1 - var(--p-zoom) * 2);
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .scroll-hint.visible {
+    opacity: 1;
+    animation: hover-float 2.5s ease-in-out infinite;
   }
   .scroll-hint .arrow {
     display: inline-block;
-    animation: bob 1.2s ease-in-out infinite;
   }
-  .scroll-hint .arrow.arrow-right {
-    animation-delay: 0.6s;
-  }
-  @keyframes bob {
-    0%   { transform: translateY(-8px); }
-    50%  { transform: translateY(14px); }
-    100% { transform: translateY(-8px); }
+  @keyframes hover-float {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
   }
 
   /* Couple reveal scene */
@@ -479,16 +502,16 @@
   }
   .family-title .accent { color: var(--red); font-family: 'Fredericka the Great', cursive; font-style: normal; }
   .day-info {
-    max-width: 480px;
+    max-width: 920px;
     margin: 0 auto;
     width: 100%;
   }
   .day-grid {
     display: grid;
-    grid-template-columns: 1fr 1.4fr 1fr;
+    grid-template-columns: 0.8fr 2.4fr 0.8fr;
     align-items: center;
     gap: clamp(10px, 2.5vw, 32px);
-    max-width: 900px;
+    max-width: 1400px;
     margin: 0 auto;
     width: 100%;
     padding: 0 4vw;
@@ -507,18 +530,18 @@
     font-family: 'Patrick Hand', cursive;
     letter-spacing: 0.4em;
     text-transform: uppercase;
-    font-size: clamp(11px, 1.2vw, 13px);
+    font-size: clamp(22px, 2.4vw, 26px);
     color: var(--red);
   }
   .day-info .value {
     font-family: 'Fredericka the Great', cursive;
-    font-size: clamp(22px, 2.6vw, 30px);
+    font-size: clamp(44px, 5.2vw, 60px);
     color: var(--ink);
     margin-top: 0.1em;
   }
   .day-info .sub {
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(15px, 1.5vw, 17px);
+    font-size: clamp(30px, 3vw, 34px);
     color: var(--wood);
     margin-top: 0.2em;
   }
@@ -534,7 +557,7 @@
     position: relative;
     padding: 10vh 6vw 8vh;
   }
-  .faq-wrap { max-width: 760px; margin: 0 auto; }
+  .faq-wrap { max-width: 1100px; margin: 0 auto; }
   .faq-heading {
     font-family: 'Fredericka the Great', cursive;
     font-size: clamp(36px, 5vw, 56px);
@@ -550,7 +573,7 @@
     list-style: none;
     cursor: pointer;
     font-family: 'Fredericka the Great', cursive;
-    font-size: clamp(22px, 2.6vw, 30px);
+    font-size: clamp(44px, 5.2vw, 60px);
     color: var(--ink);
     padding: 14px 4px;
     display: flex; align-items: center; justify-content: space-between;
@@ -567,7 +590,7 @@
   .faq-item[open] summary::after { content: "–"; }
   .faq-item .faq-body {
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(15px, 1.6vw, 18px);
+    font-size: clamp(30px, 3.2vw, 36px);
     color: var(--wood);
     line-height: 1.55;
     padding: 2px 4px 16px;
@@ -584,10 +607,10 @@
   }
   .details-wrap {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
     align-items: center;
     gap: clamp(24px, 4vw, 64px);
-    max-width: 1100px;
+    max-width: 1400px;
     width: 100%;
     pointer-events: auto;
   }
@@ -633,21 +656,21 @@
   }
   .details-row { margin-bottom: 1.8em; }
   .details-row .label {
-    font-size: clamp(11px, 1.2vw, 12px);
+    font-size: clamp(22px, 2.4vw, 24px);
     letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--wood-light);
     margin-bottom: 0.35em;
   }
   .details-row .value {
-    font-size: clamp(22px, 2.6vw, 30px);
+    font-size: clamp(44px, 5.2vw, 60px);
     font-style: italic;
     font-weight: 400;
     line-height: 1.25;
     color: var(--ink);
   }
   .details-row .sub {
-    font-size: clamp(14px, 1.5vw, 17px);
+    font-size: clamp(28px, 3vw, 34px);
     color: var(--wood-light);
     margin-top: 0.15em;
   }
@@ -694,8 +717,8 @@
     padding: clamp(20px, 3vw, 36px) clamp(28px, 4vw, 56px);
     text-align: center;
     box-shadow: 0 40px 80px -20px rgba(60, 20, 30, 0.35);
-    width: min(720px, calc(100vw - 12vw));
-    max-width: 720px;
+    width: min(1000px, calc(100vw - 12vw));
+    max-width: 1000px;
     pointer-events: auto;
     flex: 0 0 auto;
     opacity: 0;
@@ -724,7 +747,7 @@
     margin-bottom: 0.4em;
     white-space: nowrap;
   }
-  .rsvp-card p { font-size: clamp(15px, 1.7vw, 18px); color: var(--wood); line-height: 1.5; margin-bottom: 1.8em; }
+  .rsvp-card p { font-size: clamp(30px, 3.4vw, 36px); color: var(--wood); line-height: 1.5; margin-bottom: 1.8em; }
   .rsvp-days { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3vw, 28px); margin-bottom: 1.4em; }
   .rsvp-day {
     text-align: center;
@@ -733,25 +756,25 @@
   }
   .rsvp-day-label {
     font-family: 'Fredericka the Great', cursive;
-    font-size: clamp(16px, 2vw, 22px);
+    font-size: clamp(32px, 4vw, 44px);
     color: var(--ink);
     margin-bottom: 0.15em;
   }
   .rsvp-day-date {
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(13px, 1.4vw, 16px);
+    font-size: clamp(26px, 2.8vw, 32px);
     color: var(--wood);
     margin-bottom: 0.7em;
   }
   .rsvp-day-actions { display: flex; flex-direction: column; gap: 8px; align-items: stretch; margin-top: auto; }
   .btn-sm {
-    font-size: clamp(11px, 1.2vw, 13px);
+    font-size: clamp(22px, 2.4vw, 26px);
     padding: 10px 16px;
     letter-spacing: 0.24em;
   }
   .btn {
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(13px, 1.4vw, 15px);
+    font-size: clamp(26px, 2.8vw, 30px);
     letter-spacing: 0.32em;
     text-transform: uppercase;
     padding: 14px 28px;
@@ -807,7 +830,7 @@
   .rsvp-form-inner label {
     display: block;
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(13px, 1.4vw, 16px);
+    font-size: clamp(26px, 2.8vw, 32px);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--wood-light);
@@ -851,7 +874,7 @@
   .btn-remove-guest:hover { opacity: 1; }
   .btn-add-guest {
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(13px, 1.3vw, 15px);
+    font-size: clamp(26px, 2.6vw, 30px);
     letter-spacing: 0.12em;
     color: var(--red);
     background: none;
@@ -881,7 +904,7 @@
   .btn-send-rsvp {
     width: 100%;
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(14px, 1.5vw, 17px);
+    font-size: clamp(28px, 3vw, 34px);
     letter-spacing: 0.32em;
     text-transform: uppercase;
     padding: 14px 28px;
@@ -904,7 +927,7 @@
   }
   .rsvp-confirmation p {
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(16px, 1.8vw, 20px);
+    font-size: clamp(32px, 3.6vw, 40px);
     color: var(--ink);
     line-height: 1.5;
     margin-bottom: 0.4em;
@@ -930,7 +953,7 @@
   }
   .btn-calendar {
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(12px, 1.3vw, 14px);
+    font-size: clamp(24px, 2.6vw, 28px);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     padding: 12px 16px;
@@ -1036,10 +1059,11 @@
     position: fixed;
     top: 18px; left: 50%;
     transform: translateX(-50%);
-    font-family: 'Caveat', cursive;
-    font-size: 14px;
-    letter-spacing: 0.18em;
-    color: rgba(60, 30, 20, 0.55);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(12px, 1.6vw, 18px);
+    letter-spacing: 0.02em;
+    color: #b91c1c;
+    direction: rtl;
     z-index: 99;
     opacity: calc(1 - var(--p) * 3);
     pointer-events: none;
@@ -1131,7 +1155,7 @@
   <p>This invite is best viewed in landscape — turn your phone sideways.</p>
 </div>
 
-<div class="top-mono">– an invitation –</div>
+<div class="top-mono" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
 
 <div class="progress-rail" aria-hidden="true"></div>
 <div class="chapter-label" id="chapter-label">scroll to enter</div>
@@ -1153,16 +1177,17 @@
         <!-- Approach text pinned to image (in the sky just above the house) -->
         <div class="house-text">
           <div class="inner">
-            <div class="bismillah" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-            <div class="eyebrow">The <span class="fam-syeds">Syeds</span> and <span class="fam-elliotts">Elliotts</span> warmly invite you to the wedding of</div>
-            <div class="names"><span class="nm-1">Leon</span><span class="amp">&amp;</span><span class="nm-2">Iman</span></div>
-            <div class="scroll-hint">
-              <span class="arrow">↓</span>
-              <span>scroll to step inside</span>
-              <span class="arrow arrow-right">↓</span>
-            </div>
+            <div class="eyebrow">The <span class="fam-syeds">Syeds</span> and <span class="fam-elliotts">Elliotts</span> warmly invite you to our wedding...</div>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- Scroll hint below the house -->
+    <div class="scroll-hint-wrap">
+      <div class="scroll-hint">
+        <span class="arrow">↓</span>
+        <span>scroll to step inside</span>
+        <span class="arrow arrow-right">↓</span>
       </div>
     </div>
 
@@ -1296,7 +1321,6 @@
       <summary>Travel</summary>
       <div class="faq-body">
         <p>The venue is accessible by taxi from both <strong>Cambridge station</strong> and <strong>Cambridge North station</strong>.</p>
-        <p>We'll run a shuttle from on both days, details to follow with your RSVP.</p>
       </div>
     </details>
     <details class="faq-item">
@@ -1382,6 +1406,35 @@
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 
 <script>
+  (function typewriterEffect() {
+    const el = document.querySelector('.eyebrow');
+    if (!el) return;
+    const full = el.innerHTML;
+    el.innerHTML = '';
+    el.style.color = '#1a1410';
+    let i = 0;
+    const tags = [];
+    function next() {
+      if (i >= full.length) {
+        el.innerHTML = full;
+        document.querySelector('.scroll-hint')?.classList.add('visible');
+        return;
+      }
+      if (full[i] === '<') {
+        const close = full.indexOf('>', i);
+        const tag = full.slice(i, close + 1);
+        i = close + 1;
+        el.innerHTML = full.slice(0, i);
+        requestAnimationFrame(next);
+        return;
+      }
+      i++;
+      el.innerHTML = full.slice(0, i);
+      setTimeout(next, 90);
+    }
+    setTimeout(next, 600);
+  })();
+
   // Invite variant — ?invite=day1 | day2 | both (default: both)
   (function applyInviteVariant() {
     const params = new URLSearchParams(window.location.search);
