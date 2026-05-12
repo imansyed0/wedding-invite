@@ -1654,7 +1654,7 @@
   const phases = {
     zoom:     [0.00, 1.00],
     doors:    [0.00, 0.50],
-    couple:   [0.50, 0.90],
+    couple:   [0.50, 0.72],
   };
 
   const labels = [
@@ -1718,11 +1718,11 @@
     if (lab) chapterLabel.textContent = lab.text;
     chapterLabel.classList.toggle('on-light', p > 0.55);
 
-    if (p > 0.55 && p < 0.95 && !autoScrolling && !autoScrollTriggered) {
+    if (p >= 0.5 && p < 0.95 && !autoScrolling && !autoScrollTriggered) {
       autoScrolling = true;
       autoScrollTriggered = true;
       const target = trackTop + trackHeight + 10;
-      slowScrollTo(target, 1500);
+      slowScrollTo(target, 1100);
     }
     // Snap back to the fully zoomed-out house when scrolling up out of
     // the postcard area. Triggered as p drops below 0.95 from a higher
