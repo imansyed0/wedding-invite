@@ -312,20 +312,26 @@
   }
   .scroll-hint-wrap {
     position: absolute;
-    bottom: 8%;
-    left: 50%;
-    transform: translateX(-50%);
+    top: clamp(12px, 2.2vw, 22px);
+    left: clamp(12px, 2.2vw, 22px);
     z-index: 13;
-    text-align: center;
     pointer-events: none;
     opacity: calc(1 - var(--p-zoom) * 1.6);
   }
   .scroll-hint {
+    position: relative;
     font-family: 'Caveat', cursive;
     font-weight: 600;
-    font-size: clamp(22px, 3.4vw, 42px);
-    color: #6d28d9;
-    display: flex; align-items: center; justify-content: center; gap: 0.55em;
+    font-size: clamp(18px, 2.4vw, 26px);
+    color: #1a1410;
+    background: #ffffff;
+    border: 2px solid #1a1410;
+    border-radius: 999px;
+    box-shadow: 2px 3px 0 #1a1410;
+    padding: 0.25em 0.8em;
+    display: inline-flex; align-items: center; gap: 0.4em;
+    pointer-events: auto;
+    cursor: pointer;
     opacity: 0;
     transition: opacity 1s ease;
   }
@@ -335,6 +341,18 @@
   }
   .scroll-hint .arrow {
     display: inline-block;
+  }
+  .scroll-hint::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 26px;
+    width: 14px;
+    height: 14px;
+    background: #ffffff;
+    border-right: 2px solid #1a1410;
+    border-bottom: 2px solid #1a1410;
+    transform: rotate(45deg);
   }
   @keyframes hover-float {
     0%   { transform: translateY(0); }
@@ -359,8 +377,9 @@
     .eyebrow .fam-elliotts { -webkit-text-stroke: 1px #1a1410; paint-order: stroke fill; }
     .names { font-size: clamp(24px, 3.4vw, 34px); -webkit-text-stroke: 1.9px #1a1410; line-height: 0.92; }
     .invite-line { font-size: clamp(9px, 1.3vw, 14px); letter-spacing: 0.1em; margin-top: 0.3em; }
-    .stage .scroll-hint-wrap { bottom: 0; transform: translateX(-50%); }
-    .stage .scroll-hint { font-size: clamp(14px, 2.1vw, 22px); gap: 0.45em; }
+    .stage .scroll-hint-wrap { top: 10px; left: 10px; }
+    .stage .scroll-hint { font-size: clamp(16px, 2vw, 22px); gap: 0.4em; padding: 0.2em 0.75em; box-shadow: 2px 2px 0 #1a1410; }
+    .stage .scroll-hint::after { bottom: -7px; left: 22px; width: 12px; height: 12px; }
 
     /* Day-1/Day-2 detail sub-lines: keep them on one line across the full
        landscape range. The longest copy ("South Asian or Western, however
@@ -1262,9 +1281,8 @@
     <!-- Scroll hint below the house -->
     <div class="scroll-hint-wrap">
       <div class="scroll-hint">
-        <span class="arrow">↓</span>
         <span>scroll to step inside</span>
-        <span class="arrow arrow-right">↓</span>
+        <span class="arrow">↓</span>
       </div>
     </div>
 
@@ -1750,12 +1768,33 @@
       const day = parseInt(e.target.dataset.day);
       const rsvp = e.target.dataset.rsvp;
 
+      const formArea = document.getElementById('rsvp-form-area');
+      const wasFormVisible = formArea.classList.contains('visible');
+
       if (rsvpState[day] === rsvp) {
         rsvpState[day] = null;
       } else {
         rsvpState[day] = rsvp;
       }
       updateRsvpButtons();
+
+      // When "I'll be there" reveals the form for the first time, focus the
+      // first guest-name input (so mobile keyboards pop within the gesture)
+      // and smooth-scroll it near the top of the viewport once the form's
+      // max-height expansion has settled. Idempotent: only fires on the
+      // hidden -> visible transition, never re-scrolls if already on form.
+      const isFormVisible = formArea.classList.contains('visible');
+      if (rsvp === 'yes' && !wasFormVisible && isFormVisible) {
+        const firstInput = document.querySelector('#rsvp-guest-list input');
+        if (firstInput) {
+          try { firstInput.focus({ preventScroll: true }); } catch (_) { firstInput.focus(); }
+          setTimeout(() => {
+            const top = firstInput.getBoundingClientRect().top + window.scrollY;
+            const target = Math.max(0, top - 80);
+            slowScrollTo(target, 800);
+          }, 520);
+        }
+      }
     });
   });
 
