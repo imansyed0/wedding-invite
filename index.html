@@ -253,13 +253,13 @@
     max-width: 720px;
     opacity: calc(1 - var(--p-zoom) * 1.6);
   }
-  /* Mobile landscape — reposition image to expose more sky above the house,
-     then keep the text pinned just above the horizon line. */
+  /* Mobile landscape — pin the text to the sky just above the roof,
+     same zone we agreed on for desktop (below clouds, above house). */
   @media (orientation: landscape) and (max-height: 500px) {
-    .house-inner { top: 38%; transform: translate(-50%, -38%); }
-    .house-text { top: 18%; width: 90%; }
-    .eyebrow { font-size: 18px; margin-bottom: 0.2em; }
-    .scroll-hint { font-size: 20px; margin-top: 0.2em; gap: 0.45em; }
+    .house-inner { top: 50%; transform: translate(-50%, -50%); }
+    .house-text { top: 30%; width: 86%; }
+    .eyebrow { font-size: 20px; margin-bottom: 0.2em; }
+    .scroll-hint { font-size: 18px; margin-top: 0.2em; gap: 0.45em; }
   }
   .house-text .inner {
     pointer-events: auto;
