@@ -65,8 +65,8 @@
   .house-zoom {
     position: absolute;
     inset: 0;
-    transform-origin: 37% 75.7%;
-    transform: scale(calc(1 + var(--p-zoom) * 7)) translateY(calc(var(--p-zoom) * 2vh));
+    transform-origin: 37% 75.95%;
+    transform: scale(calc(1 + var(--p-zoom) * 9)) translateY(calc(var(--p-zoom) * 2vh));
     will-change: transform;
   }
   .house-img {
@@ -84,10 +84,15 @@
     border-radius: 50% 50% 0 0 / 30% 30% 0 0;
     overflow: hidden;
     background-color: #d9a4c4;
-    box-shadow: inset 0 0 0 2.5px #1a1410, 0 0 0 1.5px #1a1410;
     background-image: url('art/doorway-pattern.jpg');
     background-size: 140% 140%;
     background-position: center;
+    box-shadow:
+      inset 0 0 0 2.5px #1a1410,
+      0 0 0 1.5px #1a1410,
+      0 0 calc(var(--p-doors) * 14px) calc(var(--p-doors) * 4px) rgba(255, 200, 150, calc(var(--p-doors) * 0.9)),
+      0 0 calc(var(--p-doors) * 28px) calc(var(--p-doors) * 8px) rgba(255, 170, 190, calc(var(--p-doors) * 0.6)),
+      0 0 calc(var(--p-doors) * 50px) calc(var(--p-doors) * 14px) rgba(220, 130, 200, calc(var(--p-doors) * 0.35));
   }
   .door {
     position: absolute; top: 0; bottom: 0;
@@ -203,31 +208,39 @@
   .scene { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6vh 6vw; }
   .scene .inner { pointer-events: auto; text-align: center; }
 
-  .scene-approach {
-    z-index: 20;
-    opacity: calc(1 - var(--p-zoom) * 1.6);
-    color: var(--ink);
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: calc(2vh + 2px);
-  }
-  .scene-approach .inner {
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
+  /* House-pinned text — positioned relative to the house image, in the sky just above the roof */
+  .house-text {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    z-index: 13;
+    text-align: center;
+    pointer-events: none;
+    width: 80%;
     max-width: 720px;
-    text-shadow: none;
-    transform: translateX(-2%);
+    opacity: calc(1 - var(--p-zoom) * 1.6);
+  }
+  .house-text .inner {
+    pointer-events: auto;
+  }
+  .bismillah {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(10px, 1.4vw, 18px);
+    color: #b91c1c;
+    -webkit-text-stroke: 0.7px #1a1410;
+    paint-order: stroke fill;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5em;
+    display: block;
+    direction: rtl;
+    line-height: 1.4;
   }
   .eyebrow {
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(14px, 2.2vw, 28px);
-    color: #f59e0b;
-    -webkit-text-stroke: 1.5px #1a1410;
+    font-size: clamp(13px, 2vw, 24px);
+    color: #ec4899;
+    -webkit-text-stroke: 1.3px #1a1410;
     paint-order: stroke fill;
     text-shadow: 3px 3px 0 rgba(26,20,16,0.18);
     letter-spacing: 0.02em;
@@ -260,20 +273,27 @@
     paint-order: stroke fill;
   }
   .scroll-hint {
-    margin-top: 0.15em;
+    margin-top: 0.4em;
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(12px, 1.6vw, 20px);
-    color: #f59e0b;
-    -webkit-text-stroke: 1.2px #1a1410;
+    font-size: clamp(22px, 3.4vw, 40px);
+    color: #1e3a8a;
+    -webkit-text-stroke: 1.6px #1a1410;
     paint-order: stroke fill;
-    display: flex; align-items: center; justify-content: center; gap: 0.6em;
+    display: flex; align-items: center; justify-content: center; gap: 0.55em;
     opacity: calc(1 - var(--p-zoom) * 2);
   }
   .scroll-hint .arrow {
     display: inline-block;
-    animation: bob 1.6s ease-in-out infinite;
+    animation: bob 1.2s ease-in-out infinite;
   }
-  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+  .scroll-hint .arrow.arrow-right {
+    animation-delay: 0.6s;
+  }
+  @keyframes bob {
+    0%   { transform: translateY(-8px); }
+    50%  { transform: translateY(14px); }
+    100% { transform: translateY(-8px); }
+  }
 
   /* Couple reveal scene */
   .scene-couple {
@@ -303,11 +323,11 @@
   .couple-art {
     position: relative;
     aspect-ratio: 1024 / 1536;
-    height: 100%;
+    height: 82%;
     width: auto;
-    max-width: 100%;
+    max-width: 88%;
     margin: 0 auto;
-    transform: translateX(-20px);
+    transform: translateX(-10px);
     background-image: url('art/couple.jpeg');
     background-size: 100% 100%;
     background-position: center;
@@ -324,7 +344,7 @@
   }
   .couple-text {
     text-align: center;
-    padding: 0 2% 0 4%;
+    padding: 18% 2% 0 4%;
   }
   .couple-name {
     font-family: 'Fredericka the Great', cursive;
@@ -539,6 +559,17 @@
     background: url('art/cake.png') center/contain no-repeat;
     filter: drop-shadow(0 24px 32px rgba(180, 60, 90, 0.22));
     justify-self: center;
+    transform-origin: 50% 90%;
+    animation: tilt-cake 2.2s steps(1, end) infinite;
+    animation-delay: -0.3s;
+  }
+  @keyframes tilt-cake {
+    0%    { transform: rotate(-2.5deg); }
+    20%   { transform: rotate(3deg); }
+    40%   { transform: rotate(-1.8deg); }
+    60%   { transform: rotate(2.5deg); }
+    80%   { transform: rotate(-3deg); }
+    100%  { transform: rotate(1.5deg); }
   }
   .details-text { font-family: 'Patrick Hand', cursive; color: var(--ink); }
   .details-text h2 {
@@ -610,12 +641,18 @@
     background: var(--paper);
     border: none;
     position: relative;
-    transform: none;
     padding: clamp(20px, 3vw, 36px) clamp(28px, 4vw, 56px);
     text-align: center;
     box-shadow: 0 40px 80px -20px rgba(60, 20, 30, 0.35);
     max-width: 460px;
     pointer-events: auto;
+    opacity: 0;
+    transform: translateY(120px) rotate(-6deg) scale(0.85);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .rsvp-card.in-view {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
   }
   .rsvp-card::after {
     content: "";
@@ -680,6 +717,211 @@
     font-size: clamp(18px, 2vw, 22px);
     color: var(--red);
   }
+
+  /* RSVP button states */
+  .btn-sm.selected {
+    transform: translateY(-2px);
+  }
+  .btn-sm.selected:not(.ghost) {
+    background: #7d1414;
+  }
+  .btn-sm.selected.ghost {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-sm.dimmed {
+    opacity: 0.4;
+  }
+
+  /* RSVP form area */
+  .rsvp-form-area {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
+    opacity: 0;
+    margin-top: 0;
+  }
+  .rsvp-form-area.visible {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 1.6em;
+  }
+  .rsvp-form-inner {
+    border-top: 2px solid rgba(26,20,16,0.12);
+    padding-top: 1.4em;
+    text-align: left;
+  }
+  .rsvp-form-inner label {
+    display: block;
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(13px, 1.4vw, 16px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--wood-light);
+    margin-bottom: 0.4em;
+  }
+  .rsvp-guest-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .rsvp-guest-row input {
+    flex: 1;
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(15px, 1.6vw, 18px);
+    padding: 10px 14px;
+    border: 1.5px solid rgba(26,20,16,0.2);
+    background: rgba(255,255,255,0.6);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .rsvp-guest-row input:focus {
+    border-color: var(--red);
+  }
+  .rsvp-guest-row input::placeholder {
+    color: rgba(26,20,16,0.35);
+  }
+  .btn-remove-guest {
+    background: none;
+    border: none;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 20px;
+    color: var(--red-soft);
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .btn-remove-guest:hover { opacity: 1; }
+  .btn-add-guest {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(13px, 1.3vw, 15px);
+    letter-spacing: 0.12em;
+    color: var(--red);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 0;
+    margin-bottom: 1.2em;
+    transition: color 0.2s;
+  }
+  .btn-add-guest:hover { color: #9a1414; }
+  .rsvp-notes {
+    width: 100%;
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(15px, 1.6vw, 18px);
+    padding: 10px 14px;
+    border: 1.5px solid rgba(26,20,16,0.2);
+    background: rgba(255,255,255,0.6);
+    color: var(--ink);
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 1.4em;
+  }
+  .rsvp-notes:focus { border-color: var(--red); }
+  .rsvp-notes::placeholder { color: rgba(26,20,16,0.35); }
+  .btn-send-rsvp {
+    width: 100%;
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(14px, 1.5vw, 17px);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    background: var(--red);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .btn-send-rsvp:hover { background: #9a1414; transform: translateY(-2px); }
+
+  /* RSVP confirmation */
+  .rsvp-confirmation {
+    text-align: center;
+    padding: 1em 0;
+  }
+  .rsvp-confirmation .check {
+    font-size: 2.4em;
+    margin-bottom: 0.3em;
+  }
+  .rsvp-confirmation p {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(16px, 1.8vw, 20px);
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 0.4em;
+  }
+
+  /* Add to Calendar section */
+  .calendar-section {
+    margin-top: 2em;
+    border-top: 2px solid rgba(26,20,16,0.12);
+    padding-top: 1.6em;
+  }
+  .calendar-heading {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: clamp(20px, 2.6vw, 28px);
+    color: var(--ink);
+    margin-bottom: 0.6em;
+  }
+  .calendar-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(10px, 2vw, 16px);
+  }
+  .btn-calendar {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(12px, 1.3vw, 14px);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s, color 0.2s;
+    text-align: center;
+    line-height: 1.4;
+    text-decoration: none;
+    display: block;
+  }
+  .btn-calendar:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+  .btn-calendar .cal-icon {
+    display: block;
+    font-size: 1.4em;
+    margin-bottom: 0.2em;
+  }
+
+  /* Invite-variant visibility (URL ?invite=day1|day2|both) */
+  /* Default: cal-event-name is only shown when single-day */
+  .btn-calendar .cal-event-name { display: none; }
+
+  /* Day 1 only — hide day-2 things and all "Day N" prefixes; show event name in calendar */
+  body.invite-day1 #day-two,
+  body.invite-day1 [data-day-section="2"] { display: none !important; }
+  body.invite-day1 .day-prefix,
+  body.invite-day1 .day-prefix-sep { display: none !important; }
+  body.invite-day1 .btn-calendar .cal-event-name { display: inline; }
+  body.invite-day1 .rsvp-days,
+  body.invite-day1 .calendar-btns { grid-template-columns: 1fr; max-width: 280px; margin-left: auto; margin-right: auto; }
+
+  /* Day 2 only — mirror of above */
+  body.invite-day2 #day-one,
+  body.invite-day2 [data-day-section="1"] { display: none !important; }
+  body.invite-day2 .day-prefix,
+  body.invite-day2 .day-prefix-sep { display: none !important; }
+  body.invite-day2 .btn-calendar .cal-event-name { display: inline; }
+  body.invite-day2 .rsvp-days,
+  body.invite-day2 .calendar-btns { grid-template-columns: 1fr; max-width: 280px; margin-left: auto; margin-right: auto; }
 
   /* Progress chrome */
   .progress-rail {
@@ -846,6 +1088,19 @@
             <div class="door door-right" aria-hidden="true"></div>
           </div>
         </div>
+        <!-- Approach text pinned to image (in the sky just above the house) -->
+        <div class="house-text">
+          <div class="inner">
+            <div class="bismillah" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div class="eyebrow">The Syeds and Elliotts warmly invite you to the wedding of</div>
+            <div class="names"><span class="nm-1">Leon</span><span class="amp">&amp;</span><span class="nm-2">Iman</span></div>
+            <div class="scroll-hint">
+              <span class="arrow">↓</span>
+              <span>scroll to step inside</span>
+              <span class="arrow arrow-right">↓</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -868,20 +1123,6 @@
       <div class="bird-container bird-container-two"><div class="bird bird-two"></div></div>
       <div class="bird-container bird-container-three"><div class="bird bird-three"></div></div>
       <div class="bird-container bird-container-four"><div class="bird bird-four"></div></div>
-    </div>
-
-    <!-- SCENE 1 — APPROACH -->
-    <div class="scene scene-approach">
-      <div class="inner">
-        <div class="eyebrow">you are warmly invited to</div>
-        <div class="names"><span class="nm-1">Leon</span><span class="amp">&amp;</span><span class="nm-2">Iman</span></div>
-        <div class="invite-line">are getting married</div>
-        <div class="scroll-hint">
-          <span class="arrow">↓</span>
-          <span>scroll to step inside</span>
-          <span class="arrow">↓</span>
-        </div>
-      </div>
     </div>
 
     <!-- SCENE 2 — COUPLE REVEAL -->
@@ -909,7 +1150,7 @@
 <section class="scene-family" id="day-one">
   <div class="day-grid">
     <div class="family-title">
-      <span class="accent">day one</span> nikkah &amp; mehndi
+      <span class="accent day-prefix">Day 1:</span><span class="day-prefix-sep"> </span>The Ceremony and Party — Nikkah &amp; Mehndi
     </div>
     <div class="family-col day-side">
       <div class="horse-art" role="img" aria-label="Dreamy the horse with flower garland"></div>
@@ -922,7 +1163,7 @@
       <div class="details-row">
         <div class="label">when</div>
         <div class="value">Saturday, 29 August 2026</div>
-        <div class="sub">3pm — late</div>
+        <div class="sub">3pm · Party from ~7pm once dinner is finished</div>
       </div>
       <div class="ornament" aria-hidden="true"></div>
       <div class="details-row">
@@ -933,8 +1174,8 @@
       <div class="ornament" aria-hidden="true"></div>
       <div class="details-row">
         <div class="label">dress</div>
-        <div class="value">Colourful</div>
-        <div class="sub">South Asian recommended · Western welcome</div>
+        <div class="value">Traditional</div>
+        <div class="sub">South Asian or Western, however you interpret it. The more colour, the better.</div>
       </div>
     </div>
     <div class="family-col day-side">
@@ -952,11 +1193,11 @@
   <div class="details-wrap">
     <div class="cake-art" role="img" aria-label="Wedding cake"></div>
     <div class="details-text">
-      <h2><span class="accent">day two</span> baraat</h2>
+      <h2><span class="accent day-prefix">Day 2:</span><span class="day-prefix-sep"> </span>The Grand Reception — Baraat</h2>
       <div class="details-row">
         <div class="label">when</div>
         <div class="value">Sunday, 30 August 2026</div>
-        <div class="sub">Ceremony in the afternoon · Reception to follow</div>
+        <div class="sub">From 12pm</div>
       </div>
       <div class="ornament" aria-hidden="true"></div>
       <div class="details-row">
@@ -977,19 +1218,22 @@
 <!-- SECTION — GOOD TO KNOW -->
 <section class="scene-faq">
   <div class="faq-wrap">
-    <h2 class="faq-heading"><span class="accent">good</span> to know</h2>
+    <h2 class="faq-heading"><span class="accent">Good</span> to know</h2>
     <details class="faq-item">
       <summary>Accommodation</summary>
       <div class="faq-body">
-        <p>We've held a few rooms at <strong>The Bell Inn, Cambridge</strong> and <strong>The Anchor at Burwell</strong> under <em>Leon &amp; Iman</em>. Mention the wedding when booking.</p>
-        <p>For something quieter, look at cottages on Airbnb around Lode, Reach, and Swaffham Bulbeck.</p>
+        <p>There are a number of places to stay nearby:</p>
+        <p><a href="https://quayhotel.co.uk/" target="_blank" rel="noopener"><strong>The Quay Hotel</strong></a> — premium option, walking distance.</p>
+        <p><a href="https://www.travelodge.co.uk/hotels/255/Cambridge-Central-hotel" target="_blank" rel="noopener"><strong>Cambridge Travelodge</strong></a> — affordable option with many other guests staying.</p>
+        <p><a href="https://www.lodesideglamping.co.uk/" target="_blank" rel="noopener"><strong>Lodeside Glamping</strong></a> — the nearest affordable option, walkable from the venue.</p>
+        <p>There are also plenty of Airbnbs around Lode, Reach, and Swaffham Bulbeck.</p>
       </div>
     </details>
     <details class="faq-item">
       <summary>Travel</summary>
       <div class="faq-body">
-        <p>Nearest station is <strong>Cambridge North</strong> (~20 min by taxi). London Liverpool Street → Cambridge takes about 75 minutes.</p>
-        <p>We'll run a shuttle from Cambridge city centre on both days — details to follow with your RSVP.</p>
+        <p>The venue is accessible by taxi from both <strong>Cambridge station</strong> and <strong>Cambridge North station</strong>.</p>
+        <p>We'll run a shuttle from on both days, details to follow with your RSVP.</p>
       </div>
     </details>
     <details class="faq-item">
@@ -1007,16 +1251,16 @@
     <h2>Will you be there?</h2>
     <p>We can't wait to celebrate with you. Please let us know by <strong>1 July 2026</strong>.</p>
     <div class="rsvp-days">
-      <div class="rsvp-day">
-        <div class="rsvp-day-label">Day one · Nikkah &amp; Mehndi</div>
+      <div class="rsvp-day" data-day-section="1">
+        <div class="rsvp-day-label"><span class="day-prefix">Day one · </span>Nikkah &amp; Mehndi</div>
         <div class="rsvp-day-date">Sat 29 August</div>
         <div class="rsvp-day-actions">
           <button class="btn btn-sm" data-day="1" data-rsvp="yes">I'll be there</button>
           <button class="btn btn-sm ghost" data-day="1" data-rsvp="no">Can't make it</button>
         </div>
       </div>
-      <div class="rsvp-day">
-        <div class="rsvp-day-label">Day two · Baraat</div>
+      <div class="rsvp-day" data-day-section="2">
+        <div class="rsvp-day-label"><span class="day-prefix">Day two · </span>Baraat</div>
         <div class="rsvp-day-date">Sun 30 August</div>
         <div class="rsvp-day-actions">
           <button class="btn btn-sm" data-day="2" data-rsvp="yes">I'll be there</button>
@@ -1024,7 +1268,41 @@
         </div>
       </div>
     </div>
-    <div class="rsvp-meta">with love, Leon &amp; Iman ♥</div>
+
+    <!-- RSVP Form (appears when "I'll be there" is selected) -->
+    <div class="rsvp-form-area" id="rsvp-form-area">
+      <div class="rsvp-form-inner">
+        <label for="rsvp-guests">Who's coming?</label>
+        <div id="rsvp-guest-list">
+          <div class="rsvp-guest-row">
+            <input type="text" placeholder="Your name" aria-label="Guest name" />
+          </div>
+        </div>
+        <button type="button" class="btn-add-guest" id="btn-add-guest">+ Add another guest</button>
+
+        <label for="rsvp-notes">Any notes for us?</label>
+        <textarea class="rsvp-notes" id="rsvp-notes" placeholder="Dietary requirements, accessibility needs, or anything else..."></textarea>
+
+        <button type="button" class="btn-send-rsvp" id="btn-send-rsvp">Send RSVP</button>
+      </div>
+    </div>
+
+    <!-- Add to Calendar -->
+    <div class="calendar-section">
+      <div class="calendar-heading">Add to Calendar</div>
+      <div class="calendar-btns">
+        <a class="btn-calendar" id="cal-day1" href="#" download="leon-iman-day1.ics" data-day-section="1">
+          <span class="cal-icon">📅</span>
+          <span class="day-prefix">Day One<br/></span><span class="cal-event-name">Nikkah &amp; Mehndi<br/></span>Sat 29 Aug
+        </a>
+        <a class="btn-calendar" id="cal-day2" href="#" download="leon-iman-day2.ics" data-day-section="2">
+          <span class="cal-icon">📅</span>
+          <span class="day-prefix">Day Two<br/></span><span class="cal-event-name">Baraat<br/></span>Sun 30 Aug
+        </a>
+      </div>
+    </div>
+
+    <div class="rsvp-meta">With love, Leon &amp; Iman ♥</div>
   </div>
 </section>
 
@@ -1040,6 +1318,15 @@
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 
 <script>
+  // Invite variant — ?invite=day1 | day2 | both (default: both)
+  (function applyInviteVariant() {
+    const params = new URLSearchParams(window.location.search);
+    const invite = (params.get('invite') || 'both').toLowerCase();
+    if (invite === 'day1') document.body.classList.add('invite-day1');
+    else if (invite === 'day2') document.body.classList.add('invite-day2');
+    else document.body.classList.add('invite-both');
+  })();
+
   const root = document.documentElement;
   const track = document.querySelector('.scroll-track');
   const chapterLabel = document.getElementById('chapter-label');
@@ -1050,7 +1337,7 @@
   const phases = {
     zoom:     [0.00, 1.00],
     doors:    [0.00, 0.50],
-    couple:   [0.20, 0.95],
+    couple:   [0.50, 0.90],
   };
 
   const labels = [
@@ -1111,11 +1398,11 @@
     if (lab) chapterLabel.textContent = lab.text;
     chapterLabel.classList.toggle('on-light', p > 0.55);
 
-    if (p > 0.35 && p < 0.95 && !autoScrolling && !autoScrollTriggered) {
+    if (p > 0.55 && p < 0.95 && !autoScrolling && !autoScrollTriggered) {
       autoScrolling = true;
       autoScrollTriggered = true;
       const target = trackTop + trackHeight + 10;
-      slowScrollTo(target, 3800);
+      slowScrollTo(target, 2200);
     }
     if (p < 0.15) {
       autoScrollTriggered = false;
@@ -1155,25 +1442,179 @@
   }
   spawnPetals(14);
 
-  // RSVP interactions — per day
+  // RSVP interactions — toggle radio-group per day
+  const rsvpState = { 1: null, 2: null };
+
+  function updateRsvpButtons() {
+    [1, 2].forEach(day => {
+      const btns = document.querySelectorAll(`[data-day="${day}"]`);
+      btns.forEach(b => {
+        const rsvp = b.dataset.rsvp;
+        b.classList.remove('selected', 'dimmed');
+        b.style.removeProperty('opacity');
+        b.style.removeProperty('background');
+        b.style.removeProperty('color');
+        b.style.removeProperty('border-color');
+        b.disabled = false;
+        if (rsvp === 'yes') b.textContent = "I'll be there";
+        else b.textContent = "Can't make it";
+
+        if (rsvpState[day] !== null) {
+          if (rsvpState[day] === rsvp) {
+            b.classList.add('selected');
+          } else {
+            b.classList.add('dimmed');
+          }
+        }
+      });
+    });
+
+    const anyYes = rsvpState[1] === 'yes' || rsvpState[2] === 'yes';
+    const formArea = document.getElementById('rsvp-form-area');
+    if (anyYes) {
+      formArea.classList.add('visible');
+    } else {
+      formArea.classList.remove('visible');
+    }
+  }
+
   document.querySelectorAll('[data-rsvp]').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const day = e.target.dataset.day;
+      const day = parseInt(e.target.dataset.day);
       const rsvp = e.target.dataset.rsvp;
-      const siblings = document.querySelectorAll(`[data-day="${day}"]`);
-      siblings.forEach(b => { b.disabled = true; b.style.opacity = 0.5; });
-      e.target.style.opacity = 1;
-      if (rsvp === 'yes') {
-        e.target.textContent = "See you there ♥";
-        e.target.style.background = '#7d1414';
+
+      if (rsvpState[day] === rsvp) {
+        rsvpState[day] = null;
       } else {
-        e.target.textContent = "Noted ♥";
-        e.target.style.background = 'transparent';
-        e.target.style.color = 'var(--wood)';
-        e.target.style.borderColor = 'var(--wood)';
+        rsvpState[day] = rsvp;
       }
+      updateRsvpButtons();
     });
   });
+
+  // Guest name management
+  const guestList = document.getElementById('rsvp-guest-list');
+  document.getElementById('btn-add-guest').addEventListener('click', () => {
+    const row = document.createElement('div');
+    row.className = 'rsvp-guest-row';
+    row.innerHTML = `
+      <input type="text" placeholder="Guest name" aria-label="Guest name" />
+      <button type="button" class="btn-remove-guest" title="Remove guest">&times;</button>
+    `;
+    row.querySelector('.btn-remove-guest').addEventListener('click', () => row.remove());
+    guestList.appendChild(row);
+    row.querySelector('input').focus();
+  });
+
+  // Send RSVP (no backend — shows confirmation)
+  document.getElementById('btn-send-rsvp').addEventListener('click', () => {
+    const guests = Array.from(guestList.querySelectorAll('input'))
+      .map(i => i.value.trim())
+      .filter(Boolean);
+
+    if (guests.length === 0) {
+      guestList.querySelector('input').focus();
+      guestList.querySelector('input').style.borderColor = 'var(--red)';
+      return;
+    }
+
+    const formArea = document.getElementById('rsvp-form-area');
+    const inner = formArea.querySelector('.rsvp-form-inner');
+    const isSingleDay = document.body.classList.contains('invite-day1') || document.body.classList.contains('invite-day2');
+    const days = [];
+    if (rsvpState[1] === 'yes') days.push(isSingleDay ? 'Nikkah & Mehndi' : 'Day One (Nikkah & Mehndi)');
+    if (rsvpState[2] === 'yes') days.push(isSingleDay ? 'Baraat' : 'Day Two (Baraat)');
+
+    inner.innerHTML = `
+      <div class="rsvp-confirmation">
+        <div class="check">♥</div>
+        <p><strong>Thank you!</strong></p>
+        <p>${guests.join(', ')} — we'll see you${days.length ? ' for ' + days.join(' & ') : ''}!</p>
+        <p style="font-size: 0.85em; color: var(--wood-light); margin-top: 0.8em;">
+          We'll be in touch with more details soon.
+        </p>
+      </div>
+    `;
+  });
+
+  // Add to Calendar — .ics file generation
+  function generateICS(event) {
+    const pad = (n) => String(n).padStart(2, '0');
+    const formatDate = (d) =>
+      `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}Z`;
+
+    const now = new Date();
+    const uid = `leon-iman-${event.day}@wedding`;
+
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Leon & Iman Wedding//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${formatDate(now)}`,
+      `DTSTART:${formatDate(event.start)}`,
+      `DTEND:${formatDate(event.end)}`,
+      `SUMMARY:${event.summary}`,
+      `LOCATION:${event.location}`,
+      `DESCRIPTION:${event.description}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ];
+
+    return lines.join('\r\n');
+  }
+
+  const day1Start = new Date(Date.UTC(2026, 7, 29, 14, 0, 0));
+  const day1End   = new Date(Date.UTC(2026, 7, 29, 21, 0, 0));
+  const day2Start = new Date(Date.UTC(2026, 7, 30, 11, 0, 0));
+  const day2End   = new Date(Date.UTC(2026, 7, 30, 21, 0, 0));
+
+  const ics1 = generateICS({
+    day: 1,
+    start: day1Start,
+    end: day1End,
+    summary: 'Leon & Iman Wedding — Day One: Nikkah & Mehndi',
+    location: 'Jack of Clubs Barn\\, Lode Fen\\, CB25 9HE',
+    description: 'Day One — Nikkah & Mehndi. Dress: Traditional (South Asian or Western).'
+  });
+
+  const ics2 = generateICS({
+    day: 2,
+    start: day2Start,
+    end: day2End,
+    summary: 'Leon & Iman Wedding — Day Two: Baraat',
+    location: 'Jack of Clubs Barn\\, Lode Fen\\, CB25 9HE',
+    description: 'Day Two — The Grand Reception. Dress: Garden formal.'
+  });
+
+  function setICSLink(id, icsContent) {
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const el = document.getElementById(id);
+    el.href = url;
+  }
+
+  setICSLink('cal-day1', ics1);
+  setICSLink('cal-day2', ics2);
+
+  // RSVP card fly-in on scroll-into-view
+  const rsvpCard = document.querySelector('.rsvp-card');
+  if (rsvpCard && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          rsvpCard.classList.add('in-view');
+          io.unobserve(rsvpCard);
+        }
+      });
+    }, { threshold: 0.15 });
+    io.observe(rsvpCard);
+  } else if (rsvpCard) {
+    rsvpCard.classList.add('in-view');
+  }
 
   // Smooth-scroll hint
   document.querySelector('.scroll-hint')?.addEventListener('click', () => {
@@ -1195,7 +1636,7 @@
 
     useEffect(() => {
       const sel = (s) => document.querySelectorAll(s);
-      sel('.scene-approach .names').forEach(el => {
+      sel('.house-text .names').forEach(el => {
         el.innerHTML = `<span class="nm-1">${tweaks.name1}</span><span class="amp">&amp;</span><span class="nm-2">${tweaks.name2}</span>`;
       });
       sel('.scene-couple .couple-name').forEach(el => {
@@ -1203,7 +1644,7 @@
       });
       const rsvpMeta = document.querySelector('.rsvp-meta');
       if (rsvpMeta) {
-        rsvpMeta.innerHTML = `with love, ${tweaks.name1} &amp; ${tweaks.name2} ♥`;
+        rsvpMeta.innerHTML = `With love, ${tweaks.name1} &amp; ${tweaks.name2} ♥`;
       }
       const stage = document.querySelector('.stage');
       const palettes = {
