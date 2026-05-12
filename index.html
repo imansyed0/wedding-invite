@@ -1165,6 +1165,10 @@
 
 <div class="top-mono" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
 
+<audio id="bg-audio" preload="auto" playsinline>
+  <source src="art/santoor-clickaud.mp3" type="audio/mpeg" />
+</audio>
+
 <div class="progress-rail" aria-hidden="true"></div>
 <div class="chapter-label" id="chapter-label">scroll to enter</div>
 
@@ -1414,6 +1418,44 @@
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 
 <script>
+  (function setupBackgroundAudio() {
+    const audio = document.getElementById('bg-audio');
+    if (!audio) return;
+
+    let started = false;
+    const gestureEvents = ['pointerdown', 'touchstart', 'keydown', 'click'];
+
+    function cleanupGestureListeners() {
+      gestureEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, startFromGesture, true);
+      });
+    }
+
+    function startPlayback() {
+      if (started) return Promise.resolve();
+      started = true;
+      audio.currentTime = 0;
+      return audio.play().catch((error) => {
+        started = false;
+        throw error;
+      });
+    }
+
+    function startFromGesture() {
+      startPlayback()
+        .then(cleanupGestureListeners)
+        .catch(() => {});
+    }
+
+    gestureEvents.forEach((eventName) => {
+      window.addEventListener(eventName, startFromGesture, { capture: true, passive: true });
+    });
+
+    startPlayback()
+      .then(cleanupGestureListeners)
+      .catch(() => {});
+  })();
+
   (function typewriterEffect() {
     const el = document.querySelector('.eyebrow');
     if (!el) return;
