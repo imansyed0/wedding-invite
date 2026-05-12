@@ -6,7 +6,7 @@
 <title>Leon &amp; Iman — A Wedding Invitation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Caveat:wght@400;500;600;700&family=Lilita+One&family=Fredoka:wght@600;700&family=Fredericka+the+Great&family=Patrick+Hand&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Caveat:wght@400;500;600;700&family=Lilita+One&family=Fredoka:wght@600;700&family=Fredericka+the+Great&display=swap" rel="stylesheet" />
 <style>
   @font-face {
     font-family: 'Berky';
@@ -38,7 +38,7 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--ink); color: var(--ink); font-family: 'Patrick Hand', cursive; -webkit-font-smoothing: antialiased; }
+  html, body { background: var(--ink); color: var(--ink); font-family: 'Caveat', cursive; -webkit-font-smoothing: antialiased; }
   body { overscroll-behavior: none; }
 
   .scroll-track { height: 700vh; position: relative; background: #ecd4b8; }
@@ -245,7 +245,7 @@
   .house-text {
     position: absolute;
     left: 50%;
-    top: 28%;
+    top: 60%;
     transform: translateX(-50%);
     z-index: 13;
     text-align: center;
@@ -253,20 +253,6 @@
     width: 80%;
     max-width: 720px;
     opacity: calc(1 - var(--p-zoom) * 2.8);
-  }
-  /* Mobile landscape — keep the original house framing, then fit the
-     headline block into the sky band between the clouds and the roof. */
-  @media (orientation: landscape) and (max-height: 500px) {
-    .house-wrap { --house-base-scale: 1; }
-    .house-inner { top: 56%; transform: translate(-50%, -56%); }
-    .house-text { top: 27%; width: 60%; max-width: 440px; transform: translateX(-50%); }
-    .bismillah { font-size: 10px; margin-bottom: 0.25em; }
-    .eyebrow { display: block; width: 100%; max-width: 100%; font-size: 7px; margin: 0 auto 0.18em; line-height: 1.06; }
-    .eyebrow .eyebrow-line { display: block; white-space: nowrap; }
-    .names { font-size: 29px; -webkit-text-stroke: 1.9px #1a1410; line-height: 0.92; }
-    .invite-line { font-size: 11px; letter-spacing: 0.1em; margin-top: 0.3em; }
-    .stage .scroll-hint-wrap { bottom: 0; transform: translateX(-50%); }
-    .stage .scroll-hint { font-size: 18px; gap: 0.45em; }
   }
   .house-text .inner {
     pointer-events: auto;
@@ -286,7 +272,7 @@
   .eyebrow {
     font-family: 'Berky', cursive;
     font-weight: normal;
-    font-size: clamp(24px, 4.5vw, 56px);
+    font-size: clamp(24px, 3.2vw, 48px);
     color: transparent;
     letter-spacing: 0.02em;
     margin-bottom: 0.35em;
@@ -294,9 +280,13 @@
   }
   .eyebrow-line { display: inline; }
   .eyebrow .fam-syeds,
-  .eyebrow .fam-elliotts { font-weight: bold; }
+  .eyebrow .fam-elliotts {
+    font-weight: bold;
+    -webkit-text-stroke: 1.4px #1a1410;
+    paint-order: stroke fill;
+  }
   .eyebrow .fam-syeds { color: #6d28d9; }
-  .eyebrow .fam-elliotts { color: #ec4899; }
+  .eyebrow .fam-elliotts { color: #be185d; }
   .names {
     font-family: 'Fredericka the Great', cursive;
     font-weight: 400;
@@ -311,7 +301,7 @@
   .names .amp { color: #f59e0b; -webkit-text-stroke: 3px #1a1410; padding: 0 0.08em; }
   .names .nm-2 { color: #6d28d9; }
   .invite-line {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(12px, 1.6vw, 20px);
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -331,8 +321,8 @@
     opacity: calc(1 - var(--p-zoom) * 1.6);
   }
   .scroll-hint {
-    font-family: 'Patrick Hand', cursive;
-    font-weight: bold;
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
     font-size: clamp(22px, 3.4vw, 42px);
     color: #6d28d9;
     display: flex; align-items: center; justify-content: center; gap: 0.55em;
@@ -350,6 +340,24 @@
     0%   { transform: translateY(0); }
     50%  { transform: translateY(-10px); }
     100% { transform: translateY(0); }
+  }
+
+  /* Mobile landscape — keep the original house framing, then fit the
+     headline block into the sky band between the clouds and the roof.
+     Placed after the default rules so its overrides actually take effect. */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .house-wrap { --house-base-scale: 1; }
+    .house-inner { top: 56%; transform: translate(-50%, -56%); }
+    .house-text { top: 31%; width: 60%; max-width: 440px; transform: translateX(-50%); }
+    .bismillah { font-size: 22px; margin-bottom: 0.25em; }
+    .eyebrow { display: block; width: 100%; max-width: 100%; font-size: 28px; margin: 0 auto 0.18em; line-height: 1.06; }
+    .eyebrow .eyebrow-line { display: block; white-space: nowrap; }
+    .eyebrow .fam-syeds,
+    .eyebrow .fam-elliotts { -webkit-text-stroke: 1px #1a1410; paint-order: stroke fill; }
+    .names { font-size: 29px; -webkit-text-stroke: 1.9px #1a1410; line-height: 0.92; }
+    .invite-line { font-size: 11px; letter-spacing: 0.1em; margin-top: 0.3em; }
+    .stage .scroll-hint-wrap { bottom: 0; transform: translateX(-50%); }
+    .stage .scroll-hint { font-size: 18px; gap: 0.45em; }
   }
 
   /* Couple reveal scene */
@@ -493,7 +501,7 @@
   }
   .family-label .meta {
     display: block;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-style: normal;
     font-size: 0.7em;
     color: var(--wood);
@@ -535,7 +543,7 @@
     text-align: center;
   }
   .day-info .label {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     font-size: clamp(22px, 2.4vw, 26px);
@@ -548,7 +556,7 @@
     margin-top: 0.1em;
   }
   .day-info .sub {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(30px, 3vw, 34px);
     color: var(--wood);
     margin-top: 0.2em;
@@ -590,14 +598,14 @@
   .faq-item summary::-webkit-details-marker { display: none; }
   .faq-item summary::after {
     content: "+";
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: 1.3em;
     color: var(--red);
     transition: transform 0.2s ease;
   }
   .faq-item[open] summary::after { content: "–"; }
   .faq-item .faq-body {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(30px, 3.2vw, 36px);
     color: var(--wood);
     line-height: 1.55;
@@ -653,7 +661,7 @@
     80%   { transform: rotate(-3deg); }
     100%  { transform: rotate(1.5deg); }
   }
-  .details-text { font-family: 'Patrick Hand', cursive; color: var(--ink); }
+  .details-text { font-family: 'Caveat', cursive; color: var(--ink); }
   .details-text h2 {
     font-family: 'Fredericka the Great', cursive;
     font-weight: 600;
@@ -769,7 +777,7 @@
     margin-bottom: 0.15em;
   }
   .rsvp-day-date {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(26px, 2.8vw, 32px);
     color: var(--wood);
     margin-bottom: 0.7em;
@@ -781,7 +789,7 @@
     letter-spacing: 0.24em;
   }
   .btn {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(26px, 2.8vw, 30px);
     letter-spacing: 0.32em;
     text-transform: uppercase;
@@ -797,7 +805,7 @@
   .btn.ghost:hover { background: var(--ink); color: var(--paper); }
   .rsvp-meta {
     margin-top: 2em;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(18px, 2vw, 22px);
     color: var(--red);
   }
@@ -837,7 +845,7 @@
   }
   .rsvp-form-inner label {
     display: block;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(26px, 2.8vw, 32px);
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -852,7 +860,7 @@
   }
   .rsvp-guest-row input {
     flex: 1;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(15px, 1.6vw, 18px);
     padding: 10px 14px;
     border: 1.5px solid rgba(26,20,16,0.2);
@@ -870,7 +878,7 @@
   .btn-remove-guest {
     background: none;
     border: none;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: 20px;
     color: var(--red-soft);
     cursor: pointer;
@@ -881,7 +889,7 @@
   }
   .btn-remove-guest:hover { opacity: 1; }
   .btn-add-guest {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(26px, 2.6vw, 30px);
     letter-spacing: 0.12em;
     color: var(--red);
@@ -895,7 +903,7 @@
   .btn-add-guest:hover { color: #9a1414; }
   .rsvp-notes {
     width: 100%;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(15px, 1.6vw, 18px);
     padding: 10px 14px;
     border: 1.5px solid rgba(26,20,16,0.2);
@@ -911,7 +919,7 @@
   .rsvp-notes::placeholder { color: rgba(26,20,16,0.35); }
   .btn-send-rsvp {
     width: 100%;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(28px, 3vw, 34px);
     letter-spacing: 0.32em;
     text-transform: uppercase;
@@ -934,7 +942,7 @@
     margin-bottom: 0.3em;
   }
   .rsvp-confirmation p {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(32px, 3.6vw, 40px);
     color: var(--ink);
     line-height: 1.5;
@@ -960,7 +968,7 @@
     gap: clamp(10px, 2vw, 16px);
   }
   .btn-calendar {
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Caveat', cursive;
     font-size: clamp(24px, 2.6vw, 28px);
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -1185,11 +1193,11 @@
             <div class="door door-left" aria-hidden="true"></div>
             <div class="door door-right" aria-hidden="true"></div>
           </div>
-        </div>
-        <!-- Approach text pinned to image (in the sky just above the house) -->
-        <div class="house-text">
-          <div class="inner">
-            <div class="eyebrow"><span class="eyebrow-line">The <span class="fam-syeds">Syeds</span> and <span class="fam-elliotts">Elliotts</span></span><span class="eyebrow-line">warmly invite you to our</span><span class="eyebrow-line">wedding...</span></div>
+          <!-- Approach text pinned to image (in the sky just above the house) -->
+          <div class="house-text">
+            <div class="inner">
+              <div class="eyebrow"><span class="eyebrow-line">The <span class="fam-syeds">Syeds</span> and <span class="fam-elliotts">Elliotts</span></span><span class="eyebrow-line">warmly invite you to our</span><span class="eyebrow-line">wedding ...</span></div>
+            </div>
           </div>
         </div>
       </div>
