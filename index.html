@@ -245,7 +245,7 @@
   .house-text {
     position: absolute;
     left: 50%;
-    top: 60%;
+    top: 24%;
     transform: translateX(-50%);
     z-index: 13;
     text-align: center;
@@ -344,20 +344,34 @@
 
   /* Mobile landscape — keep the original house framing, then fit the
      headline block into the sky band between the clouds and the roof.
-     Placed after the default rules so its overrides actually take effect. */
+     Placed after the default rules so its overrides actually take effect.
+     All type sizes use clamp(vw) so they scale proportionally across the
+     landscape preview range (667–932 wide), instead of being pinned to a
+     single hard-coded px value that's only right at one viewport. */
   @media (orientation: landscape) and (max-height: 500px) {
     .house-wrap { --house-base-scale: 1; }
     .house-inner { top: 56%; transform: translate(-50%, -56%); }
     .house-text { top: 31%; width: 60%; max-width: 440px; transform: translateX(-50%); }
-    .bismillah { font-size: 22px; margin-bottom: 0.25em; }
-    .eyebrow { display: block; width: 100%; max-width: 100%; font-size: 28px; margin: 0 auto 0.18em; line-height: 1.06; }
+    .bismillah { font-size: clamp(16px, 2.6vw, 26px); margin-bottom: 0.25em; }
+    .eyebrow { display: block; width: 100%; max-width: 100%; font-size: clamp(22px, 3.3vw, 32px); margin: 0 auto 0.18em; line-height: 1.06; }
     .eyebrow .eyebrow-line { display: block; white-space: nowrap; }
     .eyebrow .fam-syeds,
     .eyebrow .fam-elliotts { -webkit-text-stroke: 1px #1a1410; paint-order: stroke fill; }
-    .names { font-size: 29px; -webkit-text-stroke: 1.9px #1a1410; line-height: 0.92; }
-    .invite-line { font-size: 11px; letter-spacing: 0.1em; margin-top: 0.3em; }
+    .names { font-size: clamp(24px, 3.4vw, 34px); -webkit-text-stroke: 1.9px #1a1410; line-height: 0.92; }
+    .invite-line { font-size: clamp(9px, 1.3vw, 14px); letter-spacing: 0.1em; margin-top: 0.3em; }
     .stage .scroll-hint-wrap { bottom: 0; transform: translateX(-50%); }
-    .stage .scroll-hint { font-size: 18px; gap: 0.45em; }
+    .stage .scroll-hint { font-size: clamp(14px, 2.1vw, 22px); gap: 0.45em; }
+
+    /* Day-1/Day-2 detail sub-lines: keep them on one line across the full
+       landscape range. The longest copy ("South Asian or Western, however
+       you interpret it. The more colour, the better.") is the constraint.
+       Smaller font + nowrap is the only thing that fits at 800-wide where
+       the day-info column is the narrowest. */
+    .day-info .sub,
+    .details-row .sub {
+      font-size: clamp(13px, 1.7vw, 17px);
+      white-space: nowrap;
+    }
   }
 
   /* Couple reveal scene */
@@ -367,9 +381,47 @@
     background: linear-gradient(180deg, #eba2c2 0%, #efc6b8 55%, #ecd4b8 100%);
   }
 
+  /* Positioned inside .couple-card (position:relative), so % values are of
+     the card. The art sits in the left grid column (card padding 6%, then
+     50/50 split → left column spans 6%–50% of card width, centered at
+     ~28%). left:13% was leaving the cue under the left edge of the card,
+     not the picture. 27% puts it under the picture across every size. */
+  .couple-scroll-cue {
+    position: absolute;
+    bottom: 9%;
+    left: 27%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: clamp(18px, 2.4vw, 30px);
+    color: var(--wood);
+    text-align: center;
+    pointer-events: none;
+    z-index: 5;
+    white-space: nowrap;
+    opacity: calc((var(--p-couple) - 0.6) * 2.5);
+    animation: hover-float 2.5s ease-in-out infinite;
+  }
+  .couple-scroll-cue .arrow {
+    display: inline-block;
+    font-size: 1.15em;
+    line-height: 1;
+  }
+  @media (orientation: landscape) and (max-height: 500px) {
+    .couple-scroll-cue { bottom: 8%; font-size: clamp(13px, 1.8vw, 18px); gap: 0.35em; }
+  }
+
   .couple-card {
     position: relative;
-    width: min(78vw, 142vh);
+    /* width chosen so aspect-ratio-derived height is always ≤ 82vh.
+       The old `min(78vw, 142vh)` let the height clip against max-height
+       and broke the aspect ratio on short landscape viewports (e.g. SE
+       667×375), stretching the postcard background. 114vh = 82vh × the
+       card's natural aspect ratio (1722/1238 ≈ 1.391). */
+    width: min(78vw, 114vh);
     aspect-ratio: 1722/1238;
     max-height: 82vh;
     background-image: url('art/postcard.png');
@@ -436,10 +488,15 @@
     z-index: 40;
     background: linear-gradient(180deg,
       #ecd4b8 0%,
-      #e8c3a0 15%,
-      #d8a0a8 30%,
-      #c4a6d0 50%,
-      #8a7ba8 72%,
+      #ebcdaf 8%,
+      #e8c3a0 18%,
+      #e0b29b 28%,
+      #d8a0a8 38%,
+      #ceadbe 48%,
+      #c4a6d0 58%,
+      #ad96bf 68%,
+      #8a7ba8 78%,
+      #5d4a76 90%,
       #3a2845 100%
     );
     margin-top: -20px;
@@ -1244,6 +1301,10 @@
             <span>August 2026</span>
           </div>
         </div>
+        <div class="couple-scroll-cue" aria-hidden="true">
+          <span class="arrow">↓</span>
+          <span>keep scrolling for details</span>
+        </div>
       </div>
     </div>
 
@@ -1283,7 +1344,7 @@
       <div class="details-row">
         <div class="label">dress</div>
         <div class="value">Traditional</div>
-        <div class="sub">South Asian or Western, however you interpret it. The more colour, the better.</div>
+        <div class="sub">South Asian or Western, however you interpret it.<br />The more colour, the better.</div>
       </div>
     </div>
     <div class="family-col day-side">
@@ -1299,7 +1360,7 @@
 <!-- SECTION — DAY TWO: Baraat with cake -->
 <section class="scene-details" id="day-two">
   <div class="details-wrap">
-    <h2 class="details-title"><span class="accent day-prefix">Day 2:</span><span class="day-prefix-sep"> </span>The Grand Reception — Baraat</h2>
+    <h2 class="details-title"><span class="accent day-prefix">Day 2:</span><span class="day-prefix-sep"> </span>The Reception — Baraat</h2>
     <div class="cake-art" role="img" aria-label="Wedding cake"></div>
     <div class="details-text">
       <div class="details-row">
@@ -1356,7 +1417,7 @@
 <section class="scene-rsvp">
   <div class="rsvp-card">
     <h2>Will you be there?</h2>
-    <p>We can't wait to celebrate with you. Please let us know by <strong>1 July 2026</strong>.</p>
+    <p>We can't wait to celebrate with you.<br />Please let us know by <strong>1 July 2026</strong>.</p>
     <div class="rsvp-days">
       <div class="rsvp-day" data-day-section="1">
         <div class="rsvp-day-label"><span class="day-prefix">Day one · </span>Nikkah &amp; Mehndi</div>
