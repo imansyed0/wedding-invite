@@ -1423,7 +1423,12 @@
     if (!audio) return;
 
     let started = false;
+    let fadeFrame = null;
     const gestureEvents = ['pointerdown', 'touchstart', 'keydown', 'click'];
+    const targetVolume = 0.65;
+    const fadeDuration = 5000;
+
+    audio.volume = 0;
 
     function cleanupGestureListeners() {
       gestureEvents.forEach((eventName) => {
@@ -1431,14 +1436,40 @@
       });
     }
 
+    function fadeInVolume() {
+      if (fadeFrame) cancelAnimationFrame(fadeFrame);
+      audio.volume = 0;
+      const start = performance.now();
+
+      function step(now) {
+        const elapsed = now - start;
+        const t = Math.min(1, elapsed / fadeDuration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        audio.volume = targetVolume * eased;
+        if (t < 1) {
+          fadeFrame = requestAnimationFrame(step);
+        } else {
+          fadeFrame = null;
+          audio.volume = targetVolume;
+        }
+      }
+
+      fadeFrame = requestAnimationFrame(step);
+    }
+
     function startPlayback() {
       if (started) return Promise.resolve();
       started = true;
       audio.currentTime = 0;
-      return audio.play().catch((error) => {
-        started = false;
-        throw error;
-      });
+      audio.volume = 0;
+      return audio.play()
+        .then(() => {
+          fadeInVolume();
+        })
+        .catch((error) => {
+          started = false;
+          throw error;
+        });
     }
 
     function startFromGesture() {
