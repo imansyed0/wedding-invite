@@ -650,7 +650,12 @@
   }
   .day-grid .family-title { grid-column: 1 / -1; }
   .day-grid .day-info { grid-column: 1 / -1; order: 3; }
-  .day-side { align-self: center; }
+  /* Stretch each animal column to the full height of its grid row and
+     pack image + caption to the bottom. This puts both image bottoms
+     on a shared "ground line" (just above the captions) and both
+     captions on the same baseline, even though the horse and cats
+     images have different aspect ratios. */
+  .day-side { align-self: stretch; justify-content: flex-end; }
   .day-side .horse-art, .day-side .cats-art { width: 100%; max-width: 218px; margin: 0 auto; }
   /* Pull the two animal columns toward the centre so Dreamy and Lola &
      Rumi look like they're standing next to each other, separated only
