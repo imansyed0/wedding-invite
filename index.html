@@ -485,7 +485,12 @@
     align-items: center;
     padding: 6.5% 6% 7% 6%;
     box-sizing: border-box;
-    filter: drop-shadow(0 12px 18px rgba(60, 20, 30, 0.28)) drop-shadow(0 4px 6px rgba(60, 20, 30, 0.18));
+    /* Single drop-shadow rather than two stacked ones: drop-shadow is
+       a paint-heavy filter and has to be recomputed every frame while
+       the card is translating + rotating. One layer with slightly
+       higher alpha gets the same visual weight without the per-frame
+       paint doubling. */
+    filter: drop-shadow(0 10px 16px rgba(60, 20, 30, 0.34));
     transform: translateY(calc((1 - var(--p-couple)) * 16vh)) rotate(calc(-1.8deg + (1 - var(--p-couple)) * -3.5deg));
   }
   .couple-art {
@@ -634,7 +639,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: clamp(10px, 2.5vw, 32px);
+    /* Slightly wider gap so Dreamy and Lola & Rumi sit visibly next to
+       each other (rather than touching) once both columns are pulled to
+       the inside edge via justify-self below. */
+    gap: clamp(20px, 3.5vw, 56px);
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
@@ -644,6 +652,13 @@
   .day-grid .day-info { grid-column: 1 / -1; order: 3; }
   .day-side { align-self: center; }
   .day-side .horse-art, .day-side .cats-art { width: 100%; max-width: 218px; margin: 0 auto; }
+  /* Pull the two animal columns toward the centre so Dreamy and Lola &
+     Rumi look like they're standing next to each other, separated only
+     by the grid gap rather than each floating in the middle of a half.
+     The label keeps its natural width so subcaptions like "the bearer
+     of garlands" don't wrap. */
+  .day-grid > .day-side:has(.horse-art) { justify-self: end; }
+  .day-grid > .day-side:has(.cats-art)  { justify-self: start; }
   .day-info .details-row {
     text-align: center;
   }
@@ -1461,7 +1476,7 @@
       <summary>Accommodation</summary>
       <div class="faq-body">
         <p>There are a number of places to stay nearby:</p>
-        <p><a href="https://www.cambridgequymill.co.uk/" target="_blank" rel="noopener"><strong>Quy Mill Hotel</strong></a> — premium option, a short drive or longish walk from the venue.</p>
+        <p><a href="https://www.cambridgequymill.co.uk/" target="_blank" rel="noopener"><strong>Quy Mill Hotel</strong></a> — premium option, a short drive from the venue.</p>
         <p><a href="https://novotel.accor.com/gb/city/hotels-cambridge-v0683.shtml" target="_blank" rel="noopener"><strong>Novotel Cambridge North</strong></a> — by Cambridge North station, where some of the family are staying.</p>
         <p><a href="https://www.travelodge.co.uk/hotels/255/Cambridge-Central-hotel" target="_blank" rel="noopener"><strong>Cambridge Travelodge</strong></a> — affordable option with many other guests staying.</p>
         <p><a href="https://www.lodesideglamping.co.uk/" target="_blank" rel="noopener"><strong>Lodeside Glamping</strong></a> — the nearest affordable option, walkable from the venue.</p>
@@ -1674,7 +1689,11 @@
   const phases = {
     zoom:     [0.00, 1.00],
     doors:    [0.00, 0.50],
-    couple:   [0.50, 0.72],
+    /* End just shy of the autoscroll's landing (p=1) so the postcard's
+       translate/rotate decelerate in sync with the scroll itself — no
+       gap between "card landed" and "scroll still going" which read as
+       a jerk. */
+    couple:   [0.50, 0.95],
   };
 
   const labels = [
