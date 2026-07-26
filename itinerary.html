@@ -217,6 +217,12 @@
     text-decoration: none;
     border-bottom: 1px dashed var(--wood);
   }
+  .day-meta .day-flavor {
+    display: block;
+    font-size: 15px;
+    color: var(--wood-light);
+    margin-top: 1px;
+  }
   .dress-chip {
     display: inline-block;
     font-family: 'Caveat', cursive;
@@ -499,11 +505,14 @@
       </div>
       <span class="dress-chip">Dress: Vibrant &mdash; South Asian or Western, the more colour the better</span>
       <ul class="timeline">
-        <li><span class="t-time">3:00pm</span><span class="t-what">Nikkah ceremony</span></li>
-        <li><span class="t-what">Mehndi, mingling &amp; photos</span><span class="t-note">Grab henna if you fancy it &mdash; no rush, take your time.</span></li>
-        <li><span class="t-what">Dinner is served</span></li>
-        <li><span class="t-time">~7:00pm</span><span class="t-what">Party begins</span><span class="t-note">Once dinner wraps up &mdash; dancing shoes on.</span></li>
-        <li><span class="t-what">Dancing &amp; celebrations until late</span></li>
+        <li><span class="t-time">2:15pm</span><span class="t-what">Guests seated for the Nikkah</span></li>
+        <li><span class="t-time">2:30pm</span><span class="t-what">Nikkah ceremony</span></li>
+        <li><span class="t-time">3:00&ndash;4:00pm</span><span class="t-what">Photographs &mdash; family &amp; couple</span><span class="t-note">Grab a drink and relax while we're being papped.</span></li>
+        <li><span class="t-time">4:00pm</span><span class="t-what">Day guests arrive</span><span class="t-note">Mingling, drinks &amp; photos continue for everyone.</span></li>
+        <li><span class="t-time">6:15pm</span><span class="t-what">Guests seated for entrances</span></li>
+        <li><span class="t-time">6:30pm</span><span class="t-what">Bride &amp; groom entrances</span></li>
+        <li><span class="t-time">7:00&ndash;8:30pm</span><span class="t-what">Wedding dinner</span></li>
+        <li><span class="t-time">8:30pm</span><span class="t-what">Evening guests arrive &mdash; party begins!</span></li>
       </ul>
       <div class="day-actions">
         <button class="btn-flat" id="cal-day1" type="button">📅 Add to calendar</button>
@@ -523,14 +532,20 @@
       </div>
       <div class="day-meta">
         <a class="venue-link" href="https://www.google.com/maps/search/?api=1&query=Jack+of+Clubs+Barn+Lode+Fen+CB25+9HE" target="_blank" rel="noopener">Jack of Clubs Barn, Lode Fen &middot; CB25 9HE</a>
+        <span class="day-flavor">Ceremony &amp; dinner held in the marquee on site.</span>
       </div>
       <span class="dress-chip">Dress: Garden formal &mdash; South Asian or Western wear welcome</span>
       <ul class="timeline">
-        <li><span class="t-time">12:00pm</span><span class="t-what">Doors open, Baraat begins</span></li>
-        <li><span class="t-what">Reception festivities</span></li>
-        <li><span class="t-what">Cake cutting</span></li>
-        <li><span class="t-what">Dancing &amp; celebrations</span></li>
-        <li><span class="t-time">7:00pm</span><span class="t-what">Day wraps up</span></li>
+        <li><span class="t-time">12:00&ndash;1:00pm</span><span class="t-what">Guests arrive</span><span class="t-note">Mocktails &amp; snacks to start.</span></li>
+        <li><span class="t-time">1:00&ndash;2:15pm</span><span class="t-what">Mingling &amp; a Santoor performance</span><span class="t-note">In the marquee &mdash; settle in.</span></li>
+        <li><span class="t-time">2:15pm</span><span class="t-what">Guests seated for entrances</span></li>
+        <li><span class="t-time">2:30pm</span><span class="t-what">Bride &amp; groom entrances</span></li>
+        <li><span class="t-time">3:00&ndash;5:00pm</span><span class="t-what">Wedding dinner</span><span class="t-note">With a second Santoor performance during the main course.</span></li>
+        <li><span class="t-time">5:00&ndash;5:30pm</span><span class="t-what">Speeches</span></li>
+        <li><span class="t-time">5:30&ndash;6:30pm</span><span class="t-what">Mingling &amp; fresh air</span><span class="t-note">While the marquee is reset for cake &amp; dancing.</span></li>
+        <li><span class="t-time">6:30pm</span><span class="t-what">First dance</span><span class="t-note">Then the dancing really starts.</span></li>
+        <li><span class="t-time">7:00pm</span><span class="t-what">Cake cutting &amp; ring ceremony</span></li>
+        <li><span class="t-time">8:30pm</span><span class="t-what">Bride &amp; groom depart</span></li>
       </ul>
       <div class="day-actions">
         <button class="btn-flat" id="cal-day2" type="button">📅 Add to calendar</button>
@@ -680,10 +695,10 @@
     return lines.join('\r\n');
   }
 
-  const day1Start = new Date(Date.UTC(2026, 7, 29, 14, 0, 0));
-  const day1End   = new Date(Date.UTC(2026, 7, 29, 21, 0, 0));
+  const day1Start = new Date(Date.UTC(2026, 7, 29, 13, 15, 0));
+  const day1End   = new Date(Date.UTC(2026, 7, 29, 22, 30, 0));
   const day2Start = new Date(Date.UTC(2026, 7, 30, 11, 0, 0));
-  const day2End   = new Date(Date.UTC(2026, 7, 30, 18, 0, 0));
+  const day2End   = new Date(Date.UTC(2026, 7, 30, 19, 30, 0));
 
   const ics1 = generateICS({
     day: 1,
