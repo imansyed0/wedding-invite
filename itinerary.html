@@ -483,11 +483,30 @@
   @media (min-width: 640px) {
     .wrap { padding: 8px 32px 56px; }
   }
+
+  /* Invite-variant visibility (URL ?invite=day1|day2|both) — same
+     mechanism as index.html's applyInviteVariant(). Default (both, or
+     JS disabled) shows the "both days" hero copy and both day cards. */
+  .day1-only, .day2-only { display: none; }
+
+  body.invite-day1 .both-only,
+  body.invite-day1 .day2-only { display: none; }
+  body.invite-day1 .day1-only { display: inline; }
+  body.invite-day1 [data-day-section="2"] { display: none !important; }
+  body.invite-day1 .day-prefix,
+  body.invite-day1 .day-prefix-sep { display: none !important; }
+
+  body.invite-day2 .both-only,
+  body.invite-day2 .day1-only { display: none; }
+  body.invite-day2 .day2-only { display: inline; }
+  body.invite-day2 [data-day-section="1"] { display: none !important; }
+  body.invite-day2 .day-prefix,
+  body.invite-day2 .day-prefix-sep { display: none !important; }
 </style>
 </head>
 <body>
 
-<div class="top-nav"><a href="index.html">&larr; back to the invitation</a></div>
+<div class="top-nav"><a href="index.html" id="back-link">&larr; back to the invitation</a></div>
 
 <div class="wrap">
 
@@ -496,8 +515,16 @@
     <div class="hero-photo" role="img" aria-label="Leon and Iman"></div>
     <div class="eyebrow">You're coming to celebrate with us —</div>
     <h1>Leon <span class="amp">&amp;</span> <span class="nm-2">Iman</span></h1>
-    <div class="sub">Wedding Weekend Itinerary</div>
-    <div class="dates">Saturday 29 &ndash; Sunday 30 August 2026 &middot; Jack of Clubs Barn</div>
+    <div class="sub">
+      <span class="both-only">Wedding Weekend Itinerary</span>
+      <span class="day1-only">Nikkah &amp; Mehndi Itinerary</span>
+      <span class="day2-only">Baraat Itinerary</span>
+    </div>
+    <div class="dates">
+      <span class="both-only">Saturday 29 &ndash; Sunday 30 August 2026 &middot; Jack of Clubs Barn</span>
+      <span class="day1-only">Saturday 29 August 2026 &middot; Jack of Clubs Barn</span>
+      <span class="day2-only">Sunday 30 August 2026 &middot; Jack of Clubs Barn</span>
+    </div>
   </div>
 
   <!-- QUICK NAV -->
@@ -512,14 +539,14 @@
 
   <!-- ITINERARY -->
   <section id="itinerary">
-    <div class="card">
+    <div class="card" data-day-section="1">
       <div class="day-card-head">
         <div class="day-icons">
           <div class="icon icon-horse" role="img" aria-label="Dreamy the horse"></div>
           <div class="icon icon-cats" role="img" aria-label="Lola and Rumi the cats"></div>
         </div>
         <div class="heading">
-          <div class="day-label">Day One &middot; Sat 29 Aug</div>
+          <div class="day-label"><span class="day-prefix">Day One</span><span class="day-prefix-sep"> &middot; </span>Sat 29 Aug</div>
           <div class="day-title">Nikkah &amp; Mehndi</div>
         </div>
       </div>
@@ -544,13 +571,13 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-day-section="2">
       <div class="day-card-head">
         <div class="day-icons">
           <div class="icon icon-cake" role="img" aria-label="Wedding cake"></div>
         </div>
         <div class="heading">
-          <div class="day-label">Day Two &middot; Sun 30 Aug</div>
+          <div class="day-label"><span class="day-prefix">Day Two</span><span class="day-prefix-sep"> &middot; </span>Sun 30 Aug</div>
           <div class="day-title">Baraat</div>
         </div>
       </div>
@@ -690,6 +717,24 @@
 </footer>
 
 <script>
+  // Invite variant — ?invite=day1 | day2 | both (default: both). Matches
+  // index.html's applyInviteVariant() exactly, same param + class names,
+  // so a guest's day1/day2/both link works identically on both pages.
+  (function applyInviteVariant() {
+    const params = new URLSearchParams(window.location.search);
+    const invite = (params.get('invite') || 'both').toLowerCase();
+    if (invite === 'day1') document.body.classList.add('invite-day1');
+    else if (invite === 'day2') document.body.classList.add('invite-day2');
+    else document.body.classList.add('invite-both');
+
+    // Carry the current query string back to the main invite so the
+    // guest's variant survives the round trip.
+    const backLink = document.getElementById('back-link');
+    if (backLink && window.location.search) {
+      backLink.href = 'index.html' + window.location.search;
+    }
+  })();
+
   // Add to Calendar — same event data as the main invite's .ics generation
   function generateICS(event) {
     const pad = (n) => String(n).padStart(2, '0');
