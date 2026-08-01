@@ -72,14 +72,26 @@
     text-align: center;
     padding: 18px 4px 28px;
   }
+  /* Framed in the illustration's own 2:3 proportions rather than a
+     circle — a square/round crop of a full-length portrait cuts the
+     couple off at the knees. The wobble border SVG below shares the
+     same 1024x1536 viewBox, so the stroke stays undistorted. */
   .hero-photo {
-    width: 116px;
-    height: 116px;
-    margin: 0 auto 14px;
-    border-radius: 50%;
-    background: url('art/couple.jpeg') center 18% / cover no-repeat;
-    border: 4px solid var(--paper);
-    box-shadow: 0 10px 24px rgba(60, 20, 30, 0.28);
+    position: relative;
+    width: clamp(132px, 38vw, 168px);
+    aspect-ratio: 1024 / 1536;
+    margin: 0 auto 16px;
+    background: url('art/couple.jpeg') center / cover no-repeat;
+    box-shadow: 0 12px 26px rgba(60, 20, 30, 0.3);
+  }
+  .hero-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1536' preserveAspectRatio='none'><defs><filter id='w' x='-5%25' y='-5%25' width='110%25' height='110%25'><feTurbulence baseFrequency='0.018' numOctaves='2' seed='4'/><feDisplacementMap in='SourceGraphic' scale='8'/></filter></defs><rect x='10' y='10' width='1004' height='1516' fill='none' stroke='%231a1410' stroke-width='5' stroke-linejoin='round' filter='url(%23w)'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
   }
   .hero .eyebrow {
     font-family: 'Cormorant Garamond', serif;
@@ -190,15 +202,26 @@
     background-position: center;
   }
   .day-icons .icon + .icon { margin-left: -8px; }
-  .icon-horse { background-image: url('art/horse.png'); background-position: center 30%; }
-  .icon-cats  { background-image: url('art/cats.png'); }
-  .icon-cake  { background-image: url('art/cake.png'); }
+  /* horse.png is a tall 2:3 canvas with the head occupying only the
+     middle ~60% — letterboxing it with `contain` leaves the horse tiny.
+     Scale to the icon's width and pan to the head instead, as the main
+     invite does. Selector needs the .day-icons prefix to outrank the
+     shared `.day-icons .icon` background rules above. */
+  .day-icons .icon-horse {
+    background-image: url('art/horse.png');
+    background-size: 100% auto;
+    background-position: center 45%;
+  }
+  .day-icons .icon-cats { background-image: url('art/cats.png'); }
+  .day-icons .icon-cake { background-image: url('art/cake.png'); }
   .day-card-head .heading { flex: 1; }
   .day-label {
     font-family: 'Caveat', cursive;
     font-weight: 700;
     font-size: 15px;
-    letter-spacing: 0.3em;
+    /* 0.3em pushed "DAY ONE · SAT 29 AUG" past the column width and
+       broke the date across two lines on a 390px phone. */
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--red);
   }
