@@ -406,36 +406,6 @@
     cursor: pointer;
   }
 
-  /* Contact */
-  .contact-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255,255,255,0.4);
-    border: 1px dashed rgba(26,20,16,0.3);
-    padding: 12px 14px;
-    margin-bottom: 10px;
-  }
-  .contact-card:last-child { margin-bottom: 0; }
-  .contact-card .who {
-    font-family: 'Fredericka the Great', cursive;
-    font-size: 18px;
-    color: var(--ink);
-  }
-  .contact-card .how {
-    font-size: 16px;
-    color: var(--wood);
-  }
-  .placeholder-flag {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--red-soft);
-    font-family: 'Caveat', cursive;
-    display: block;
-    margin-top: 2px;
-  }
-
   /* FAQ (accordion, reused copy from the main invite) */
   .faq-item { border-bottom: 1.5px solid rgba(26,20,16,0.18); }
   .faq-item:first-of-type { border-top: 1.5px solid rgba(26,20,16,0.18); }
@@ -534,7 +504,6 @@
     <a class="pill" href="#registry">Registry</a>
     <a class="pill" href="#songs">Songs</a>
     <a class="pill" href="#faq">Good to know</a>
-    <a class="pill" href="#contact">Contact</a>
   </nav>
 
   <!-- ITINERARY -->
@@ -622,10 +591,6 @@
         <span class="emoji">🧥</span>
         <span>Bring a layer for once the sun goes down &mdash; evenings can turn chilly even in August.</span>
       </div>
-      <div class="weather-row">
-        <span class="emoji">☂️</span>
-        <span>A small umbrella never hurts. This is England, after all.</span>
-      </div>
     </div>
   </section>
 
@@ -694,21 +659,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="card">
-      <h2>Questions?</h2>
-      <p class="lede">If anything comes up on the day, here's who to find.</p>
-      <!-- TODO: replace with a real day-of contact (e.g. a family member or member of the wedding party) -->
-      <div class="contact-card">
-        <div>
-          <div class="who">Name</div>
-          <div class="how">Phone number</div>
-          <span class="placeholder-flag">placeholder &mdash; add a day-of contact</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
 </div>
 
