@@ -1421,7 +1421,7 @@
       <div class="details-row">
         <div class="label">when</div>
         <div class="value">Saturday, 29 August 2026</div>
-        <div class="sub">3pm · Party from ~7pm once dinner is finished</div>
+        <div class="sub">2:30pm · Party from 8:30pm</div>
       </div>
       <div class="ornament" aria-hidden="true"></div>
       <div class="details-row">
@@ -1455,7 +1455,7 @@
       <div class="details-row">
         <div class="label">when</div>
         <div class="value">Sunday, 30 August 2026</div>
-        <div class="sub">12pm – 7pm</div>
+        <div class="sub">12pm – 8:30pm</div>
       </div>
       <div class="ornament" aria-hidden="true"></div>
       <div class="details-row">
@@ -1566,6 +1566,7 @@
 </div>
 
 <footer class="credits">
+  <a href="itinerary.html" id="footer-itinerary-link">weekend itinerary &amp; registry</a> &middot;
   illustrations by <a href="https://instagram.com/fire.escape.girl" target="_blank" rel="noopener">Georgia Embling</a>
 </footer>
 
@@ -1682,6 +1683,14 @@
     if (invite === 'day1') document.body.classList.add('invite-day1');
     else if (invite === 'day2') document.body.classList.add('invite-day2');
     else document.body.classList.add('invite-both');
+
+    // Carry the current query string (whatever it is) forward to the
+    // itinerary link, so a guest's day1/day2/both variant survives the
+    // hop over to itinerary.html and back.
+    const footerLink = document.getElementById('footer-itinerary-link');
+    if (footerLink && window.location.search) {
+      footerLink.href = 'itinerary.html' + window.location.search;
+    }
   })();
 
   const root = document.documentElement;
@@ -1988,6 +1997,9 @@
         <p style="font-size: 0.85em; color: var(--wood-light); margin-top: 0.8em;">
           We'll be in touch with more details soon.
         </p>
+        <p style="margin-top: 1.2em;">
+          <a href="itinerary.html${window.location.search}" style="font-family: 'Caveat', cursive; font-size: 0.9em; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red); text-decoration: underline;">See the full itinerary, registry &amp; more &rarr;</a>
+        </p>
       </div>
     `;
   });
@@ -2022,10 +2034,10 @@
     return lines.join('\r\n');
   }
 
-  const day1Start = new Date(Date.UTC(2026, 7, 29, 14, 0, 0));
-  const day1End   = new Date(Date.UTC(2026, 7, 29, 21, 0, 0));
+  const day1Start = new Date(Date.UTC(2026, 7, 29, 13, 15, 0));
+  const day1End   = new Date(Date.UTC(2026, 7, 29, 22, 30, 0));
   const day2Start = new Date(Date.UTC(2026, 7, 30, 11, 0, 0));
-  const day2End   = new Date(Date.UTC(2026, 7, 30, 18, 0, 0));
+  const day2End   = new Date(Date.UTC(2026, 7, 30, 19, 30, 0));
 
   const ics1 = generateICS({
     day: 1,

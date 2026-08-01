@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Leon &amp; Iman — Wedding Weekend Itinerary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@400;500;600;700&family=Fredericka+the+Great&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #fbf3e3;
+    --cream: #fdf5e0;
+    --red: #be185d;
+    --red-soft: #d04848;
+    --rose: #f4a8c1;
+    --twilight: #b8a3d4;
+    --sun: #f08555;
+    --leaf: #2d5016;
+    --wood: #3d2613;
+    --wood-light: #5a3a22;
+    --gold: #c69c4a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Caveat', cursive;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    background: linear-gradient(180deg,
+      #f7c8d8 0%,
+      #f4b9cb 10%,
+      #e8c3a0 26%,
+      #e0b29b 38%,
+      #d8a0a8 50%,
+      #ceadbe 62%,
+      #c4a6d0 74%,
+      #8a7ba8 88%,
+      #3a2845 100%
+    );
+    background-attachment: fixed;
+  }
+
+  a { color: inherit; }
+
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 16px 6px;
+    font-family: 'Caveat', cursive;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+  }
+  .top-nav a {
+    text-decoration: none;
+    color: var(--wood);
+    border-bottom: 1px dashed var(--wood);
+    padding-bottom: 1px;
+  }
+
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 8px 20px 48px;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 18px 4px 28px;
+  }
+  /* Framed in the illustration's own 2:3 proportions rather than a
+     circle — a square/round crop of a full-length portrait cuts the
+     couple off at the knees. The wobble border SVG below shares the
+     same 1024x1536 viewBox, so the stroke stays undistorted. */
+  .hero-photo {
+    position: relative;
+    width: clamp(132px, 38vw, 168px);
+    aspect-ratio: 1024 / 1536;
+    margin: 0 auto 16px;
+    background: url('art/couple.jpeg') center / cover no-repeat;
+    box-shadow: 0 12px 26px rgba(60, 20, 30, 0.3);
+  }
+  .hero-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1536' preserveAspectRatio='none'><defs><filter id='w' x='-5%25' y='-5%25' width='110%25' height='110%25'><feTurbulence baseFrequency='0.018' numOctaves='2' seed='4'/><feDisplacementMap in='SourceGraphic' scale='8'/></filter></defs><rect x='10' y='10' width='1004' height='1516' fill='none' stroke='%231a1410' stroke-width='5' stroke-linejoin='round' filter='url(%23w)'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .hero .eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--wood);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.2em;
+  }
+  .hero h1 {
+    font-family: 'Fredericka the Great', cursive;
+    font-weight: 400;
+    font-size: clamp(38px, 11vw, 54px);
+    line-height: 1;
+    color: #ec4899;
+    -webkit-text-stroke: 1.6px #1a1410;
+    paint-order: stroke fill;
+  }
+  .hero h1 .amp { color: #f59e0b; -webkit-text-stroke: 2px #1a1410; padding: 0 0.08em; }
+  .hero h1 .nm-2 { color: #6d28d9; }
+  .hero .sub {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--wood);
+    margin-top: 0.5em;
+  }
+  .hero .dates {
+    font-size: 17px;
+    color: var(--wood);
+    margin-top: 0.3em;
+  }
+
+  /* Quick nav pills */
+  .pillbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 6px 0 22px;
+  }
+  .pill {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    color: var(--ink);
+    background: rgba(255,255,255,0.55);
+    border: 1.5px solid rgba(26,20,16,0.35);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+
+  /* Card shell — reused for every section, with the same hand-drawn
+     wobble border used on the couple/RSVP cards on the main invite. */
+  .card {
+    position: relative;
+    background: var(--paper);
+    padding: 22px 20px 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 18px 40px -12px rgba(60, 20, 30, 0.32);
+  }
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1536' preserveAspectRatio='none'><defs><filter id='w' x='-5%25' y='-5%25' width='110%25' height='110%25'><feTurbulence baseFrequency='0.018' numOctaves='2' seed='4'/><feDisplacementMap in='SourceGraphic' scale='8'/></filter></defs><rect x='10' y='10' width='1004' height='1516' fill='none' stroke='%231a1410' stroke-width='5' stroke-linejoin='round' filter='url(%23w)'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .card h2 {
+    font-family: 'Fredericka the Great', cursive;
+    font-weight: 400;
+    font-size: 30px;
+    color: var(--red);
+    text-align: center;
+    line-height: 1.05;
+    margin-bottom: 0.55em;
+  }
+  .card .lede {
+    font-size: 19px;
+    color: var(--wood);
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 1em;
+  }
+
+  /* Day card header */
+  .day-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .day-icons {
+    display: flex;
+    flex-shrink: 0;
+  }
+  .day-icons .icon {
+    width: 44px;
+    height: 44px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .day-icons .icon + .icon { margin-left: -8px; }
+  /* horse.png is a tall 2:3 canvas with the head occupying only the
+     middle ~60% — letterboxing it with `contain` leaves the horse tiny.
+     Scale to the icon's width and pan to the head instead, as the main
+     invite does. Selector needs the .day-icons prefix to outrank the
+     shared `.day-icons .icon` background rules above. */
+  .day-icons .icon-horse {
+    background-image: url('art/horse.png');
+    background-size: 100% auto;
+    background-position: center 45%;
+  }
+  .day-icons .icon-cats { background-image: url('art/cats.png'); }
+  .day-icons .icon-cake { background-image: url('art/cake.png'); }
+  .day-card-head .heading { flex: 1; }
+  .day-label {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 15px;
+    /* 0.3em pushed "DAY ONE · SAT 29 AUG" past the column width and
+       broke the date across two lines on a 390px phone. */
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .day-title {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 27px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .day-meta {
+    font-size: 17px;
+    color: var(--wood);
+    margin-bottom: 14px;
+  }
+  .day-meta .venue-link {
+    text-decoration: none;
+    border-bottom: 1px dashed var(--wood);
+  }
+  .day-meta .day-flavor {
+    display: block;
+    font-size: 15px;
+    color: var(--wood-light);
+    margin-top: 1px;
+  }
+  .dress-chip {
+    display: inline-block;
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    background: rgba(190, 24, 93, 0.1);
+    color: var(--red);
+    border: 1px solid rgba(190, 24, 93, 0.35);
+    border-radius: 999px;
+    padding: 3px 12px;
+    margin-bottom: 16px;
+  }
+
+  /* Timeline */
+  .timeline {
+    list-style: none;
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 6px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: rgba(26,20,16,0.2);
+  }
+  .timeline li {
+    position: relative;
+    padding-bottom: 18px;
+  }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: -22px; top: 5px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 1.5px var(--red);
+  }
+  .timeline .t-time {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 19px;
+    color: var(--red);
+    display: inline-block;
+    margin-right: 6px;
+  }
+  .timeline .t-what {
+    font-size: 19px;
+    color: var(--ink);
+  }
+  .timeline .t-note {
+    display: block;
+    font-size: 16px;
+    color: var(--wood-light);
+    margin-top: 1px;
+  }
+
+  .day-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .btn-flat {
+    flex: 1;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+    padding: 9px 8px;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s, color 0.15s;
+  }
+  .btn-flat:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
+
+  /* Weather */
+  .weather-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 18px;
+    color: var(--wood);
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+  .weather-row .emoji { font-size: 26px; line-height: 1.2; }
+  .weather-row:last-child { margin-bottom: 0; }
+
+  /* Registry */
+  .registry-note {
+    font-size: 12px;
+    color: var(--red-soft);
+    text-align: center;
+    margin-top: 4px;
+    font-family: 'Caveat', cursive;
+  }
+
+  /* Song requests form */
+  .field { margin-bottom: 12px; }
+  .field label {
+    display: block;
+    font-family: 'Caveat', cursive;
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--wood-light);
+    margin-bottom: 5px;
+  }
+  .field input {
+    width: 100%;
+    font-family: 'Caveat', cursive;
+    font-size: 18px;
+    padding: 10px 12px;
+    border: 1.5px solid rgba(26,20,16,0.25);
+    background: rgba(255,255,255,0.6);
+    color: var(--ink);
+    outline: none;
+  }
+  .field input:focus { border-color: var(--red); }
+  .field input::placeholder { color: rgba(26,20,16,0.35); }
+  .btn-submit {
+    width: 100%;
+    font-family: 'Caveat', cursive;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    background: var(--red);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+    margin-top: 4px;
+  }
+  .btn-submit:hover { background: #9a1414; transform: translateY(-1px); }
+  .song-confirm {
+    display: none;
+    text-align: center;
+    padding: 6px 0 2px;
+  }
+  .song-confirm .check { font-size: 1.8em; margin-bottom: 0.2em; }
+  .song-confirm p { font-size: 19px; color: var(--ink); margin-bottom: 0.5em; }
+  .song-confirm button {
+    background: none;
+    border: none;
+    font-family: 'Caveat', cursive;
+    font-size: 16px;
+    color: var(--red);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* Contact */
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.4);
+    border: 1px dashed rgba(26,20,16,0.3);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .contact-card:last-child { margin-bottom: 0; }
+  .contact-card .who {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .contact-card .how {
+    font-size: 16px;
+    color: var(--wood);
+  }
+  .placeholder-flag {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--red-soft);
+    font-family: 'Caveat', cursive;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* FAQ (accordion, reused copy from the main invite) */
+  .faq-item { border-bottom: 1.5px solid rgba(26,20,16,0.18); }
+  .faq-item:first-of-type { border-top: 1.5px solid rgba(26,20,16,0.18); }
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 21px;
+    color: var(--ink);
+    padding: 12px 2px;
+    display: flex; align-items: center; justify-content: space-between;
+    user-select: none;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+";
+    font-family: 'Caveat', cursive;
+    font-size: 1.2em;
+    color: var(--red);
+  }
+  .faq-item[open] summary::after { content: "–"; }
+  .faq-item .faq-body {
+    font-size: 17px;
+    color: var(--wood);
+    line-height: 1.55;
+    padding: 0 2px 14px;
+  }
+  .faq-item .faq-body p { margin-bottom: 0.55em; }
+  .faq-item .faq-body p:last-child { margin-bottom: 0; }
+
+  .credits {
+    text-align: center;
+    padding: 18px 16px 8px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.65);
+  }
+  .credits a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: underline;
+    text-decoration-color: rgba(255,255,255,0.35);
+    text-underline-offset: 2px;
+  }
+
+  @media (min-width: 640px) {
+    .wrap { padding: 8px 32px 56px; }
+  }
+
+  /* Invite-variant visibility (URL ?invite=day1|day2|both) — same
+     mechanism as index.html's applyInviteVariant(). Default (both, or
+     JS disabled) shows the "both days" hero copy and both day cards. */
+  .day1-only, .day2-only { display: none; }
+
+  body.invite-day1 .both-only,
+  body.invite-day1 .day2-only { display: none; }
+  body.invite-day1 .day1-only { display: inline; }
+  body.invite-day1 [data-day-section="2"] { display: none !important; }
+  body.invite-day1 .day-prefix,
+  body.invite-day1 .day-prefix-sep { display: none !important; }
+
+  body.invite-day2 .both-only,
+  body.invite-day2 .day1-only { display: none; }
+  body.invite-day2 .day2-only { display: inline; }
+  body.invite-day2 [data-day-section="1"] { display: none !important; }
+  body.invite-day2 .day-prefix,
+  body.invite-day2 .day-prefix-sep { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="top-nav"><a href="index.html" id="back-link">&larr; back to the invitation</a></div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-photo" role="img" aria-label="Leon and Iman"></div>
+    <div class="eyebrow">You're coming to celebrate with us —</div>
+    <h1>Leon <span class="amp">&amp;</span> <span class="nm-2">Iman</span></h1>
+    <div class="sub">
+      <span class="both-only">Wedding Weekend Itinerary</span>
+      <span class="day1-only">Nikkah &amp; Mehndi Itinerary</span>
+      <span class="day2-only">Baraat Itinerary</span>
+    </div>
+    <div class="dates">
+      <span class="both-only">Saturday 29 &ndash; Sunday 30 August 2026 &middot; Jack of Clubs Barn</span>
+      <span class="day1-only">Saturday 29 August 2026 &middot; Jack of Clubs Barn</span>
+      <span class="day2-only">Sunday 30 August 2026 &middot; Jack of Clubs Barn</span>
+    </div>
+  </div>
+
+  <!-- QUICK NAV -->
+  <nav class="pillbar" aria-label="Section shortcuts">
+    <a class="pill" href="#itinerary">Itinerary</a>
+    <a class="pill" href="#weather">Weather</a>
+    <a class="pill" href="#registry">Registry</a>
+    <a class="pill" href="#songs">Songs</a>
+    <a class="pill" href="#faq">Good to know</a>
+    <a class="pill" href="#contact">Contact</a>
+  </nav>
+
+  <!-- ITINERARY -->
+  <section id="itinerary">
+    <div class="card" data-day-section="1">
+      <div class="day-card-head">
+        <div class="day-icons">
+          <div class="icon icon-horse" role="img" aria-label="Dreamy the horse"></div>
+          <div class="icon icon-cats" role="img" aria-label="Lola and Rumi the cats"></div>
+        </div>
+        <div class="heading">
+          <div class="day-label"><span class="day-prefix">Day One</span><span class="day-prefix-sep"> &middot; </span>Sat 29 Aug</div>
+          <div class="day-title">Nikkah &amp; Mehndi</div>
+        </div>
+      </div>
+      <div class="day-meta">
+        <a class="venue-link" href="https://www.google.com/maps/search/?api=1&query=Jack+of+Clubs+Barn+Lode+Fen+CB25+9HE" target="_blank" rel="noopener">Jack of Clubs Barn, Lode Fen &middot; CB25 9HE</a>
+      </div>
+      <span class="dress-chip">Dress: Vibrant &mdash; South Asian or Western, the more colour the better</span>
+      <ul class="timeline">
+        <li><span class="t-time">1:15pm</span><span class="t-what">Leon's family arrive</span><span class="t-note">Welcome drinks &amp; mingling ahead of the Nikkah.</span></li>
+        <li><span class="t-time">2:15pm</span><span class="t-what">Guests seated for the Nikkah</span></li>
+        <li><span class="t-time">2:30pm</span><span class="t-what">Nikkah ceremony</span></li>
+        <li><span class="t-time">3:00&ndash;4:00pm</span><span class="t-what">Photographs &mdash; family &amp; couple</span><span class="t-note">Grab a drink and relax while we're being papped.</span></li>
+        <li><span class="t-time">4:00&ndash;6:00pm</span><span class="t-what">Day guests arrive &mdash; mingling &amp; free time</span><span class="t-note">Drinks and catching up while we sneak off for a few more photos (and an outfit change).</span></li>
+        <li><span class="t-time">6:15pm</span><span class="t-what">Guests seated for entrances</span></li>
+        <li><span class="t-time">6:30pm</span><span class="t-what">Bride &amp; groom entrances</span></li>
+        <li><span class="t-time">7:00&ndash;8:30pm</span><span class="t-what">Wedding dinner</span></li>
+        <li><span class="t-time">8:30pm</span><span class="t-what">Evening guests arrive &mdash; party begins!</span><span class="t-note">Friends are taking over the decks through the night from about 9:30pm &mdash; Faiz, Joe, Luke, Alex, Georgia &amp; Matt.</span></li>
+      </ul>
+      <div class="day-actions">
+        <button class="btn-flat" id="cal-day1" type="button">📅 Add to calendar</button>
+        <a class="btn-flat" href="https://www.google.com/maps/search/?api=1&query=Jack+of+Clubs+Barn+Lode+Fen+CB25+9HE" target="_blank" rel="noopener">📍 Directions</a>
+      </div>
+    </div>
+
+    <div class="card" data-day-section="2">
+      <div class="day-card-head">
+        <div class="day-icons">
+          <div class="icon icon-cake" role="img" aria-label="Wedding cake"></div>
+        </div>
+        <div class="heading">
+          <div class="day-label"><span class="day-prefix">Day Two</span><span class="day-prefix-sep"> &middot; </span>Sun 30 Aug</div>
+          <div class="day-title">Baraat</div>
+        </div>
+      </div>
+      <div class="day-meta">
+        <a class="venue-link" href="https://www.google.com/maps/search/?api=1&query=Jack+of+Clubs+Barn+Lode+Fen+CB25+9HE" target="_blank" rel="noopener">Jack of Clubs Barn, Lode Fen &middot; CB25 9HE</a>
+        <span class="day-flavor">Ceremony &amp; dinner held in the marquee on site.</span>
+      </div>
+      <span class="dress-chip">Dress: Garden formal &mdash; South Asian or Western wear welcome</span>
+      <ul class="timeline">
+        <li><span class="t-time">12:00&ndash;1:00pm</span><span class="t-what">Guests arrive</span><span class="t-note">Mocktails &amp; snacks to start.</span></li>
+        <li><span class="t-time">1:00&ndash;1:45pm</span><span class="t-what">Mingling</span></li>
+        <li><span class="t-time">1:45pm</span><span class="t-what">Santoor performance</span><span class="t-note">Guests invited into the marquee for some live music.</span></li>
+        <li><span class="t-time">2:15pm</span><span class="t-what">Guests seated for entrances</span></li>
+        <li><span class="t-time">2:30pm</span><span class="t-what">Bride &amp; groom entrances</span></li>
+        <li><span class="t-time">3:00&ndash;5:00pm</span><span class="t-what">Wedding dinner</span><span class="t-note">With a second Santoor performance during the main course.</span></li>
+        <li><span class="t-time">5:00&ndash;5:30pm</span><span class="t-what">Speeches</span></li>
+        <li><span class="t-time">5:30&ndash;6:30pm</span><span class="t-what">Mingling &amp; fresh air</span><span class="t-note">While the marquee is reset for cake &amp; dancing.</span></li>
+        <li><span class="t-time">6:30pm</span><span class="t-what">First dance</span><span class="t-note">Then the dancing really starts.</span></li>
+        <li><span class="t-time">8:00pm</span><span class="t-what">Cake cutting</span></li>
+        <li><span class="t-time">8:30pm</span><span class="t-what">Bride &amp; groom depart</span></li>
+      </ul>
+      <div class="day-actions">
+        <button class="btn-flat" id="cal-day2" type="button">📅 Add to calendar</button>
+        <a class="btn-flat" href="https://www.google.com/maps/search/?api=1&query=Jack+of+Clubs+Barn+Lode+Fen+CB25+9HE" target="_blank" rel="noopener">📍 Directions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEATHER & WHAT TO BRING -->
+  <section id="weather">
+    <div class="card">
+      <h2>Weather &amp; what to bring</h2>
+      <div class="weather-row">
+        <span class="emoji">🌦️</span>
+        <span>British summer is famously unpredictable &mdash; expect warm(ish) days and cooler evenings, and pack for both sunshine and a passing shower.</span>
+      </div>
+      <div class="weather-row">
+        <span class="emoji">👟</span>
+        <span>The barn sits in open fields, so heels sink into grass. Flats, wedges or block heels are your friend outdoors.</span>
+      </div>
+      <div class="weather-row">
+        <span class="emoji">🧥</span>
+        <span>Bring a layer for once the sun goes down &mdash; evenings can turn chilly even in August.</span>
+      </div>
+      <div class="weather-row">
+        <span class="emoji">☂️</span>
+        <span>A small umbrella never hurts. This is England, after all.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRY -->
+  <section id="registry">
+    <div class="card">
+      <h2>Our registry</h2>
+      <p class="lede">Your presence is truly the only present we need &mdash; but if you'd like to give something, here's where to look.</p>
+      <!-- TODO: replace with the real registry link (Zola / Amazon / John Lewis / honeymoon fund details, etc.) -->
+      <a class="btn-flat" style="display:block;" href="#" onclick="return false;">🎁 View our registry (link coming soon)</a>
+      <div class="registry-note">placeholder &mdash; Leon &amp; Iman to add the real link</div>
+    </div>
+  </section>
+
+  <!-- SONG REQUESTS -->
+  <section id="songs">
+    <div class="card">
+      <h2>Request a song</h2>
+      <p class="lede">Help us build the reception playlist &mdash; what will get you on the dance floor?</p>
+      <form id="song-form">
+        <div class="field">
+          <label for="song-name">Your name</label>
+          <input type="text" id="song-name" placeholder="Your name" required />
+        </div>
+        <div class="field">
+          <label for="song-title">Song &amp; artist</label>
+          <input type="text" id="song-title" placeholder="e.g. Jai Ho &mdash; A.R. Rahman" required />
+        </div>
+        <button type="submit" class="btn-submit">Add to the playlist</button>
+      </form>
+      <div class="song-confirm" id="song-confirm">
+        <div class="check">🎶</div>
+        <p>Added &mdash; thank you!</p>
+        <button type="button" id="song-again">request another song</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOOD TO KNOW -->
+  <section id="faq">
+    <div class="card">
+      <h2>Good to know</h2>
+      <details class="faq-item">
+        <summary>Accommodation</summary>
+        <div class="faq-body">
+          <p>There are a number of places to stay nearby:</p>
+          <p><a href="https://www.cambridgequymill.co.uk/" target="_blank" rel="noopener"><strong>Quy Mill Hotel</strong></a> &mdash; premium option, a short drive from the venue.</p>
+          <p><a href="https://novotel.accor.com/gb/city/hotels-cambridge-v0683.shtml" target="_blank" rel="noopener"><strong>Novotel Cambridge North</strong></a> &mdash; by Cambridge North station, where some of the family are staying.</p>
+          <p><a href="https://www.travelodge.co.uk/hotels/255/Cambridge-Central-hotel" target="_blank" rel="noopener"><strong>Cambridge Travelodge</strong></a> &mdash; affordable option with many other guests staying.</p>
+          <p><a href="https://www.lodesideglamping.co.uk/" target="_blank" rel="noopener"><strong>Lodeside Glamping</strong></a> &mdash; the nearest affordable option, walkable from the venue.</p>
+          <p>There are also plenty of Airbnbs around Lode, Reach, and Swaffham Bulbeck.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Travel</summary>
+        <div class="faq-body">
+          <p>The venue is accessible by taxi from both <strong>Cambridge station</strong> and <strong>Cambridge North station</strong>.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Parking</summary>
+        <div class="faq-body">
+          <p>Free on-site parking at the barn. Cars can be left overnight.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="card">
+      <h2>Questions?</h2>
+      <p class="lede">If anything comes up on the day, here's who to find.</p>
+      <!-- TODO: replace with a real day-of contact (e.g. a family member or member of the wedding party) -->
+      <div class="contact-card">
+        <div>
+          <div class="who">Name</div>
+          <div class="how">Phone number</div>
+          <span class="placeholder-flag">placeholder &mdash; add a day-of contact</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="credits">
+  illustrations by <a href="https://instagram.com/fire.escape.girl" target="_blank" rel="noopener">Georgia Embling</a>
+</footer>
+
+<script>
+  // Invite variant — ?invite=day1 | day2 | both (default: both). Matches
+  // index.html's applyInviteVariant() exactly, same param + class names,
+  // so a guest's day1/day2/both link works identically on both pages.
+  (function applyInviteVariant() {
+    const params = new URLSearchParams(window.location.search);
+    const invite = (params.get('invite') || 'both').toLowerCase();
+    if (invite === 'day1') document.body.classList.add('invite-day1');
+    else if (invite === 'day2') document.body.classList.add('invite-day2');
+    else document.body.classList.add('invite-both');
+
+    // Carry the current query string back to the main invite so the
+    // guest's variant survives the round trip.
+    const backLink = document.getElementById('back-link');
+    if (backLink && window.location.search) {
+      backLink.href = 'index.html' + window.location.search;
+    }
+  })();
+
+  // Add to Calendar — same event data as the main invite's .ics generation
+  function generateICS(event) {
+    const pad = (n) => String(n).padStart(2, '0');
+    const formatDate = (d) =>
+      `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}Z`;
+
+    const now = new Date();
+    const uid = `leon-iman-${event.day}@wedding`;
+
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Leon & Iman Wedding//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${formatDate(now)}`,
+      `DTSTART:${formatDate(event.start)}`,
+      `DTEND:${formatDate(event.end)}`,
+      `SUMMARY:${event.summary}`,
+      `LOCATION:${event.location}`,
+      `DESCRIPTION:${event.description}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ];
+
+    return lines.join('\r\n');
+  }
+
+  const day1Start = new Date(Date.UTC(2026, 7, 29, 13, 15, 0));
+  const day1End   = new Date(Date.UTC(2026, 7, 29, 22, 30, 0));
+  const day2Start = new Date(Date.UTC(2026, 7, 30, 11, 0, 0));
+  const day2End   = new Date(Date.UTC(2026, 7, 30, 19, 30, 0));
+
+  const ics1 = generateICS({
+    day: 1,
+    start: day1Start,
+    end: day1End,
+    summary: 'Leon & Iman Wedding — Day One: Nikkah & Mehndi',
+    location: 'Jack of Clubs Barn\\, Lode Fen\\, CB25 9HE',
+    description: 'Day One — Nikkah & Mehndi. Dress: Vibrant (South Asian or Western).'
+  });
+
+  const ics2 = generateICS({
+    day: 2,
+    start: day2Start,
+    end: day2End,
+    summary: 'Leon & Iman Wedding — Day Two: Baraat',
+    location: 'Jack of Clubs Barn\\, Lode Fen\\, CB25 9HE',
+    description: 'Day Two — The Grand Reception. Dress: Garden formal.'
+  });
+
+  function downloadICS(icsContent, filename) {
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  document.getElementById('cal-day1').addEventListener('click', () => downloadICS(ics1, 'leon-iman-day1.ics'));
+  document.getElementById('cal-day2').addEventListener('click', () => downloadICS(ics2, 'leon-iman-day2.ics'));
+
+  // Song requests — fire-and-forget POST, same pattern as the RSVP form.
+  // Replace with a Google Apps Script (or similar) deployment URL to
+  // actually collect responses; the confirmation shows either way.
+  const SONGS_ENDPOINT = '';
+
+  const songForm = document.getElementById('song-form');
+  const songConfirm = document.getElementById('song-confirm');
+
+  songForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('song-name').value.trim();
+    const title = document.getElementById('song-title').value.trim();
+    if (!name || !title) return;
+
+    if (SONGS_ENDPOINT && SONGS_ENDPOINT.startsWith('http')) {
+      fetch(SONGS_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ name, title, submittedAt: new Date().toISOString() })
+      }).catch(() => { /* ignore; confirmation still shows */ });
+    }
+
+    songForm.style.display = 'none';
+    songConfirm.style.display = 'block';
+  });
+
+  document.getElementById('song-again').addEventListener('click', () => {
+    songForm.reset();
+    songForm.style.display = 'block';
+    songConfirm.style.display = 'none';
+    document.getElementById('song-name').focus();
+  });
+</script>
+
+</body>
+</html>
