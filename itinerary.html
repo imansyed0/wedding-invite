@@ -83,6 +83,27 @@
     margin: 0 auto 16px;
     background: url('art/couple.jpeg') center / cover no-repeat;
     box-shadow: 0 12px 26px rgba(60, 20, 30, 0.3);
+    /* Pivots near its top edge so it swings like a picture hanging off
+       a nail, and judders in steps instead of easing — the same
+       stop-motion trick the horse, cats and cake use on the main
+       invite. Both the keyframe spacing and the angles are irregular
+       on purpose, so it never settles into a metronome rhythm. The
+       ::after wobble border is a child, so the frame swings with it. */
+    transform-origin: 50% 6%;
+    animation: wiggle-portrait 2.7s steps(1, end) infinite;
+  }
+  @keyframes wiggle-portrait {
+    0%   { transform: rotate(-2.1deg); }
+    14%  { transform: rotate(1.5deg); }
+    31%  { transform: rotate(-0.7deg); }
+    43%  { transform: rotate(2.4deg); }
+    58%  { transform: rotate(-1.8deg); }
+    69%  { transform: rotate(0.9deg); }
+    85%  { transform: rotate(-2.6deg); }
+    100% { transform: rotate(1.2deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo { animation: none; transform: rotate(-1deg); }
   }
   .hero-photo::after {
     content: "";
