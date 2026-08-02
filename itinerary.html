@@ -813,10 +813,16 @@
   document.getElementById('cal-day1').addEventListener('click', () => downloadICS(ics1, 'leon-iman-day1.ics'));
   document.getElementById('cal-day2').addEventListener('click', () => downloadICS(ics2, 'leon-iman-day2.ics'));
 
-  // Song requests — fire-and-forget POST, same pattern as the RSVP form.
-  // Replace with a Google Apps Script (or similar) deployment URL to
-  // actually collect responses; the confirmation shows either way.
-  const SONGS_ENDPOINT = '';
+  // Song requests — fire-and-forget POST, same endpoint and same
+  // no-cors/text-plain pattern as the RSVP form on index.html.
+  //
+  // Both forms post to the one Apps Script deployment. Requests carry
+  // type:'song' so the script can route them to their own Music tab;
+  // RSVP posts have no `type`, so a script that treats "anything not a
+  // song" as an RSVP keeps working unchanged. The script MUST know
+  // about type:'song' before guests use this, or song rows land in the
+  // RSVP sheet — see the doPost branch in the commit message.
+  const SONGS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzaEUrvA27fL0mGGyhIzYtqEo969FEvv_okBZzzmVNAFxskXIfsfbRM3APfw8BlqEoCOw/exec';
 
   const songForm = document.getElementById('song-form');
   const songConfirm = document.getElementById('song-confirm');
@@ -824,15 +830,21 @@
   songForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('song-name').value.trim();
-    const title = document.getElementById('song-title').value.trim();
-    if (!name || !title) return;
+    const song = document.getElementById('song-title').value.trim();
+    if (!name || !song) return;
 
     if (SONGS_ENDPOINT && SONGS_ENDPOINT.startsWith('http')) {
       fetch(SONGS_ENDPOINT, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ name, title, submittedAt: new Date().toISOString() })
+        body: JSON.stringify({
+          type: 'song',
+          name: name,
+          song: song,
+          submittedAt: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        })
       }).catch(() => { /* ignore; confirmation still shows */ });
     }
 
