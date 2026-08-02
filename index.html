@@ -410,7 +410,7 @@
     .stage .scroll-hint::after { bottom: -7px; left: 22px; width: 12px; height: 12px; }
 
     /* Day-1/Day-2 detail sub-lines: keep them on one line across the full
-       landscape range. The longest copy ("South Asian or Western, however
+       landscape range. The longest copy ("South Asian or British, however
        you interpret it. The more colour, the better.") is the constraint.
        Smaller font + nowrap is the only thing that fits at 800-wide where
        the day-info column is the narrowest. */
@@ -1433,7 +1433,7 @@
       <div class="details-row">
         <div class="label">dress</div>
         <div class="value">Vibrant</div>
-        <div class="sub">South Asian or Western, however you interpret it.<br />The more colour, the better.</div>
+        <div class="sub">South Asian or British, however you interpret it.<br />The more colour, the better.</div>
       </div>
     </div>
     <div class="family-col day-side">
@@ -1455,7 +1455,7 @@
       <div class="details-row">
         <div class="label">when</div>
         <div class="value">Sunday, 30 August 2026</div>
-        <div class="sub">12pm – 8:30pm</div>
+        <div class="sub">12:30pm – 8:30pm</div>
       </div>
       <div class="ornament" aria-hidden="true"></div>
       <div class="details-row">
@@ -1467,7 +1467,7 @@
       <div class="details-row">
         <div class="label">dress</div>
         <div class="value">Garden formal</div>
-        <div class="sub">South Asian or Western wear welcome</div>
+        <div class="sub">South Asian or British wear welcome</div>
       </div>
     </div>
   </div>
@@ -1676,13 +1676,16 @@
     setTimeout(next, 600);
   })();
 
-  // Invite variant — ?invite=day1 | day2 | both (default: both)
+  // Invite variant — ?invite=nikkah | day1 | day2 | all | both (default: both)
   (function applyInviteVariant() {
     const params = new URLSearchParams(window.location.search);
     const invite = (params.get('invite') || 'both').toLowerCase();
-    if (invite === 'day1') document.body.classList.add('invite-day1');
+    // 'nikkah' guests are Day One guests attending the Nikkah ceremony, but
+    // that distinction only matters on itinerary.html — here it collapses
+    // to the same 'invite-day1' treatment as any other Day One guest.
+    if (invite === 'day1' || invite === 'nikkah') document.body.classList.add('invite-day1');
     else if (invite === 'day2') document.body.classList.add('invite-day2');
-    else document.body.classList.add('invite-both');
+    else document.body.classList.add('invite-both'); // 'both', 'all', and any unrecognised value
 
     // Carry the current query string (whatever it is) forward to the
     // itinerary link, so a guest's day1/day2/both variant survives the
@@ -2036,7 +2039,7 @@
 
   const day1Start = new Date(Date.UTC(2026, 7, 29, 13, 15, 0));
   const day1End   = new Date(Date.UTC(2026, 7, 29, 22, 30, 0));
-  const day2Start = new Date(Date.UTC(2026, 7, 30, 11, 0, 0));
+  const day2Start = new Date(Date.UTC(2026, 7, 30, 11, 30, 0));
   const day2End   = new Date(Date.UTC(2026, 7, 30, 19, 30, 0));
 
   const ics1 = generateICS({
@@ -2045,7 +2048,7 @@
     end: day1End,
     summary: 'Leon & Iman Wedding — Day One: Nikkah & Mehndi',
     location: 'Jack of Clubs Barn\\, Lode Fen\\, CB25 9HE',
-    description: 'Day One — Nikkah & Mehndi. Dress: Vibrant (South Asian or Western).'
+    description: 'Day One — Nikkah & Mehndi. Dress: Vibrant (South Asian or British).'
   });
 
   const ics2 = generateICS({
