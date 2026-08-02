@@ -215,6 +215,22 @@
     text-align: center;
     line-height: 1.05;
     margin-bottom: 0.55em;
+    /* Each heading sits slightly askew, leaning the opposite way to the
+       one before, as if hand-lettered onto the card rather than typeset.
+       The angles are deliberately unequal so a run of cards reads as
+       wonky rather than as a mechanical zig-zag. Kept under 2deg: enough
+       to notice, not enough to hurt reading or push the text wide. */
+    transform: rotate(-1.6deg);
+  }
+  .wrap > section:nth-of-type(2) .card h2 { transform: rotate(1.3deg); }
+  .wrap > section:nth-of-type(3) .card h2 { transform: rotate(-1.1deg); }
+  .wrap > section:nth-of-type(4) .card h2 { transform: rotate(1.8deg); }
+  .wrap > section:nth-of-type(5) .card h2 { transform: rotate(-1.4deg); }
+  /* Day-card titles get the same treatment, tilting against each other. */
+  .day-title { transform: rotate(-1.2deg); transform-origin: 0 50%; }
+  [data-day-section="2"] .day-title { transform: rotate(1.5deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .card h2, .day-title { transform: none; }
   }
   .card .lede {
     font-size: 22px;
@@ -572,11 +588,11 @@
       <h2>What to bring or wear</h2>
       <div class="bring-row">
         <span class="emoji">👟</span>
-        <span>The ground is grass and can be soft, so flat shoes or wedges/block heels are easiest.</span>
+        <span>The ground outside the marquee is grass, so flat shoes or wedges/block heels are recommended. There's flooring inside the marquee.</span>
       </div>
       <div class="bring-row">
         <span class="emoji">🧥</span>
-        <span>It might get cold in the evening, so bring a layer.</span>
+        <span>The evening might be cooler, so bring a light layer.</span>
       </div>
     </div>
   </section>
@@ -587,7 +603,7 @@
       <h2>Getting there</h2>
       <div class="bring-row">
         <span class="emoji">🚕</span>
-        <span>There's no public transport from central Cambridge to the barn, so a taxi is the easiest way. It's about a 20 minute drive from either Cambridge or Cambridge North station.</span>
+        <span>There's no public transport from central Cambridge to the barn, so driving or a taxi is the easiest way. It's about a 20 minute drive from either Cambridge or Cambridge North station.</span>
       </div>
       <div class="bring-row">
         <span class="emoji">🚌</span>
@@ -669,8 +685,8 @@
         <li class="nikkah-only"><span class="t-time">1:15pm</span><span class="t-what">Leon's family arrive</span><span class="t-note">Drinks and mingling before the Nikkah.</span></li>
         <li class="nikkah-only"><span class="t-time">2:15pm</span><span class="t-what">Guests seated for the Nikkah</span></li>
         <li class="nikkah-only"><span class="t-time">2:30pm</span><span class="t-what">Nikkah ceremony</span></li>
-        <li class="nikkah-only"><span class="t-time">3:00&ndash;4:00pm</span><span class="t-what">Photographs &mdash; family &amp; couple</span><span class="t-note">Grab a drink while we get photos done.</span></li>
-        <li><span class="t-time">4:00&ndash;6:00pm</span><span class="t-what">Day guests arrive &mdash; mingling &amp; free time</span><span class="t-note">Drinks and catching up while we're off getting photos.</span></li>
+        <li class="nikkah-only"><span class="t-time">3:00&ndash;4:00pm</span><span class="t-what">Photographs &mdash; family &amp; couple</span><span class="t-note">Grab a drink and find the chai cart while we get photos done.</span></li>
+        <li><span class="t-time">4:00&ndash;6:00pm</span><span class="t-what">Day guests arrive &mdash; mingling &amp; free time</span><span class="t-note">Drinks, garden games and catching up while we're off getting photos.</span></li>
         <li><span class="t-time">6:15pm</span><span class="t-what">Guests seated for entrances</span></li>
         <li><span class="t-time">6:30pm</span><span class="t-what">Bride &amp; groom entrances</span></li>
         <li><span class="t-time">7:00&ndash;8:30pm</span><span class="t-what">Wedding dinner</span></li>
@@ -698,14 +714,14 @@
       </div>
       <span class="dress-chip">Dress: Garden formal &mdash; South Asian or British wear welcome</span>
       <ul class="timeline">
-        <li><span class="t-time">12:30&ndash;1:00pm</span><span class="t-what">Guests arrive</span><span class="t-note">Mocktails and snacks.</span></li>
-        <li><span class="t-time">1:00&ndash;1:45pm</span><span class="t-what">Mingling</span></li>
-        <li><span class="t-time">1:45pm</span><span class="t-what">Santoor performance</span><span class="t-note">Come into the marquee for live music.</span></li>
+        <li><span class="t-time">12:30&ndash;1:00pm</span><span class="t-what">Guests arrive</span><span class="t-note">Mocktails and canap&eacute;s to start.</span></li>
+        <li><span class="t-time">1:00&ndash;1:45pm</span><span class="t-what">Mingling &amp; garden games</span></li>
+        <li><span class="t-time">1:45pm</span><span class="t-what">Santoor performance</span><span class="t-note">Come into the marquee for live santoor music.</span></li>
         <li><span class="t-time">2:15pm</span><span class="t-what">Guests seated for entrances</span></li>
         <li><span class="t-time">2:30pm</span><span class="t-what">Bride &amp; groom entrances</span></li>
         <li><span class="t-time">3:00&ndash;5:00pm</span><span class="t-what">Wedding dinner</span><span class="t-note">Santoor plays again during the main course.</span></li>
         <li><span class="t-time">5:00&ndash;5:30pm</span><span class="t-what">Speeches</span></li>
-        <li><span class="t-time">5:30&ndash;6:30pm</span><span class="t-what">Mingling &amp; fresh air</span><span class="t-note">The marquee gets set up for cake and dancing.</span></li>
+        <li><span class="t-time">5:30&ndash;6:30pm</span><span class="t-what">Mingling &amp; fresh air</span><span class="t-note">Garden games outside while the marquee is set up for cake and dancing.</span></li>
         <li><span class="t-time">6:30pm</span><span class="t-what">First dance</span></li>
         <li><span class="t-time">8:00pm</span><span class="t-what">Cake cutting</span></li>
         <li><span class="t-time">8:30pm</span><span class="t-what">Bride &amp; groom depart</span></li>
