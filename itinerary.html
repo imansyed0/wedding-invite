@@ -8,6 +8,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@400;500;600;700&family=Fredericka+the+Great&display=swap" rel="stylesheet" />
 <style>
+  /* Vintage Melinda — self-hosted display face for the couple's names and
+     section headings. Licensed free for personal use (see
+     art/vintage-melinda-LICENSE.txt); clause 5 permits the WOFF2
+     conversion and clause 7 the embedding, for a family site like this.
+     WOFF2 first (54KB) with the original OTF (167KB) as fallback.
+     It is a connected script, so it must never be used on anything set
+     in uppercase — the letters won't join. Body text and the timeline
+     times deliberately stay on a plainer face for legibility. */
+  @font-face {
+    font-family: 'Vintage Melinda';
+    src: url('art/vintage-melinda.woff2') format('woff2'),
+         url('art/vintage-melinda.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
   :root {
     --ink: #1a1410;
     --paper: #fbf3e3;
@@ -123,7 +139,7 @@
     margin-bottom: 0.2em;
   }
   .hero h1 {
-    font-family: 'Fredericka the Great', cursive;
+    font-family: 'Vintage Melinda', 'Fredericka the Great', cursive;
     font-weight: 400;
     font-size: clamp(38px, 11vw, 54px);
     line-height: 1;
@@ -188,7 +204,7 @@
     background-repeat: no-repeat;
   }
   .card h2 {
-    font-family: 'Fredericka the Great', cursive;
+    font-family: 'Vintage Melinda', 'Fredericka the Great', cursive;
     font-weight: 400;
     font-size: 34px;
     color: var(--red);
@@ -247,7 +263,7 @@
     color: var(--red);
   }
   .day-title {
-    font-family: 'Fredericka the Great', cursive;
+    font-family: 'Vintage Melinda', 'Fredericka the Great', cursive;
     font-size: 31px;
     color: var(--ink);
     line-height: 1.1;
