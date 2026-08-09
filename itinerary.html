@@ -521,6 +521,12 @@
   body.invite-day1 .var-day1 { display: inline; }
   body.invite-day1 [data-day-section="2"] { display: none !important; }
   body.invite-day1 .nikkah-only { display: none !important; }
+  /* Saturday's two printed itineraries differ by more than hidden rows --
+     4:00pm is the refreshments slot for Nikkah guests but the arrival
+     slot for everyone joining later -- so each variant carries its own
+     rows instead of sharing one list. */
+  .timeline li.row-day1 { display: none; }
+  body.invite-day1 .timeline li.row-day1 { display: list-item; }
   body.invite-day1 .day-prefix,
   body.invite-day1 .day-prefix-sep { display: none !important; }
 
@@ -657,15 +663,14 @@
       </div>
       <span class="dress-chip">Dress: Vibrant &mdash; South Asian or British, the more colour the better</span>
       <ul class="timeline">
-        <li class="nikkah-only"><span class="t-time">1:15pm</span><span class="t-what">Leon's family arrive</span><span class="t-note">Drinks and mingling before the Nikkah.</span></li>
-        <li class="nikkah-only"><span class="t-time">2:15pm</span><span class="t-what">Guests seated for the Nikkah</span></li>
-        <li class="nikkah-only"><span class="t-time">2:30pm</span><span class="t-what">Nikkah ceremony</span></li>
-        <li class="nikkah-only"><span class="t-time">3:00&ndash;4:00pm</span><span class="t-what">Photographs &mdash; family &amp; couple</span><span class="t-note">Grab a drink and find the chai cart while we get photos done.</span></li>
-        <li><span class="t-time">4:00&ndash;6:00pm</span><span class="t-what">Day guests arrive &mdash; mingling &amp; free time</span><span class="t-note">Drinks, garden games and catching up while we're off getting photos.</span></li>
-        <li><span class="t-time">6:15pm</span><span class="t-what">Guests seated for entrances</span></li>
-        <li><span class="t-time">6:30pm</span><span class="t-what">Bride &amp; groom entrances</span></li>
-        <li><span class="t-time">7:00&ndash;8:30pm</span><span class="t-what">Wedding dinner</span></li>
-        <li><span class="t-time">8:30pm</span><span class="t-what">Evening guests arrive &mdash; party begins!</span><span class="t-note">Friends are on the decks from about 9:30pm.</span></li>
+        <li class="nikkah-only"><span class="t-time">1:15&ndash;1:45pm</span><span class="t-what">Arrival</span></li>
+        <li class="nikkah-only"><span class="t-time">2:15pm</span><span class="t-what">Nikkah ceremony</span></li>
+        <li class="nikkah-only"><span class="t-time">3:00pm</span><span class="t-what">Family photographs</span></li>
+        <li class="nikkah-only"><span class="t-time">4:00pm</span><span class="t-what">Chai, canap&eacute;s, drinks and games</span></li>
+        <li class="row-day1"><span class="t-time">4:00pm</span><span class="t-what">Arrival</span></li>
+        <li class="row-day1"><span class="t-time">4:30pm</span><span class="t-what">Drinks, snacks, chai, photos and garden games</span></li>
+        <li><span class="t-time">6:15pm</span><span class="t-what">Wedding dinner</span></li>
+        <li><span class="t-time">8:30pm</span><span class="t-what">Party &rsquo;til late!</span><span class="t-note">Friends are on the decks from about 9:30pm.</span></li>
       </ul>
       <div class="day-actions">
         <button class="btn-flat" id="cal-day1" type="button">📅 Add to calendar</button>
@@ -689,17 +694,13 @@
       </div>
       <span class="dress-chip">Dress: Garden formal &mdash; South Asian or British wear welcome</span>
       <ul class="timeline">
-        <li><span class="t-time">12:30&ndash;1:00pm</span><span class="t-what">Guests arrive</span><span class="t-note">Mocktails and canap&eacute;s to start.</span></li>
-        <li><span class="t-time">1:00&ndash;1:45pm</span><span class="t-what">Mingling &amp; garden games</span></li>
-        <li><span class="t-time">1:45pm</span><span class="t-what">Santoor performance</span><span class="t-note">Come into the marquee for live santoor music.</span></li>
-        <li><span class="t-time">2:15pm</span><span class="t-what">Guests seated for entrances</span></li>
-        <li><span class="t-time">2:30pm</span><span class="t-what">Bride &amp; groom entrances</span></li>
-        <li><span class="t-time">3:00&ndash;5:00pm</span><span class="t-what">Wedding dinner</span><span class="t-note">Santoor plays again during the main course.</span></li>
-        <li><span class="t-time">5:00&ndash;5:30pm</span><span class="t-what">Speeches</span></li>
-        <li><span class="t-time">5:30&ndash;6:30pm</span><span class="t-what">Mingling &amp; fresh air</span><span class="t-note">Garden games outside while the marquee is set up for cake and dancing.</span></li>
+        <li><span class="t-time">12:30pm onwards</span><span class="t-what">Guests arrive to drinks and canap&eacute;s</span></li>
+        <li><span class="t-time">1:45pm</span><span class="t-what">Live music performance</span></li>
+        <li><span class="t-time">2:30pm</span><span class="t-what">Bride and groom entrances</span></li>
+        <li><span class="t-time">3:00pm</span><span class="t-what">Wedding dinner</span></li>
+        <li><span class="t-time">5:00pm</span><span class="t-what">Speeches</span></li>
         <li><span class="t-time">6:30pm</span><span class="t-what">First dance</span></li>
         <li><span class="t-time">8:00pm</span><span class="t-what">Cake cutting</span></li>
-        <li><span class="t-time">8:30pm</span><span class="t-what">Bride &amp; groom depart</span></li>
       </ul>
       <div class="day-actions">
         <button class="btn-flat" id="cal-day2" type="button">📅 Add to calendar</button>
@@ -772,7 +773,7 @@
   // Day One's start is variant-aware: the full day (with the Nikkah)
   // starts at 2:15pm (13:15 UTC); the no-Nikkah variant starts at the
   // 4:00pm arrival (15:00 UTC) instead.
-  const day1StartWithNikkah = new Date(Date.UTC(2026, 7, 29, 13, 15, 0));
+  const day1StartWithNikkah = new Date(Date.UTC(2026, 7, 29, 12, 15, 0));
   const day1StartNoNikkah   = new Date(Date.UTC(2026, 7, 29, 15, 0, 0));
   const day1Start = resolvedInvite === 'day1' ? day1StartNoNikkah : day1StartWithNikkah;
   const day1End   = new Date(Date.UTC(2026, 7, 29, 22, 30, 0));
