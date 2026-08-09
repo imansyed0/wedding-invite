@@ -399,11 +399,10 @@
   .bring-row .emoji { font-size: 26px; line-height: 1.2; }
   .bring-row:last-child { margin-bottom: 0; }
 
-  /* Gifts */
-  /* Gifts — the charity donation is the ask that actually matters, so it
-     leads the card and gets the only filled button on the page. Cash and
-     the registry sit below a rule, deliberately quieter, so the priority
-     reads at a glance rather than needing to be spelled out. */
+  /* Gifts — a charity donation is the only thing suggested here, kept
+     deliberately low-pressure in the copy. It still gets the page's one
+     filled button, so anyone who does want to give can act on it
+     without hunting. */
   .gift-lead {
     font-size: 21px;
     color: var(--wood);
@@ -424,22 +423,6 @@
     transition: transform 0.15s, background 0.15s;
   }
   .btn-donate:hover { background: #9a1414; transform: translateY(-1px); }
-  .gift-secondary {
-    margin-top: 1.1em;
-    padding-top: 1em;
-    border-top: 1.5px solid rgba(26,20,16,0.15);
-    font-size: 19px;
-    color: var(--wood-light);
-    line-height: 1.45;
-    text-align: center;
-  }
-  .gift-note {
-    font-size: 15px;
-    color: var(--red-soft);
-    text-align: center;
-    margin-top: 4px;
-    font-family: 'Cregan', cursive;
-  }
 
   /* Song requests form */
   .field { margin-bottom: 12px; }
@@ -620,14 +603,10 @@
   <section id="gifts">
     <div class="card">
       <h2>Gifts</h2>
-      <p class="gift-lead">More than anything, we'd love you to give to <strong>CHINAR International</strong>.</p>
+      <p class="gift-lead">Honestly, you being there is plenty. But if you did want to give something, we'd love it to go to <strong>CHINAR International</strong>.</p>
       <p class="gift-lead">CHINAR (Child Nurture and Relief) works with orphans, widows and young people affected by conflict in Jammu and Kashmir. They run community learning centres across the region, supporting education, nutrition, health and skills training.</p>
-      <p class="gift-lead">You can give through the Donate button on their website.</p>
+      <p class="gift-lead">There's a Donate button on their website, if you'd like to.</p>
       <a class="btn-donate" href="https://www.chinarinternational.org/" target="_blank" rel="noopener">Donate to CHINAR International</a>
-      <div class="gift-secondary">
-        You're also very welcome to give cash towards our travels and setting up our new home. Registry details to follow.
-        <!-- TODO: add the registry link here once it's set up -->
-      </div>
     </div>
   </section>
 
