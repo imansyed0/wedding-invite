@@ -505,7 +505,7 @@
        day1   — Day One WITHOUT the Nikkah, timeline starts 4:00pm
        day2   — Day Two only
        all    — everything (default) */
-  .var-nikkah, .var-day1, .var-day2 { display: none; }
+  .var-nikkah, .var-day1, .var-day2, .var-all-later { display: none; }
 
   body.invite-nikkah .var-all,
   body.invite-nikkah .var-day1,
@@ -527,6 +527,17 @@
      rows instead of sharing one list. */
   .timeline li.row-day1 { display: none; }
   body.invite-day1 .timeline li.row-day1 { display: list-item; }
+
+  /* Both days, but joining Saturday after the ceremony -- the one
+     combination the other four variants can't express. Keeps both day
+     cards, then borrows the later-arrival Saturday rows from
+     invite-day1. Only the day-card title swaps: the hero still wants
+     the both-days wording, so .var-all is hidden inside .day-title
+     rather than globally. */
+  body.invite-all-later .nikkah-only { display: none !important; }
+  body.invite-all-later .timeline li.row-day1 { display: list-item; }
+  body.invite-all-later .day-title .var-all { display: none; }
+  body.invite-all-later .var-all-later { display: inline; }
   body.invite-day1 .day-prefix,
   body.invite-day1 .day-prefix-sep { display: none !important; }
 
@@ -654,6 +665,7 @@
             <span class="var-all">Nikkah &amp; Mehndi</span>
             <span class="var-nikkah">Nikkah &amp; Mehndi</span>
             <span class="var-day1">Mehndi &amp; Party</span>
+            <span class="var-all-later">Mehndi &amp; Party</span>
           </div>
         </div>
       </div>
@@ -727,7 +739,7 @@
     const params = new URLSearchParams(window.location.search);
     let invite = (params.get('invite') || '').toLowerCase();
     if (invite === 'both') invite = 'all';
-    if (!['nikkah', 'day1', 'day2', 'all'].includes(invite)) invite = 'all';
+    if (!['nikkah', 'day1', 'day2', 'all', 'all-later'].includes(invite)) invite = 'all';
     resolvedInvite = invite;
     document.body.classList.add('invite-' + invite);
 
@@ -774,12 +786,13 @@
   // 4:00pm arrival (15:00 UTC) instead.
   const day1StartWithNikkah = new Date(Date.UTC(2026, 7, 29, 12, 15, 0));
   const day1StartNoNikkah   = new Date(Date.UTC(2026, 7, 29, 15, 0, 0));
-  const day1Start = resolvedInvite === 'day1' ? day1StartNoNikkah : day1StartWithNikkah;
+  const arrivesLate = resolvedInvite === 'day1' || resolvedInvite === 'all-later';
+  const day1Start = arrivesLate ? day1StartNoNikkah : day1StartWithNikkah;
   const day1End   = new Date(Date.UTC(2026, 7, 29, 22, 30, 0));
   const day2Start = new Date(Date.UTC(2026, 7, 30, 11, 30, 0));
   const day2End   = new Date(Date.UTC(2026, 7, 30, 19, 30, 0));
 
-  const day1Title = resolvedInvite === 'day1' ? 'Mehndi & Party' : 'Nikkah & Mehndi';
+  const day1Title = arrivesLate ? 'Mehndi & Party' : 'Nikkah & Mehndi';
 
   const ics1 = generateICS({
     day: 1,
